@@ -4,13 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Starworshipper.me</title>
-    <!-- Favicon -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⭐</text></svg>">
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
@@ -18,7 +14,6 @@
         body {
             font-family: 'Inter', sans-serif;
             background-color: #121212;
-            overflow: hidden;
         }
 
         @keyframes rotate-background {
@@ -40,36 +35,33 @@
             margin-top: -75vmax;
             margin-left: -75vmax;
             
-
             background-image: 
                 radial-gradient(circle at 30% 30%, var(--color-1, rgba(100, 100, 255, 0.25)), transparent 45%),
                 radial-gradient(circle at 70% 70%, var(--color-2, rgba(255, 100, 150, 0.25)), transparent 45%);
             
             z-index: -1;
             
-
             animation: rotate-background 90s linear infinite;
         }
 
-        /* Custom class for a subtle glow on hover for the links */
         .link-glow:hover {
             box-shadow: 0 0 20px rgba(128, 128, 255, 0.15), 0 0 8px rgba(255, 255, 255, 0.1);
         }
     </style>
 </head>
-<body class="bg-gray-900 text-white flex items-center justify-center min-h-screen p-4 sm:p-6">
+<body class="bg-gray-900 text-white min-h-screen p-4 sm:p-6">
 
-
+    <!-- Card Container with Acrylic/Blur Effect -->
     <div class="w-full max-w-md mx-auto bg-gray-900/60 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl overflow-hidden">
         <div class="p-8">
 
-
+            <!-- Profile Section -->
             <header class="text-center mb-8">
                 <img 
                   src="av.png" 
                   alt="Profile Picture" 
                   class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-gray-600/50 shadow-lg"
-                  onerror="this.onerror=null; this.src='https://placehold.co/128x128/1f2937/ffffff?text=Error';"
+                  onerror="this.onerror=null; this.src='https://placehold.co/128x128/1f2937/ffffff?text=Gone%20Fishin';"
                 >
                 <h1 class="text-2xl font-bold text-white">@Starworshipper</h1>
                 <p class="text-gray-300 mt-1">Certified dumb dog.</p>
@@ -116,7 +108,6 @@
 
             </main>
 
-            <!-- Footer -->
             <footer class="text-center mt-12">
                 <p class="text-gray-400 text-sm">Powered by <span id="random-emoji">❤️</span></p>
             </footer>
@@ -124,27 +115,26 @@
         </div>
     </div>
 
-    <!-- JavaScript to set random background colors -->
+    <!-- Le' random color selector -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const root = document.documentElement;
             
             const randomHue1 = Math.floor(Math.random() * 360);
             const randomHue2 = (randomHue1 + 180) % 360;
-            const randomSaturation = Math.floor(Math.random() * 80) + 20; // Range: 20% to 100%
-            const randomLightness = Math.floor(Math.random() * 50) + 30;  // Range: 30% to 80%
+            const randomSaturation = Math.floor(Math.random() * 80) + 20; // 
+            const randomLightness = Math.floor(Math.random() * 50) + 30;  // 
             root.style.setProperty('--color-1', `hsla(${randomHue1}, ${randomSaturation}%, ${randomLightness}%, 0.75)`);
             root.style.setProperty('--color-2', `hsla(${randomHue2}, ${randomSaturation}%, ${randomLightness}%, 0.75)`);
 
-            // --- Set Random Footer Emoji ---
+            // --- Random powered by Emoji ---
             const emojiElement = document.getElementById('random-emoji');
-            const emojis = ['😊', '✨', '🚀', '🌟', '🎉', '🔥', '💻', '❤️', '🦊', '🐾', '🌠', '💖', '😂', '👍', '🤔', '👋', '😎', '👽', '👾', '🎮', '🎵', '🎨', '🌙', '⭐', '🪐', '💡', '💯', '😀', '😁', '😅', '🤣', '😇', '😍', '🤩', '😘', '😗', '😙', '😚', '😋', '😛', '😜', '🤪', '🤨', '🧐', '🤓', '🥳', '🤡', '👻', '💀', '🎃', '😺', '😸', '😹', '😻', '😼', '😽', '🙀', '😿', '😾', '🤲', '👐', '🙌', '👏', '🙏', '🤝', '👍', '👎', '👊', '✊', '�', '🤜', '🤞', '✌️', '🤟', '🤘', '👌', '🤏', '👈', '👉', '👆', '👇', '☝️', '✋', '🤚', '🖐️', '🖖', '👋', '🤙', '💪', '🦾', '✍️', '💅', '🤳', '💃', '🕺', '🕴️', '👩‍🚀', '🧑‍🚀', '👨‍🚀', '👑', '💎', '💐', '🌹', '🌺', '🌻', '🌼', '🌷', '🌱', '🌲', '🌳', '🌴', '🌵', '🌾', '🌿', '☘️', '🍀', '🍁', '🍂', '🍃', '🌍', '🌎', '🌏', '🌕', '🌖', '🌗', '🌘', '🌑', '🌒', '🌓', '🌔', '☀️', '🔥', '💧', '🌊', '💨', '❄️', '☃️', '⛄', '☄️', '🌈', '⚡️', '🌟', '💫', '💥', '💢', '✨'];
+            const emojis = ['😊', '✨', '🚀', '🌟', '🎉', '🔥', '💻', '❤️', '🦊', '🐾', '🌠', '💖', '😂', '👍', '🤔', '👋', '😎', '👽', '👾', '🎮', '🎵', '🎨', '🌙', '⭐', '🪐', '💡', '💯', '😀', '😁', '😅', '🤣', '😇', '😍', '🤩', '😘', '😗', '😙', '😚', '😋', '😛', '😜', '�', '🤨', '🧐', '🤓', '🥳', '🤡', '👻', '💀', '🎃', '😺', '😸', '😹', '😻', '😼', '😽', '🙀', '😿', '😾', '🤲', '👐', '🙌', '👏', '🙏', '🤝', '👍', '👎', '👊', '✊', '🤛', '🤜', '🤞', '✌️', '🤟', '🤘', '👌', '🤏', '👈', '👉', '👆', '👇', '☝️', '✋', '🤚', '🖐️', '🖖', '👋', '🤙', '💪', '🦾', '✍️', '💅', '🤳', '💃', '🕺', '🕴️', '👩‍🚀', '🧑‍🚀', '👨‍🚀', '👑', '💎', '💐', '🌹', '🌺', '🌻', '🌼', '🌷', '🌱', '🌲', '🌳', '🌴', '🌵', '🌾', '🌿', '☘️', '🍀', '🍁', '🍂', '🍃', '🌍', '🌎', '🌏', '🌕', '🌖', '🌗', '🌘', '🌑', '🌒', '🌓', '🌔', '☀️', '🔥', '💧', '🌊', '💨', '❄️', '☃️', '⛄', '☄️', '🌈', '⚡️', '🌟', '💫', '💥', '💢', '✨'];
             const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
             if (emojiElement) {
                 emojiElement.textContent = randomEmoji;
             }
         });
     </script>
-
 </body>
 </html>
