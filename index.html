@@ -49,10 +49,10 @@
         }
     </style>
 </head>
-<body class="bg-gray-900 text-white min-h-screen p-4 sm:p-6">
 
-    <!-- Card Container with Acrylic/Blur Effect -->
-    <div class="w-full max-w-md mx-auto bg-gray-900/60 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl overflow-hidden">
+<body class="bg-gray-900 text-white min-h-screen p-4 sm:p-6 sm:flex sm:items-center sm:justify-center">
+
+    <div class="w-full max-w-md mx-auto my-8 bg-gray-900/60 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl overflow-hidden">
         <div class="p-8">
 
             <!-- Profile Section -->
@@ -61,7 +61,7 @@
                   src="av.png" 
                   alt="Profile Picture" 
                   class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-gray-600/50 shadow-lg"
-                  onerror="this.onerror=null; this.src='https://placehold.co/128x128/1f2937/ffffff?text=Gone%20Fishin';"
+                  onerror="this.onerror=null; this.src='https://placehold.co/128x128/1f2937/ffffff?text=Error';"
                 >
                 <h1 class="text-2xl font-bold text-white">@Starworshipper</h1>
                 <p class="text-gray-300 mt-1">Certified dumb dog.</p>
@@ -80,6 +80,12 @@
                 <a href="https://discord.com/users/1328748257714770026" target="_blank" rel="noopener noreferrer" class="link-glow flex items-center justify-center w-full bg-gray-800/70 text-white p-4 rounded-lg transition-transform duration-200 ease-in-out hover:scale-105 hover:bg-gray-700/90">
                     <i class="fa-brands fa-discord w-6 mr-3"></i>
                     <span class="font-semibold">Discord</span>
+                </a>
+
+                <!-- Link: Reddit -->
+                <a href="https://www.reddit.com/user/Starworshipper_/" target="_blank" rel="noopener noreferrer" class="link-glow flex items-center justify-center w-full bg-gray-800/70 text-white p-4 rounded-lg transition-transform duration-200 ease-in-out hover:scale-105 hover:bg-gray-700/90">
+                    <i class="fa-brands fa-reddit w-6 mr-3"></i>
+                    <span class="font-semibold">Reddit</span>
                 </a>
 
                 <!-- Link: Unsplash -->
@@ -102,6 +108,7 @@
 
             </main>
 
+            <!-- Footer -->
             <footer class="text-center mt-12">
                 <p class="text-gray-400 text-sm">Powered by <span id="random-emoji">❤️</span></p>
             </footer>
@@ -109,7 +116,7 @@
         </div>
     </div>
 
-    <!-- Le' random color selector -->
+    <!-- JavaScript to set random background colors -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const root = document.documentElement;
@@ -121,9 +128,9 @@
             root.style.setProperty('--color-1', `hsla(${randomHue1}, ${randomSaturation}%, ${randomLightness}%, 0.75)`);
             root.style.setProperty('--color-2', `hsla(${randomHue2}, ${randomSaturation}%, ${randomLightness}%, 0.75)`);
 
-            // --- Random powered by Emoji ---
+            // --- Set Random Footer Emoji ---
             const emojiElement = document.getElementById('random-emoji');
-            const emojis = ['😊', '✨', '🚀', '🌟', '🎉', '🔥', '💻', '❤️', '🦊', '🐾', '🌠', '💖', '😂', '👍', '🤔', '👋', '😎', '👽', '👾', '🎮', '🎵', '🎨', '🌙', '⭐', '🪐', '💡', '💯', '😀', '😁', '😅', '🤣', '😇', '😍', '🤩', '😘', '😗', '😙', '😚', '😋', '😛', '😜', '�', '🤨', '🧐', '🤓', '🥳', '🤡', '👻', '💀', '🎃', '😺', '😸', '😹', '😻', '😼', '😽', '🙀', '😿', '😾', '🤲', '👐', '🙌', '👏', '🙏', '🤝', '👍', '👎', '👊', '✊', '🤛', '🤜', '🤞', '✌️', '🤟', '🤘', '👌', '🤏', '👈', '👉', '👆', '👇', '☝️', '✋', '🤚', '🖐️', '🖖', '👋', '🤙', '💪', '🦾', '✍️', '💅', '🤳', '💃', '🕺', '🕴️', '👩‍🚀', '🧑‍🚀', '👨‍🚀', '👑', '💎', '💐', '🌹', '🌺', '🌻', '🌼', '🌷', '🌱', '🌲', '🌳', '🌴', '🌵', '🌾', '🌿', '☘️', '🍀', '🍁', '🍂', '🍃', '🌍', '🌎', '🌏', '🌕', '🌖', '🌗', '🌘', '🌑', '🌒', '🌓', '🌔', '☀️', '🔥', '💧', '🌊', '💨', '❄️', '☃️', '⛄', '☄️', '🌈', '⚡️', '🌟', '💫', '💥', '💢', '✨'];
+            const emojis = ['😊', '✨', '🚀', '🌟', '🎉', '🔥', '💻', '❤️', '🦊', '🐾', '🌠', '💖', '😂', '👍', '🤔', '👋', '😎', '👽', '👾', '🎮', '🎵', '🎨', '🌙', '⭐', '�', '💡', '💯', '😀', '😁', '😅', '🤣', '😇', '😍', '🤩', '😘', '😗', '😙', '😚', '😋', '😛', '😜', '🤪', '🤨', '🧐', '🤓', '🥳', '🤡', '👻', '💀', '🎃', '😺', '😸', '😹', '😻', '😼', '😽', '🙀', '😿', '😾', '🤲', '👐', '🙌', '👏', '🙏', '🤝', '👍', '👎', '👊', '✊', '🤛', '🤜', '🤞', '✌️', '🤟', '🤘', '👌', '🤏', '👈', '👉', '👆', '👇', '☝️', '✋', '🤚', '🖐️', '🖖', '👋', '🤙', '💪', '🦾', '✍️', '💅', '🤳', '💃', '🕺', '🕴️', '👩‍🚀', '🧑‍🚀', '👨‍🚀', '👑', '💎', '💐', '🌹', '🌺', '🌻', '🌼', '🌷', '🌱', '🌲', '🌳', '🌴', '🌵', '🌾', '🌿', '☘️', '🍀', '🍁', '🍂', '🍃', '🌍', '🌎', '🌏', '🌕', '🌖', '🌗', '🌘', '🌑', '🌒', '🌓', '🌔', '☀️', '🔥', '💧', '🌊', '💨', '❄️', '☃️', '⛄', '☄️', '🌈', '⚡️', '🌟', '💫', '💥', '💢', '✨'];
             const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
             if (emojiElement) {
                 emojiElement.textContent = randomEmoji;
