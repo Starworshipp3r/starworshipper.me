@@ -47,6 +47,15 @@
         .link-glow:hover {
             box-shadow: 0 0 20px rgba(128, 128, 255, 0.15), 0 0 8px rgba(255, 255, 255, 0.1);
         }
+        @keyframes roll-dice {
+    0% { transform: rotate(0deg) scale(1); }
+    50% { transform: rotate(360deg) scale(1.3); }
+    100% { transform: rotate(720deg) scale(1); }
+}
+
+.dice-rolling {
+    animation: roll-dice 0.6s ease;
+}
     </style>
 </head>
 
@@ -64,7 +73,15 @@
                   onerror="this.onerror=null; this.src='https://placehold.co/128x128/1f2937/ffffff?text=Error';"
                 >
                 <h1 class="text-2xl font-bold text-white">@Starworshipper</h1>
-                <p class="text-gray-300 mt-1">Certified dumb dog.</p>
+
+                <div class="text-center mt-1">
+                <p class="text-gray-300">
+                    Certified <span id="random-word">dumb</span> dog.
+                </p>
+                <button id="shuffle-word" class="mt-2 text-gray-400 hover:text-white transition" aria-label="Shuffle word">
+                    <i id="dice-icon" class="fa-solid fa-dice fa-lg"></i>
+                </button>
+                </div>
             </header>
 
             <!-- Links Section -->
@@ -112,6 +129,47 @@
 
     <!-- JavaScript to set random background colors -->
     <script>
+        
+        // --- Set Random Word for "Certified ___ dog." ---
+        const wordElement = document.getElementById('random-word');
+        const shuffleButton = document.getElementById('shuffle-word');
+        const words = [
+            'dumb', 'WRX driving', 'music listening', 'daily gym going', 
+            'car enthusiast', 'nature exploring', 'tea drinking', 
+            'photo taking', 'vinyl collecting', '.flac hoarding',  
+            'pre-workout loving', 'MILF loving', 'home cooking', 'DROP TABLE hobbies;'
+        ];
+
+        function setRandomWord() {
+            const randomWord = words[Math.floor(Math.random() * words.length)];
+            wordElement.textContent = randomWord;
+        }
+
+        // Set random word on page load
+        if (wordElement) {
+            setRandomWord();
+        }
+
+        // Shuffle button click
+        if (shuffleButton) {
+    shuffleButton.addEventListener('click', () => {
+        const dice = document.getElementById('dice-icon');
+
+        // Add animation class
+        dice.classList.add('dice-rolling');
+
+        // Change word after a slight delay
+        setTimeout(() => {
+            setRandomWord();
+        }, 200);
+
+        // Remove the animation class when done so it can replay next time
+        dice.addEventListener('animationend', () => {
+            dice.classList.remove('dice-rolling');
+        }, { once: true });
+    });
+}
+
         document.addEventListener('DOMContentLoaded', () => {
             const root = document.documentElement;
             
@@ -131,5 +189,7 @@
             }
         });
     </script>
+
+    
 </body>
 </html>
