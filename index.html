@@ -1,96 +1,100 @@
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Starworshipper.me</title>
-        <!-- Basic SEO -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Starworshipper.me</title>
     <title>DUMBDOG — Starworshipper Links</title>
-    <meta name="description" content="DUMBDOG (Dumbdog) — Starworshipper's link hub with quick links to profiles and pages.">
-    <link rel="canonical" href="https://starworshipper.me/">
-    <meta name="robots" content="index, follow">
+<meta name="description" content="DUMBDOG (Dumbdog) — Starworshipper's link hub with quick links to profiles and pages.">
+<link rel="canonical" href="https://starworshipper.me/">
+<meta name="robots" content="index, follow">
 
-    <!-- Open Graph -->
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="DUMBDOG — Starworshipper Links">
-    <meta property="og:description" content="DUMBDOG (Dumbdog) — Starworshipper's link hub with quick links to profiles and pages.">
-    <meta property="og:url" content="https://starworshipper.me/">
-    <meta property="og:image" content="https://starworshipper.me/av.jpg">
-    <meta property="og:site_name" content="Starworshipper">
-    <meta property="og:locale" content="en_US">
+<meta property="og:type" content="website">
+<meta property="og:title" content="DUMBDOG — Starworshipper Links">
+<meta property="og:description" content="DUMBDOG (Dumbdog) — Starworshipper's link hub with quick links to profiles and pages.">
+<meta property="og:url" content="https://starworshipper.me/">
+<meta property="og:image" content="https://starworshipper.me/av.jpg">
+<meta property="og:site_name" content="Starworshipper">
+<meta property="og:locale" content="en_US">
 
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="DUMBDOG — Starworshipper Links">
-    <meta name="twitter:description" content="DUMBDOG (Dumbdog) — Starworshipper's link hub with quick links to profiles and pages.">
-    <meta name="twitter:image" content="https://starworshipper.me/av.jpg">
-    <meta name="twitter:image:alt" content="Starworshipper link hub">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="DUMBDOG — Starworshipper Links">
+<meta name="twitter:description" content="DUMBDOG (Dumbdog) — Starworshipper's link hub with quick links to profiles and pages.">
+<meta name="twitter:image" content="https://starworshipper.me/av.jpg">
+<meta name="twitter:image:alt" content="Starworshipper link hub">
 
-    <!-- Structured Data -->
-    <script type="application/ld+json">
-    {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "Starworshipper",
-    "alternateName": "Dumbdog",
-    "url": "https://starworshipper.me/",
-    "description": "Starworshipper's DUMBDOG link hub."
+<script type="application/ld+json">
+{
+"@context": "https://schema.org",
+"@type": "WebSite",
+"name": "Starworshipper",
+"alternateName": "Dumbdog",
+"url": "https://starworshipper.me/",
+"description": "Starworshipper's DUMBDOG link hub."
+}
+</script>
+
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⭐</text></svg>">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+    body {
+        font-family: 'Inter', sans-serif;
+        background-color: #121212;
     }
-    </script>
 
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⭐</text></svg>">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #121212;
+    @keyframes rotate-background {
+        from {
+            transform: rotate(0deg);
         }
+        to {
+            transform: rotate(360deg);
+        }
+    }
 
-        @keyframes rotate-background {
-            from {
-                transform: rotate(0deg);
-            }
-            to {
-                transform: rotate(360deg);
-            }
-        }
+    body::before {
+        content: '';
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        width: 150vmax;
+        height: 150vmax;
+        margin-top: -75vmax;
+        margin-left: -75vmax;
+        
+        background-image: 
+            radial-gradient(circle at 30% 30%, var(--color-1, rgba(100, 100, 255, 0.25)), transparent 45%),
+            radial-gradient(circle at 70% 70%, var(--color-2, rgba(255, 100, 150, 0.25)), transparent 45%);
+        
+        z-index: -1;
+        
+        animation: rotate-background 90s linear infinite;
+    }
 
-        body::before {
-            content: '';
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            width: 150vmax;
-            height: 150vmax;
-            margin-top: -75vmax;
-            margin-left: -75vmax;
-            
-            background-image: 
-                radial-gradient(circle at 30% 30%, var(--color-1, rgba(100, 100, 255, 0.25)), transparent 45%),
-                radial-gradient(circle at 70% 70%, var(--color-2, rgba(255, 100, 150, 0.25)), transparent 45%);
-            
-            z-index: -1;
-            
-            animation: rotate-background 90s linear infinite;
-        }
-
-        .link-glow:hover {
-            box-shadow: 0 0 20px rgba(128, 128, 255, 0.15), 0 0 8px rgba(255, 255, 255, 0.1);
-        }
-        @keyframes roll-dice {
-    0% { transform: rotate(0deg) scale(1); }
-    50% { transform: rotate(360deg) scale(1.3); }
-    100% { transform: rotate(720deg) scale(1); }
+    .link-glow:hover {
+        box-shadow: 0 0 20px rgba(128, 128, 255, 0.15), 0 0 8px rgba(255, 255, 255, 0.1);
+    }
+    @keyframes roll-dice {
+0% { transform: rotate(0deg) scale(1); }
+50% { transform: rotate(360deg) scale(1.3); }
+100% { transform: rotate(720deg) scale(1); }
 }
 
 .dice-rolling {
-    animation: roll-dice 0.6s ease;
+animation: roll-dice 0.6s ease;
 }
-    </style>
+
+    /* --- ADDED FOR IMAGES --- */
+    .inline-image {
+        height: 1.5em; /* Controls the image height based on the font size */
+        vertical-align: middle; /* Aligns the image nicely with the text */
+        display: inline-block; /* Allows it to sit within the text flow */
+        margin: 0 0.2em; /* Adds a little space around the image */
+    }
+</style>
 </head>
 
 <body class="bg-gray-900 text-white min-h-screen p-4 sm:p-6 sm:flex sm:items-center sm:justify-center">
@@ -116,7 +120,6 @@
 
 
 
-            <!-- Profile Section -->
             <header class="text-center mb-8">
                 <img 
                   src="av.jpg" 
@@ -136,34 +139,28 @@
                 </div>
             </header>
 
-            <!-- Links Section -->
             <main class="space-y-4">
                 
-                <!-- Link: Steam -->
                 <a href="https://steamcommunity.com/id/Starworshipp3r" target="_blank" rel="noopener noreferrer" class="link-glow flex items-center justify-center w-full bg-gray-800/70 text-white p-4 rounded-lg transition-transform duration-200 ease-in-out hover:scale-105 hover:bg-gray-700/90">
                     <i class="fa-brands fa-steam w-6 mr-3"></i>
                     <span class="font-semibold">Steam</span>
                 </a>
 
-                <!-- Link: Unsplash -->
                 <a href="https://unsplash.com/@starworshipp3r" target="_blank" rel="noopener noreferrer" class="link-glow flex items-center justify-center w-full bg-gray-800/70 text-white p-4 rounded-lg transition-transform duration-200 ease-in-out hover:scale-105 hover:bg-gray-700/90">
                     <i class="fa-brands fa-unsplash w-6 mr-3"></i>
                     <span class="font-semibold">Unsplash</span>
                 </a>
 
-                <!-- Link: Discogs -->
                 <a href="https://www.discogs.com/user/Starworshipper" target="_blank" rel="noopener noreferrer" class="link-glow flex items-center justify-center w-full bg-gray-800/70 text-white p-4 rounded-lg transition-transform duration-200 ease-in-out hover:scale-105 hover:bg-gray-700/90">
                     <i class="fa-solid fa-compact-disc w-6 mr-3"></i>
                     <span class="font-semibold">Discogs</span>
                 </a>
 
-                <!-- Link: Bandcamp -->
                 <a href="https://bandcamp.com/Starworshipper" target="_blank" rel="noopener noreferrer" class="link-glow flex items-center justify-center w-full bg-gray-800/70 text-white p-4 rounded-lg transition-transform duration-200 ease-in-out hover:scale-105 hover:bg-gray-700/90">
                     <i class="fa-brands fa-bandcamp w-6 mr-3"></i>
                     <span class="font-semibold">Bandcamp</span>
                 </a>
 
-                <!-- Link: Last.fm -->
                 <a href="https://www.last.fm/user/Starworshipp3r" target="_blank" rel="noopener noreferrer" class="link-glow flex items-center justify-center w-full bg-gray-800/70 text-white p-4 rounded-lg transition-transform duration-200 ease-in-out hover:scale-105 hover:bg-gray-700/90">
                     <i class="fa-brands fa-lastfm w-6 mr-3"></i>
                     <span class="font-semibold">Last.fm</span>
@@ -171,7 +168,6 @@
 
             </main>
 
-            <!-- Footer -->
             <footer class="text-center mt-12">
                 <p class="text-gray-400 text-sm">Powered by <span id="random-emoji">❤️</span></p>
             </footer>
@@ -179,27 +175,106 @@
         </div>
     </div>
 
-    <!-- JavaScript to set random background colors -->
     <script>
         
         // --- Set Random Word for "Certified ___ dog." ---
         const wordElement = document.getElementById('random-word');
         const shuffleButton = document.getElementById('shuffle-word');
+
         const words = [
-            'dumb', 'WRX driving', 'music listening', 'daily gym going', 'car enthusiast', 'nature exploring', 'tea drinking', 
-            'photo taking', 'vinyl collecting', '.flac hoarding', 'pre-workout loving', 'mom friend', 'home cooking', 'DROP TABLE hobbies;', 'spaghetti eating',
-            'butt loving', 'deadlifting', 'mac & cheese eating', 'hot dog hating', '🌵', '✌', 'Chick-fil-A eating', 'candle burning', 'long hot shower taking', 'OnePlus using',
-            'smoothie making', 'hoodie wearing', 'beanie wearing', 'hiking', 'squatting', 'bench pressing', 'oil changing', 'touge driving', 'save public broadcasting', 'milk drinking',
-            'solo', '( ͡° ͜ʖ ͡°)', 'don\'t steal my hoodie', 'I promise I will never let you feel alone', 'IDGAF', 'good luck on your quest', 'halycon and on and on', 'rainy day enjoying',
-            'go play TOEM', 'claw machine winning', '...I should buy a boat', '"oh... hey cutie"', 'lets go to the arcade', 'buy music that you enjoy', 'it\s ok to ask for help', 'you are loved', 
-            'if you come around, I\'ll come right over', 'hеlp me fall asleep', 'awooooo', 'I\'m really tired of you playing with me', 'you always end up just betraying me', '24-bit/48 kHz',
-            'Groove Salad Classic listening', 'Groove Salad listening', 'Drone Zone listening', 'memories are bugging me', 'it really ain\'t that deep though', 'Filter > Render > Lens Flare...', 'spinnin\' round my head', 'why-w-w-why do you talk like that', 
+            // --- TEXT ITEMS ---
+            { type: 'text', value: 'dumb' },
+            { type: 'text', value: 'WRX driving' },
+            { type: 'text', value: 'music listening' },
+            { type: 'text', value: 'daily gym going' },
+            { type: 'text', value: 'car enthusiast' },
+            { type: 'text', value: 'nature exploring' },
+            { type: 'text', value: 'tea drinking' },
+            { type: 'text', value: 'photo taking' },
+            { type: 'text', value: 'vinyl collecting' },
+            { type: 'text', value: '.flac hoarding' },
+            { type: 'text', value: 'pre-workout loving' },
+            { type: 'text', value: 'mom friend' },
+            { type: 'text', value: 'home cooking' },
+            { type: 'text', value: 'DROP TABLE hobbies;' },
+            { type: 'text', value: 'spaghetti eating' },
+            { type: 'text', value: 'butt loving' },
+            { type: 'text', value: 'deadlifting' },
+            { type: 'text', value: 'mac & cheese eating' },
+            { type: 'text', value: 'hot dog hating' },
+            { type: 'text', value: '🌵' },
+            { type: 'text', value: '✌' },
+            { type: 'text', value: 'Chick-fil-A eating' },
+            { type: 'text', value: 'candle burning' },
+            { type: 'text', value: 'long hot shower taking' },
+            { type: 'text', value: 'OnePlus using' },
+            { type: 'text', value: 'smoothie making' },
+            { type: 'text', value: 'hoodie wearing' },
+            { type: 'text', value: 'beanie wearing' },
+            { type: 'text', value: 'hiking' },
+            { type: 'text', value: 'squatting' },
+            { type: 'text', value: 'bench pressing' },
+            { type: 'text', value: 'oil changing' },
+            { type: 'text', value: 'touge driving' },
+            { type: 'text', value: 'save public broadcasting' },
+            { type: 'text', value: 'milk drinking' },
+            { type: 'text', value: 'solo' },
+            { type: 'text', value: '( ͡° ͜ʖ ͡°)' },
+            { type: 'text', value: 'don\'t steal my hoodie' },
+            { type: 'text', value: 'I promise I will never let you feel alone' },
+            { type: 'text', value: 'IDGAF' },
+            { type: 'text', value: 'good luck on your quest' },
+            { type: 'text', value: 'halycon and on and on' },
+            { type: 'text', value: 'rainy day enjoying' },
+            { type: 'text', value: 'go play TOEM' },
+            { type: 'text', value: 'claw machine winning' },
+            { type: 'text', value: '...I should buy a boat' },
+            { type: 'text', value: '"oh... hey cutie"' },
+            { type: 'text', value: 'lets go to the arcade' },
+            { type: 'text', value: 'buy music that you enjoy' },
+            { type: 'text', value: 'it\'s ok to ask for help' },
+            { type: 'text', value: 'you are loved' },
+            { type: 'text', value: 'if you come around, I\'ll come right over' },
+            { type: 'text', value: 'hеlp me fall asleep' },
+            { type: 'text', value: 'awooooo' },
+            { type: 'text', value: 'I\'m really tired of you playing with me' },
+            { type: 'text', value: 'you always end up just betraying me' },
+            { type: 'text', value: '24-bit/48 kHz' },
+            { type: 'text', value: 'Groove Salad Classic listening' },
+            { type: 'text', value: 'Groove Salad listening' },
+            { type: 'text', value: 'Drone Zone listening' },
+            { type: 'text', value: 'memories are bugging me' },
+            { type: 'text', value: 'it really ain\'t that deep though' },
+            { type: 'text', value: 'Filter > Render > Lens Flare...' },
+            { type: 'text', value: 'spinnin\' round my head' },
+            { type: 'text', value: 'why-w-w-why do you talk like that' },
+
+            // --- IMAGE ITEMS ---
+            // Don't forget to add your images to the 'images' folder!
+            { type: 'image', value: 'images/boykisser.png' }
         ];
 
+        // --- UPDATED FUNCTION ---
         function setRandomWord() {
-            const randomWord = words[Math.floor(Math.random() * words.length)];
-            wordElement.textContent = randomWord;
+            // Pick a random object from the array
+            const randomItem = words[Math.floor(Math.random() * words.length)];
+
+            // Clear any previous content
+            wordElement.innerHTML = ''; 
+
+            if (randomItem.type === 'image') {
+                // If it's an image, create an <img> tag
+                const img = document.createElement('img');
+                img.src = randomItem.value;
+                img.alt = "Randomly selected image"; // Good for accessibility
+                img.className = 'inline-image'; // Apply our new CSS class
+                wordElement.appendChild(img);
+            } else {
+                // If it's text, just set the text content like before
+                wordElement.textContent = randomItem.value;
+            }
         }
+
 
         // Set random word on page load
         if (wordElement) {
@@ -208,23 +283,23 @@
 
         // Shuffle button click
         if (shuffleButton) {
-    shuffleButton.addEventListener('click', () => {
-        const dice = document.getElementById('dice-icon');
+            shuffleButton.addEventListener('click', () => {
+                const dice = document.getElementById('dice-icon');
 
-        // Add animation class
-        dice.classList.add('dice-rolling');
+                // Add animation class
+                dice.classList.add('dice-rolling');
 
-        // Change word after a slight delay
-        setTimeout(() => {
-            setRandomWord();
-        }, 200);
+                // Change word after a slight delay
+                setTimeout(() => {
+                    setRandomWord();
+                }, 200);
 
-        // Remove the animation class when done so it can replay next time
-        dice.addEventListener('animationend', () => {
-            dice.classList.remove('dice-rolling');
-        }, { once: true });
-    });
-}
+                // Remove the animation class when done so it can replay next time
+                dice.addEventListener('animationend', () => {
+                    dice.classList.remove('dice-rolling');
+                }, { once: true });
+            });
+        }
 
         document.addEventListener('DOMContentLoaded', () => {
             const root = document.documentElement;
@@ -238,7 +313,7 @@
 
             // --- Set Random Footer Emoji ---
             const emojiElement = document.getElementById('random-emoji');
-            const emojis = ['😊', '✨', '🚀', '🌟', '🎉', '🔥', '💻', '❤️', '🦊', '🐾', '🌠', '💖', '😂', '👍', '🤔', '👋', '😎', '👽', '👾', '🎮', '🎵', '🎨', '🌙', '⭐', '�', '💡', '💯', '😀', '😁', '😅', '🤣', '😇', '😍', '🤩', '😘', '😗', '😙', '😚', '😋', '😛', '😜', '🤪', '🤨', '🧐', '🤓', '🥳', '🤡', '👻', '💀', '🎃', '😺', '😸', '😹', '😻', '😼', '😽', '🙀', '😿', '😾', '🤲', '👐', '🙌', '👏', '🙏', '🤝', '👍', '👎', '👊', '✊', '🤛', '🤜', '🤞', '✌️', '🤟', '🤘', '👌', '🤏', '👈', '👉', '👆', '👇', '☝️', '✋', '🤚', '🖐️', '🖖', '👋', '🤙', '💪', '🦾', '✍️', '💅', '🤳', '💃', '🕺', '🕴️', '👩‍🚀', '🧑‍🚀', '👨‍🚀', '👑', '💎', '💐', '🌹', '🌺', '🌻', '🌼', '🌷', '🌱', '🌲', '🌳', '🌴', '🌵', '🌾', '🌿', '☘️', '🍀', '🍁', '🍂', '🍃', '🌍', '🌎', '🌏', '🌕', '🌖', '🌗', '🌘', '🌑', '🌒', '🌓', '🌔', '☀️', '🔥', '💧', '🌊', '💨', '❄️', '☃️', '⛄', '☄️', '🌈', '⚡️', '🌟', '💫', '💥', '💢', '✨'];
+            const emojis = ['😊', '✨', '🚀', '🌟', '🎉', '🔥', '💻', '❤️', '🦊', '🐾', '🌠', '💖', '😂', '👍', '🤔', '👋', '😎', '👽', '👾', '🎮', '🎵', '🎨', '🌙', '⭐', '', '💡', '💯', '😀', '😁', '😅', '🤣', '😇', '😍', '🤩', '😘', '😗', '😙', '😚', '😋', '😛', '😜', '🤪', '🤨', '🧐', '🤓', '🥳', '🤡', '👻', '💀', '🎃', '😺', '😸', '😹', '😻', '😼', '😽', '🙀', '😿', '😾', '🤲', '👐', '🙌', '👏', '🙏', '🤝', '👍', '👎', '👊', '✊', '🤛', '🤜', '🤞', '✌️', '🤟', '🤘', '👌', '🤏', '👈', '👉', '👆', '👇', '☝️', '✋', '🤚', '🖐️', '🖖', '👋', '🤙', '💪', '🦾', '✍️', '💅', '🤳', '💃', '🕺', '🕴️', '👩‍🚀', '🧑‍🚀', '👨‍🚀', '👑', '💎', '💐', '🌹', '🌺', '🌻', '🌼', '🌷', '🌱', '🌲', '🌳', '🌴', '🌵', '🌾', '🌿', '☘️', '🍀', '🍁', '🍂', '🍃', '🌍', '🌎', '🌏', '🌕', '🌖', '🌗', '🌘', '🌑', '🌒', '🌓', '🌔', '☀️', '🔥', '💧', '🌊', '💨', '❄️', '☃️', '⛄', '☄️', '🌈', '⚡️', '🌟', '💫', '💥', '💢', '✨'];
             const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
             if (emojiElement) {
                 emojiElement.textContent = randomEmoji;
