@@ -177,12 +177,12 @@ animation: roll-dice 0.6s ease;
 
     <script>
         
-        // --- Set Random Word for "Certified ___ dog." ---
+        // Set Random Word for "Certified ___ dog."
         const wordElement = document.getElementById('random-word');
         const shuffleButton = document.getElementById('shuffle-word');
 
         const words = [
-            // --- TEXT ITEMS ---
+            // TEXT
             { type: 'text', value: 'dumb' },
             { type: 'text', value: 'WRX driving' },
             { type: 'text', value: 'music listening' },
@@ -252,9 +252,9 @@ animation: roll-dice 0.6s ease;
             { type: 'text', value: 'manual transmission' },
             { type: 'text', value: '🇵🇸' },
             { type: 'text', value: '🇺🇦' },
+            { type: 'text', value: 'console.log("woof");' },
 
-            // --- IMAGE ITEMS ---
-            // Don't forget to add your images to the 'images' folder!
+            // Images
             { type: 'image', value: 'images/boykisser.png' },
             { type: 'image', value: 'images/boykisser-spin.gif' },
             { type: 'image', value: 'images/emotes/starblush.png' },
@@ -272,7 +272,7 @@ animation: roll-dice 0.6s ease;
             { type: 'image', value: 'images/blahaj.png' },
         ];
 
-        // --- UPDATED FUNCTION ---
+        // UPDATED FUNCTION
         function setRandomWord() {
             // Pick a random object from the array
             const randomItem = words[Math.floor(Math.random() * words.length)];
