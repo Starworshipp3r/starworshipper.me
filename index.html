@@ -87,18 +87,64 @@
 animation: roll-dice 0.6s ease;
 }
 
-    /* --- ADDED FOR IMAGES --- */
     .inline-image {
-        height: 1.5em; /* Controls the image height based on the font size */
-        vertical-align: middle; /* Aligns the image nicely with the text */
-        display: inline-block; /* Allows it to sit within the text flow */
-        margin: 0 0.2em; /* Adds a little space around the image */
+        height: 1.5em; 
+        vertical-align: middle;
+        display: inline-block;
+        margin: 0 0.2em;
     }
+
+    /* --- SEASONAL THEME STYLES --- */
+    #seasonal-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        z-index: 9999;
+        pointer-events: none; /* This is the magic part! Clicks will pass through. */
+    }
+
+    .seasonal-item {
+        position: absolute;
+        top: -10%; /* Start off-screen */
+        color: white;
+        user-select: none;
+        animation: fall 20s linear infinite;
+    }
+
+    @keyframes fall {
+        0% {
+            transform: translateY(0vh) rotate(0deg);
+        }
+        100% {
+            transform: translateY(110vh) rotate(360deg);
+        }
+    }
+
+    .flutter {
+    animation: flutter 15s linear infinite;
+    }
+
+    @keyframes flutter {
+        0% {
+            transform: translateY(0vh) translateX(0vw) rotate(0deg);
+        }
+        50% {
+            transform: translateY(55vh) translateX(2vw) rotate(180deg);
+        }
+        100% {
+            transform: translateY(110vh) translateX(-2vw) rotate(360deg);
+        }
+    }
+
 </style>
 </head>
 
 <body class="bg-gray-900 text-white min-h-screen p-4 sm:p-6 sm:flex sm:items-center sm:justify-center">
 
+    <div id="seasonal-container"></div>
     
     <div class="w-full max-w-md mx-auto my-8 bg-gray-900/60 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl overflow-hidden relative">
         <div class="p-8">
@@ -177,7 +223,6 @@ animation: roll-dice 0.6s ease;
 
     <script>
         
-        // Set Random Word for "Certified ___ dog."
         const wordElement = document.getElementById('random-word');
         const shuffleButton = document.getElementById('shuffle-word');
 
@@ -258,6 +303,8 @@ animation: roll-dice 0.6s ease;
             { type: 'text', value: 'AWD' },
             { type: 'text', value: 'bacon hating' },
             { type: 'text', value: 'what\'s the story wishbone' },
+            { type: 'text', value: 'late night' },
+            { type: 'text', value: 'come say hi' },
 
             // Images
             { type: 'image', value: 'images/boykisser.png' },
@@ -266,7 +313,6 @@ animation: roll-dice 0.6s ease;
             { type: 'image', value: 'images/emotes/starflirt.png' },
             { type: 'image', value: 'images/emotes/stargym.png' },
             { type: 'image', value: 'images/emotes/starpizza.png' },
-            { type: 'image', value: 'images/emotes/starshower.png' },
             { type: 'image', value: 'images/emotes/starsleep.png' },
             { type: 'image', value: 'images/OSRSLobster.png' },
             { type: 'image', value: 'images/Blood_rune.png' },
@@ -283,47 +329,32 @@ animation: roll-dice 0.6s ease;
             { type: 'image', value: 'images/Oak_Sapling.png' },
         ];
 
-        // UPDATED FUNCTION
         function setRandomWord() {
-            // Pick a random object from the array
             const randomItem = words[Math.floor(Math.random() * words.length)];
-
-            // Clear any previous content
             wordElement.innerHTML = ''; 
 
             if (randomItem.type === 'image') {
-                // If it's an image, create an <img> tag
                 const img = document.createElement('img');
                 img.src = randomItem.value;
-                img.alt = "Randomly selected image"; // Good for accessibility
-                img.className = 'inline-image'; // Apply our new CSS class
+                img.alt = "Randomly selected image";
+                img.className = 'inline-image';
                 wordElement.appendChild(img);
             } else {
-                // If it's text, just set the text content like before
                 wordElement.textContent = randomItem.value;
             }
         }
 
-
-        // Set random word on page load
         if (wordElement) {
             setRandomWord();
         }
 
-        // Shuffle button click
         if (shuffleButton) {
             shuffleButton.addEventListener('click', () => {
                 const dice = document.getElementById('dice-icon');
-
-                // Add animation class
                 dice.classList.add('dice-rolling');
-
-                // Change word after a slight delay
                 setTimeout(() => {
                     setRandomWord();
                 }, 200);
-
-                // Remove the animation class when done so it can replay next time
                 dice.addEventListener('animationend', () => {
                     dice.classList.remove('dice-rolling');
                 }, { once: true });
@@ -335,19 +366,56 @@ animation: roll-dice 0.6s ease;
             
             const randomHue1 = Math.floor(Math.random() * 360);
             const randomHue2 = (randomHue1 + 180) % 360;
-            const randomSaturation = Math.floor(Math.random() * 80) + 20; // 
-            const randomLightness = Math.floor(Math.random() * 50) + 30;  // 
+            const randomSaturation = Math.floor(Math.random() * 80) + 20; 
+            const randomLightness = Math.floor(Math.random() * 50) + 30;  
             root.style.setProperty('--color-1', `hsla(${randomHue1}, ${randomSaturation}%, ${randomLightness}%, 0.75)`);
             root.style.setProperty('--color-2', `hsla(${randomHue2}, ${randomSaturation}%, ${randomLightness}%, 0.75)`);
 
-            // --- Set Random Footer Emoji ---
             const emojiElement = document.getElementById('random-emoji');
             const emojis = ['😊', '✨', '🚀', '🌟', '🎉', '🔥', '💻', '❤️', '🦊', '🐾', '🌠', '💖', '😂', '👍', '🤔', '👋', '😎', '👽', '👾', '🎮', '🎵', '🎨', '🌙', '⭐', '', '💡', '💯', '😀', '😁', '😅', '🤣', '😇', '😍', '🤩', '😘', '😗', '😙', '😚', '😋', '😛', '😜', '🤪', '🤨', '🧐', '🤓', '🥳', '🤡', '👻', '💀', '🎃', '😺', '😸', '😹', '😻', '😼', '😽', '🙀', '😿', '😾', '🤲', '👐', '🙌', '👏', '🙏', '🤝', '👍', '👎', '👊', '✊', '🤛', '🤜', '🤞', '✌️', '🤟', '🤘', '👌', '🤏', '👈', '👉', '👆', '👇', '☝️', '✋', '🤚', '🖐️', '🖖', '👋', '🤙', '💪', '🦾', '✍️', '💅', '🤳', '💃', '🕺', '🕴️', '👩‍🚀', '🧑‍🚀', '👨‍🚀', '👑', '💎', '💐', '🌹', '🌺', '🌻', '🌼', '🌷', '🌱', '🌲', '🌳', '🌴', '🌵', '🌾', '🌿', '☘️', '🍀', '🍁', '🍂', '🍃', '🌍', '🌎', '🌏', '🌕', '🌖', '🌗', '🌘', '🌑', '🌒', '🌓', '🌔', '☀️', '🔥', '💧', '🌊', '💨', '❄️', '☃️', '⛄', '☄️', '🌈', '⚡️', '🌟', '💫', '💥', '💢', '✨'];
             const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
             if (emojiElement) {
                 emojiElement.textContent = randomEmoji;
             }
+
+            // --- SEASONAL THEME SCRIPT ---
+            const month = new Date().getMonth(); // 0 = Jan, 1 = Feb, ..., 9 = Oct, 11 = Dec
+
+            // Halloween
+            if (month === 9) { 
+                createSeasonalTheme(['🎃', '👻', '🦇', '🕷️'], 30); // Emojis and count
+            }
+
+            // Christmas
+            if (month === 11) {
+                createSeasonalTheme(['❄️'], 80); // Emojis and count
+            }
+
+            // Fall
+            if (month === 10) { 
+                createSeasonalTheme(['🍂', '🍁', '🍃'], 35, 'flutter');
+}
         });
+
+        function createSeasonalTheme(emojis, count) {
+            const container = document.getElementById('seasonal-container');
+            if (!container) return;
+
+            for (let i = 0; i < count; i++) {
+                const seasonalItem = document.createElement('span');
+                seasonalItem.classList.add('seasonal-item');
+                
+                seasonalItem.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
+
+                seasonalItem.style.left = Math.random() * 100 + 'vw';
+                seasonalItem.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                seasonalItem.style.animationDelay = Math.random() * 10 + 's';
+                seasonalItem.style.fontSize = (Math.random() * 20 + 10) + 'px';
+                seasonalItem.style.opacity = Math.random();
+
+                container.appendChild(seasonalItem);
+            }
+        }
     </script>
 
     
