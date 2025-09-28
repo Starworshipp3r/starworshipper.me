@@ -379,16 +379,16 @@ animation: roll-dice 0.6s ease;
             }
 
             // --- SEASONAL THEME SCRIPT ---
-            const month = new Date().getMonth(); // 0 = Jan, 1 = Feb, ..., 9 = Oct, 11 = Dec
+            const month = new Date().getMonth();
 
             // Halloween
             if (month === 9) { 
-                createSeasonalTheme(['🎃', '👻', '🦇', '🕷️'], 30); // Emojis and count
+                createSeasonalTheme(['🎃', '👻', '🦇', '🕷️', '💀'], 30);
             }
 
             // Christmas
             if (month === 11) {
-                createSeasonalTheme(['❄️'], 80); // Emojis and count
+                createSeasonalTheme(['❄️'], 80);
             }
 
             // Fall
