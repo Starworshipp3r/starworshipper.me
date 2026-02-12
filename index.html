@@ -23,6 +23,9 @@
 <meta name="twitter:image" content="https://starworshipper.me/av.jpg">
 <meta name="twitter:image:alt" content="Starworshipper link hub">
 
+<script>document.documentElement.classList.add('js');</script>
+
+
 <script type="application/ld+json">
 {
 "@context": "https://schema.org",
@@ -101,8 +104,10 @@
         
         z-index: -1;
         
-        animation: rotate-background 90s linear infinite;
-    }
+          animation: rotate-background 90s linear infinite;
+          animation-delay: var(--bg-delay, 0s);
+          will-change: transform;
+}
 
     .link-glow:hover {
         box-shadow: 0 0 20px rgba(128, 128, 255, 0.15), 0 0 8px rgba(255, 255, 255, 0.1);
@@ -285,6 +290,44 @@
     50% { transform: translateY(55vh) translateX(2vw) rotate(180deg); }
     100% { transform: translateY(110vh) translateX(-2vw) rotate(360deg); }
   }
+
+  /* --- Page transitions (JS-enabled, soft glass morph) --- */
+  html.js .mica-window,
+  html.js .mica-shell{
+    opacity: 0;
+    transform: translateY(10px) scale(.99);
+    filter: blur(10px);
+    transition: opacity 420ms cubic-bezier(.2,.8,.2,1),
+                transform 420ms cubic-bezier(.2,.8,.2,1),
+                filter 420ms cubic-bezier(.2,.8,.2,1);
+    will-change: transform, opacity, filter;
+  }
+
+  html.js body.is-ready .mica-window,
+  html.js body.is-ready .mica-shell{
+    opacity: 1;
+    transform: none;
+    filter: blur(0);
+  }
+
+  html.js body.is-leaving .mica-window,
+  html.js body.is-leaving .mica-shell{
+    opacity: 0;
+    transform: translateY(-6px) scale(.995);
+    filter: blur(14px);
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html.js .mica-window,
+    html.js .mica-shell{
+      transition: none !important;
+      filter: none !important;
+      transform: none !important;
+      opacity: 1 !important;
+    }
+  }
+
+
 </style>
 </head>
 
@@ -303,6 +346,15 @@
         >
         <i class="fa-solid fa-music text-lg leading-none"></i>
         </a>
+
+        <a
+        href="/site/"
+        aria-label="Enter site" title="Enter"
+        class="absolute bottom-3 right-3 sm:bottom-4 sm:right-4 z-10 mica-icon-btn"
+      >
+        <i class="fa-solid fa-arrow-right text-lg leading-none"></i>
+      </a>
+
 
 
 
@@ -551,16 +603,45 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            const root = document.documentElement;
-            
-            const randomHue1 = Math.floor(Math.random() * 360);
-            const randomHue2 = (randomHue1 + 180) % 360;
-            const randomSaturation = Math.floor(Math.random() * 80) + 20; 
-            const randomLightness = Math.floor(Math.random() * 50) + 30;  
-            root.style.setProperty('--color-1', `hsla(${randomHue1}, ${randomSaturation}%, ${randomLightness}%, 0.75)`);
-            root.style.setProperty('--color-2', `hsla(${randomHue2}, ${randomSaturation}%, ${randomLightness}%, 0.75)`);
-            root.style.setProperty('--accent', `hsla(${randomHue1}, ${Math.min(randomSaturation+10, 100)}%, ${Math.min(randomLightness+15, 72)}%, 1)`);
-            root.style.setProperty('--accent-glow', `hsla(${randomHue1}, ${Math.min(randomSaturation+10, 100)}%, ${Math.min(randomLightness+15, 72)}%, 0.22)`);
+          const root = document.documentElement;
+          const KEY = 'micaTheme_v1';
+
+          function applyTheme(t) {
+            root.style.setProperty('--color-1', `hsla(${t.h1}, ${t.s}%, ${t.l}%, 0.75)`);
+            root.style.setProperty('--color-2', `hsla(${t.h2}, ${t.s}%, ${t.l}%, 0.75)`);
+            root.style.setProperty('--accent', `hsla(${t.h1}, ${Math.min(t.s+10, 100)}%, ${Math.min(t.l+15, 72)}%, 1)`);
+            root.style.setProperty('--accent-glow', `hsla(${t.h1}, ${Math.min(t.s+10, 100)}%, ${Math.min(t.l+15, 72)}%, 0.22)`);
+          }
+
+          // --- Keep the rotating background "phase" consistent between pages ---
+          const DUR = 90; // must match your CSS animation duration (90s)
+          const START_KEY = 'micaAnimStart_v1';
+
+          let start = Number(sessionStorage.getItem(START_KEY));
+          if (!start) {
+            start = Date.now();
+            sessionStorage.setItem(START_KEY, String(start));
+          }
+
+          const elapsed = ((Date.now() - start) / 1000) % DUR;
+          root.style.setProperty('--bg-delay', `-${elapsed}s`);
+        
+
+          function generateTheme() {
+            const h1 = Math.floor(Math.random() * 360);
+            const h2 = (h1 + 180) % 360;
+            const s  = Math.floor(Math.random() * 80) + 20;
+            const l  = Math.floor(Math.random() * 50) + 30;
+            return { h1, h2, s, l };
+          }
+
+          let theme = null;
+          try { theme = JSON.parse(sessionStorage.getItem(KEY) || 'null'); } catch {}
+          if (!theme) {
+            theme = generateTheme();
+            sessionStorage.setItem(KEY, JSON.stringify(theme));
+          }
+          applyTheme(theme);
 
             const emojiElement = document.getElementById('random-emoji');
             const emojis = ['😊', '✨', '🚀', '🌟', '🎉', '🔥', '💻', '❤️', '🦊', '🐾', '🌠', '💖', '😂', '👍', '🤔', '👋', '😎', '👽', '👾', '🎮', '🎵', '🎨', '🌙', '⭐', '', '💡', '💯', '😀', '😁', '😅', '🤣', '😇', '😍', '🤩', '😘', '😗', '😙', '😚', '😋', '😛', '😜', '🤪', '🤨', '🧐', '🤓', '🥳', '🤡', '👻', '💀', '🎃', '😺', '😸', '😹', '😻', '😼', '😽', '🙀', '😿', '😾', '🤲', '👐', '🙌', '👏', '🙏', '🤝', '👍', '👎', '👊', '✊', '🤛', '🤜', '🤞', '✌️', '🤟', '🤘', '👌', '🤏', '👈', '👉', '👆', '👇', '☝️', '✋', '🤚', '🖐️', '🖖', '👋', '🤙', '💪', '🦾', '✍️', '💅', '🤳', '💃', '🕺', '🕴️', '👩‍🚀', '🧑‍🚀', '👨‍🚀', '👑', '💎', '💐', '🌹', '🌺', '🌻', '🌼', '🌷', '🌱', '🌲', '🌳', '🌴', '🌵', '🌾', '🌿', '☘️', '🍀', '🍁', '🍂', '🍃', '🌍', '🌎', '🌏', '🌕', '🌖', '🌗', '🌘', '🌑', '🌒', '🌓', '🌔', '☀️', '🔥', '💧', '🌊', '💨', '❄️', '☃️', '⛄', '☄️', '🌈', '⚡️', '🌟', '💫', '💥', '💢', '✨'];
@@ -586,6 +667,10 @@
             if (month === 10) { 
                 createSeasonalTheme(['🍂', '🍁', '🍃'], 35, 'flutter');
 }
+
+            // Fade in once theme vars are applied
+            requestAnimationFrame(() => document.body.classList.add('is-ready'));
+
         });
 
         function createSeasonalTheme(emojis, count, animationClass) {
@@ -608,9 +693,51 @@
                 container.appendChild(seasonalItem);
             }
         }
-    </script>
-
     
+
+        // Smoothly fade between internal pages (keeps external links untouched)
+        document.addEventListener('click', (e) => {
+            const a = e.target.closest('a');
+            if (!a) return;
+
+            // Only left-clicks, no modifier keys
+            if (e.button !== 0) return;
+            if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+
+            // Respect explicit targets (e.g., _blank) and downloads
+            if (a.target && a.target !== '_self') return;
+            if (a.hasAttribute('download')) return;
+
+            const href = a.getAttribute('href');
+            if (!href || href.startsWith('#')) return;
+
+            let url;
+            try { url = new URL(a.href, window.location.href); } catch { return; }
+
+            // Only same-origin navigations
+            if (url.origin !== window.location.origin) return;
+
+            // Don't intercept hash-only changes on same path
+            if (url.pathname === location.pathname && url.search === location.search && url.hash) return;
+
+            e.preventDefault();
+            document.body.classList.add('is-leaving');
+
+            const delay = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 220;
+            setTimeout(() => { window.location.href = url.href; }, delay);
+        });
+
+        // If restored from bfcache, ensure visible
+        window.addEventListener('pageshow', () => {
+            document.body.classList.remove('is-leaving');
+            document.body.classList.add('is-ready');
+        });
+
+        // Safety net: don't ever stay hidden
+        setTimeout(() => document.body.classList.add('is-ready'), 1200);
+
+</script>
+
 </body>
 
 </html>

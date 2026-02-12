@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>document.documentElement.classList.add('js');</script>
+<meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Starworshipper — Site</title>
+
+  <meta name="theme-color" content="#0b0f18">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg: #0b0f18;
+      --bg2: #0a0d16;
+      --fg: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.72);
+
+      --accent: #7aa2ff;
+      --accent-glow: rgba(122,162,255,.20);
+
+      --glass: rgba(18, 22, 32, .56);
+      --glass-2: rgba(18, 22, 32, .36);
+
+      --border: rgba(255,255,255,.14);
+      --border-2: rgba(255,255,255,.10);
+
+      --shadow: 0 30px 80px rgba(0,0,0,.55);
+      --shadow-soft: 0 12px 35px rgba(0,0,0,.35);
+
+      --radius-xl: 22px;
+      --radius-lg: 16px;
+      --radius-md: 14px;
+
+      --noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
+    }
+
+    html, body { height: 100%; }
+    body{
+      font-family: "Segoe UI Variable", "Segoe UI", "Inter", system-ui, -apple-system, sans-serif;
+      background: linear-gradient(180deg, var(--bg), var(--bg2));
+      color: var(--fg);
+      overflow-x: hidden;
+    }
+
+    @keyframes rotate-background { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+    body::before{
+      content:'';
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: 150vmax;
+      height: 150vmax;
+      margin-top: -75vmax;
+      margin-left: -75vmax;
+      background-image:
+        radial-gradient(circle at 30% 30%, var(--color-1, rgba(100, 100, 255, 0.25)), transparent 45%),
+        radial-gradient(circle at 70% 70%, var(--color-2, rgba(255, 100, 150, 0.25)), transparent 45%);
+      z-index: -1;
+      animation: rotate-background 90s linear infinite;
+      animation-delay: var(--bg-delay, 0s);
+      will-change: transform;
+    }
+
+    body::after{
+      content:'';
+      position: fixed;
+      inset: 0;
+      background-image: var(--noise);
+      background-size: 240px 240px;
+      opacity: .07;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    /* Icon button */
+    .mica-icon-btn{
+      background: rgba(255,255,255,.06);
+      border: 1px solid var(--border-2);
+      border-radius: 9999px;
+      width: 44px;
+      height: 44px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      box-shadow: var(--shadow-soft);
+      transition: transform .15s ease, background .15s ease, border-color .15s ease;
+    }
+    .mica-icon-btn:hover{
+      transform: translateY(-1px);
+      background: rgba(255,255,255,.10);
+      border-color: rgba(255,255,255,.16);
+    }
+    .mica-icon-btn:active{
+      transform: translateY(0px) scale(.98);
+      background: rgba(255,255,255,.08);
+    }
+
+    /* Reusable content card */
+    .mica-card{
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: 0 10px 28px rgba(0,0,0,.20);
+    }
+
+    /* Fullscreen shell */
+    .mica-shell{
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)),
+                  radial-gradient(900px 240px at 20% 0%, rgba(255,255,255,.10), transparent 60%),
+                  var(--glass);
+      backdrop-filter: blur(32px) saturate(1.35);
+      -webkit-backdrop-filter: blur(22px) saturate(1.35);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      min-height: calc(100dvh - 32px);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    .mica-shell::before{
+      content:'';
+      position:absolute;
+      inset: 0;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.20), transparent 40%),
+        radial-gradient(900px 280px at 10% 0%, rgba(255,255,255,.18), transparent 60%);
+      opacity: .18;
+      pointer-events:none;
+    }
+    .mica-shell::after{
+      content:'';
+      position:absolute;
+      inset:0;
+      background-image: var(--noise);
+      background-size: 260px 260px;
+      opacity: .06;
+      mix-blend-mode: overlay;
+      pointer-events:none;
+    }
+    .mica-shell > *{ position: relative; z-index: 1; }
+
+    .shell-topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+    }
+
+    .shell-body{
+      flex: 1;
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      min-height: 0; /* allows scroll areas */
+    }
+
+    .shell-sidebar{
+      padding: 16px;
+      border-right: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.02);
+      overflow: auto;
+    }
+
+    .shell-main{
+      padding: 18px;
+      overflow: auto;
+    }
+
+    .navlink{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      width:100%;
+      padding: 12px 12px;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      transition: transform .15s ease, background .15s ease, border-color .15s ease;
+    }
+    .navlink:hover{
+      transform: translateY(-1px);
+      background: rgba(255,255,255,.07);
+      border-color: rgba(255,255,255,.16);
+    }
+    .navlink:active{
+      transform: translateY(0px) scale(.99);
+    }
+
+    @media (max-width: 900px){
+      .mica-shell{ min-height: calc(100dvh - 24px); }
+      .shell-body{ grid-template-columns: 1fr; }
+      .shell-sidebar{
+        border-right: none;
+        border-bottom: 1px solid rgba(255,255,255,.10);
+      }
+    }
+
+  /* --- Page transitions (JS-enabled, soft glass morph) --- */
+  html.js .mica-window,
+  html.js .mica-shell{
+    opacity: 0;
+    transform: translateY(10px) scale(.99);
+    filter: blur(10px);
+    transition: opacity 420ms cubic-bezier(.2,.8,.2,1),
+                transform 420ms cubic-bezier(.2,.8,.2,1),
+                filter 420ms cubic-bezier(.2,.8,.2,1);
+    will-change: transform, opacity, filter;
+  }
+
+  html.js body.is-ready .mica-window,
+  html.js body.is-ready .mica-shell{
+    opacity: 1;
+    transform: none;
+    filter: blur(0);
+  }
+
+  html.js body.is-leaving .mica-window,
+  html.js body.is-leaving .mica-shell{
+    opacity: 0;
+    transform: translateY(-6px) scale(.995);
+    filter: blur(14px);
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html.js .mica-window,
+    html.js .mica-shell{
+      transition: none !important;
+      filter: none !important;
+      transform: none !important;
+      opacity: 1 !important;
+    }
+  }
+
+
+</style>
+</head>
+
+<body class="min-h-screen p-4 sm:p-6">
+  <div class="mica-shell">
+    <!-- Top bar -->
+    <div class="shell-topbar">
+      <div class="flex items-center gap-3">
+        <a href="/" class="mica-icon-btn" aria-label="Back to links" title="Back to links">
+          <i class="fa-solid fa-arrow-left text-lg leading-none"></i>
+        </a>
+
+        <div class="leading-tight">
+          <div class="font-semibold"></div>
+          <div class="text-white/60 text-sm"></div>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2"></div>
+    </div>
+
+    <!-- Layout -->
+    <div class="shell-body">
+      <!-- Sidebar -->
+      <aside class="shell-sidebar">
+        <div class="flex items-center gap-3 mb-4">
+          <img src="/av.jpg" alt="" class="w-12 h-12 rounded-full border border-white/15 bg-white/5">
+          <div>
+            <div class="font-semibold">@Starworshipper</div>
+            <div class="text-white/60 text-sm">Certified dumb dog.</div>
+          </div>
+        </div>
+
+        <nav class="space-y-2">
+          <a class="navlink" href="#about"><i class="fa-regular fa-user w-5 text-white/70"></i><span class="font-semibold">About</span></a>
+          <a class="navlink" href="#stuff"><i class="fa-regular fa-star w-5 text-white/70"></i><span class="font-semibold">Stuff</span></a>
+          <a class="navlink" href="#projects"><i class="fa-regular fa-folder-open w-5 text-white/70"></i><span class="font-semibold">Projects</span></a>
+          <a class="navlink" href="#photos"><i class="fa-regular fa-image w-5 text-white/70"></i><span class="font-semibold">Photos</span></a>
+        </nav>
+      </aside>
+
+      <!-- Main content -->
+      <main class="shell-main space-y-4">
+        <section id="about" class="mica-card">
+          <h1 class="text-2xl sm:text-3xl font-bold">The internet is dying. This is my space.</h1>
+          <p class="text-white/70 mt-2">
+            Buy music that you like. Archive media that you enjoy. Take photos of things that you like. Build meaningful connections. Help others. <br /> <br />
+            
+            This part of the site is a bit of a sandbox for me to play around with design and content ideas, but I want it to be a cozy little corner of the web that feels more personal than the modern day brainrot that is social media. 
+          </n>
+          
+          </p>
+        </section>
+
+        <section class="mica-card">
+          <h2 class="text-xl font-semibold mb-2">Highlights</h2>
+          <div class="grid sm:grid-cols-3 gap-3">
+            <div class="mica-card">
+              <div class="text-white/60 text-sm">Doing:</div>
+              <div class="font-semibold">Learning french</div>
+            </div>
+            <div class="mica-card">
+              <div class="text-white/60 text-sm">Playing:</div>
+              <div class="font-semibold">Killing Floor 2</div>
+            </div>
+            <div class="mica-card">
+              <div class="text-white/60 text-sm">Listening:</div>
+              <div class="font-semibold">Télépopmusik</div>
+            </div>
+          </div>
+        </section>
+
+        <section id="stuff" class="mica-card">
+          <h2 class="text-xl font-semibold mb-2">Stuff I’m into</h2>
+          <ul class="list-disc list-inside text-white/75 space-y-1">
+            <li>Music</li>
+            <li>Cars</li>
+            <li>Photography</li>
+            <li>Gym</li>
+          </ul>
+        </section>
+
+<!--         <section id="projects" class="mica-card">
+          <h2 class="text-xl font-semibold mb-3">Projects</h2>
+          <div class="grid sm:grid-cols-2 gap-3">
+            <div class="mica-card">
+              <div class="font-semibold">Project A</div>
+              <div class="text-white/70 text-sm">Short description.</div>
+            </div>
+            <div class="mica-card">
+              <div class="font-semibold">Project B</div>
+              <div class="text-white/70 text-sm">Short description.</div>
+            </div>
+          </div>
+        </section> -->
+
+<!--         <section id="photos" class="mica-card">
+          <h2 class="text-xl font-semibold mb-2">Photos</h2>
+          <p class="text-white/75">Drop a grid here later (or pull from Unsplash manually).</p>
+        </section> -->
+      </main>
+    </div>
+  </div>
+
+  <script>
+    const root = document.documentElement;
+
+    // Theme is shared with the landing page so colors don't "jump"
+    const KEY = 'micaTheme_v1';
+
+    function applyTheme(t) {
+      root.style.setProperty('--color-1', `hsla(${t.h1}, ${t.s}%, ${t.l}%, 0.75)`);
+      root.style.setProperty('--color-2', `hsla(${t.h2}, ${t.s}%, ${t.l}%, 0.75)`);
+      root.style.setProperty('--accent', `hsla(${t.h1}, ${Math.min(t.s+10, 100)}%, ${Math.min(t.l+15, 72)}%, 1)`);
+      root.style.setProperty('--accent-glow', `hsla(${t.h1}, ${Math.min(t.s+10, 100)}%, ${Math.min(t.l+15, 72)}%, 0.22)`);
+    }
+
+    function generateTheme() {
+      const h1 = Math.floor(Math.random() * 360);
+      const h2 = (h1 + 180) % 360;
+      const s  = Math.floor(Math.random() * 80) + 20;
+      const l  = Math.floor(Math.random() * 50) + 30;
+      return { h1, h2, s, l };
+    }
+
+    let theme = null;
+    try { theme = JSON.parse(sessionStorage.getItem(KEY) || 'null'); } catch {}
+    if (!theme) {
+      theme = generateTheme();
+      sessionStorage.setItem(KEY, JSON.stringify(theme));
+    }
+    applyTheme(theme);
+
+    // Keep rotating background phase consistent across pages
+    const DUR = 90; // must match CSS animation duration (90s)
+    const START_KEY = 'micaAnimStart_v1';
+    let start = Number(sessionStorage.getItem(START_KEY));
+    if (!start) {
+      start = Date.now();
+      sessionStorage.setItem(START_KEY, String(start));
+    }
+    const elapsed = ((Date.now() - start) / 1000) % DUR;
+    root.style.setProperty('--bg-delay', `-${elapsed}s`);
+  
+
+    // Fade in once theme vars are applied
+    requestAnimationFrame(() => document.body.classList.add('is-ready'));
+
+
+        // Smoothly fade between internal pages (keeps external links untouched)
+        document.addEventListener('click', (e) => {
+            const a = e.target.closest('a');
+            if (!a) return;
+
+            // Only left-clicks, no modifier keys
+            if (e.button !== 0) return;
+            if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+
+            // Respect explicit targets (e.g., _blank) and downloads
+            if (a.target && a.target !== '_self') return;
+            if (a.hasAttribute('download')) return;
+
+            const href = a.getAttribute('href');
+            if (!href || href.startsWith('#')) return;
+
+            let url;
+            try { url = new URL(a.href, window.location.href); } catch { return; }
+
+            // Only same-origin navigations
+            if (url.origin !== window.location.origin) return;
+
+            // Don't intercept hash-only changes on same path
+            if (url.pathname === location.pathname && url.search === location.search && url.hash) return;
+
+            e.preventDefault();
+            document.body.classList.add('is-leaving');
+
+            const delay = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 220;
+            setTimeout(() => { window.location.href = url.href; }, delay);
+        });
+
+        // If restored from bfcache, ensure visible
+        window.addEventListener('pageshow', () => {
+            document.body.classList.remove('is-leaving');
+            document.body.classList.add('is-ready');
+        });
+
+        // Safety net: don't ever stay hidden
+        setTimeout(() => document.body.classList.add('is-ready'), 1200);
+
+</script>
+
+</body>
+</html>
