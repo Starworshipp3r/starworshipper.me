@@ -308,7 +308,7 @@
             </div>
             <div class="mica-card">
               <div class="text-white/60 text-sm">Playing:</div>
-              <div class="font-semibold">Killing Floor 2</div>
+              <div class="font-semibold" id="steam-playing">Killing Floor 2</div>
             </div>
             <div class="mica-card">
               <div class="text-white/60 text-sm">Listening:</div>
@@ -434,8 +434,22 @@
 
         // Safety net: don't ever stay hidden
         setTimeout(() => document.body.classList.add('is-ready'), 1200);
-
 </script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const el = document.getElementById('steam-playing');
+  if (!el) return;
+
+  fetch('/.netlify/functions/steam-status')
+    .then(r => r.ok ? r.json() : null)
+    .then(data => {
+      if (data?.playing) el.textContent = data.playing;
+    })
+    .catch(() => {});
+});
+</script>
+
 
 </body>
 </html>
