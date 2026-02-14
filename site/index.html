@@ -312,7 +312,7 @@
             </div>
             <div class="mica-card">
               <div class="text-white/60 text-sm">Listening:</div>
-              <div class="font-semibold">Télépopmusik</div>
+              <div class="font-semibold" id="listening-artist"></div>
             </div>
           </div>
         </section>
@@ -450,6 +450,17 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const el = document.getElementById('listening-artist');
+  if (!el) return;
+
+  fetch('/.netlify/functions/lastfm-top-artist')
+    .then(r => r.ok ? r.json() : null)
+    .then(d => { if (d?.artist) el.textContent = d.artist; })
+    .catch(() => {});
+});
+</script>
 
 </body>
 </html>
