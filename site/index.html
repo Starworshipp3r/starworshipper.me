@@ -212,11 +212,11 @@
   html.js .mica-window,
   html.js .mica-shell{
     opacity: 0;
-    transform: translateY(10px) scale(.99);
-    filter: blur(10px);
-    transition: opacity 420ms cubic-bezier(.2,.8,.2,1),
-                transform 420ms cubic-bezier(.2,.8,.2,1),
-                filter 420ms cubic-bezier(.2,.8,.2,1);
+    transform: translateY(20px) scale(.97);
+    filter: blur(8px);
+    transition: opacity 800ms cubic-bezier(.16,.84,.44,1),
+                transform 800ms cubic-bezier(.16,.84,.44,1),
+                filter 800ms cubic-bezier(.16,.84,.44,1);
     will-change: transform, opacity, filter;
   }
 
@@ -230,8 +230,8 @@
   html.js body.is-leaving .mica-window,
   html.js body.is-leaving .mica-shell{
     opacity: 0;
-    transform: translateY(-6px) scale(.995);
-    filter: blur(14px);
+    transform: translateY(-8px) scale(.98);
+    filter: blur(6px);
   }
 
   @media (prefers-reduced-motion: reduce){
@@ -318,7 +318,7 @@
         </section>
 
         <section id="stuff" class="mica-card">
-          <h2 class="text-xl font-semibold mb-2">Stuff I’m into</h2>
+          <h2 class="text-xl font-semibold mb-2">Stuff I'm into</h2>
           <ul class="list-disc list-inside text-white/75 space-y-1">
             <li>Music</li>
             <li>Cars</li>
@@ -422,7 +422,7 @@
             e.preventDefault();
             document.body.classList.add('is-leaving');
 
-            const delay = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 220;
+            const delay = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 500;
             setTimeout(() => { window.location.href = url.href; }, delay);
         });
 
