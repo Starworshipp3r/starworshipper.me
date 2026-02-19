@@ -282,7 +282,6 @@
           <a class="navlink" href="#about"><i class="fa-regular fa-user w-5 text-white/70"></i><span class="font-semibold">About</span></a>
           <a class="navlink" href="#stuff"><i class="fa-regular fa-star w-5 text-white/70"></i><span class="font-semibold">Stuff</span></a>
           <a class="navlink" href="#projects"><i class="fa-regular fa-folder-open w-5 text-white/70"></i><span class="font-semibold">Projects</span></a>
-          <a class="navlink" href="#photos"><i class="fa-regular fa-image w-5 text-white/70"></i><span class="font-semibold">Photos</span></a>
         </nav>
       </aside>
 
@@ -327,19 +326,38 @@
           </ul>
         </section>
 
-<!--         <section id="projects" class="mica-card">
+        <section id="projects" class="mica-card">
           <h2 class="text-xl font-semibold mb-3">Projects</h2>
           <div class="grid sm:grid-cols-2 gap-3">
-            <div class="mica-card">
-              <div class="font-semibold">Project A</div>
-              <div class="text-white/70 text-sm">Short description.</div>
-            </div>
-            <div class="mica-card">
-              <div class="font-semibold">Project B</div>
-              <div class="text-white/70 text-sm">Short description.</div>
-            </div>
+          <div class="mica-card">
+            <div class="font-semibold mb-1">machinecodeisnomore</div>
+
+            <button
+              type="button"
+              class="group w-full text-left"
+              data-video="https://app.box.com/shared/static/r7ubgtm0tqp44nb9kszreq56sj4zkg6x.mp4"
+              data-poster="/videos/machinecodeisnomore.swf.jpg"
+              data-title="Project A"
+              aria-label="Play Project A video"
+            >
+              <div class="relative overflow-hidden rounded-xl border border-white/10 bg-black/20">
+                <img
+                  src="/videos/machinecodeisnomore.swf.jpg"
+                  alt="Project A video thumbnail"
+                  class="w-full h-48 object-cover opacity-90 group-hover:opacity-100 transition"
+                  loading="lazy"
+                />
+
+                <div class="absolute inset-0 flex items-center justify-center">
+                  <div class="w-14 h-14 rounded-full border border-white/15 bg-white/10 backdrop-blur-md flex items-center justify-center shadow-lg group-hover:scale-105 transition">
+                    <i class="fa-solid fa-play text-white/90"></i>
+                  </div>
+                </div>
+              </div>
+            </button>
           </div>
-        </section> -->
+          </div>
+        </section>
 
 <!--         <section id="photos" class="mica-card">
           <h2 class="text-xl font-semibold mb-2">Photos</h2>
@@ -348,6 +366,33 @@
       </main>
     </div>
   </div>
+
+  <!-- Video lightbox -->
+  <div id="videoModal" class="fixed inset-0 hidden z-[9999]">
+    <div id="videoBackdrop" class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+
+    <div class="relative h-full w-full flex items-center justify-center p-4 sm:p-8">
+      <div class="w-full max-w-4xl mica-card p-0 overflow-hidden">
+        <div class="flex items-center justify-between px-4 py-3 border-b border-white/10 bg-white/5">
+          <div class="font-semibold" id="videoModalTitle">Video</div>
+          <button id="videoCloseBtn" type="button" class="mica-icon-btn" aria-label="Close video">
+            <i class="fa-solid fa-xmark text-lg"></i>
+          </button>
+        </div>
+
+        <div class="bg-black/30">
+          <video
+            id="modalVideo"
+            class="w-full max-h-[70vh] bg-black"
+            controls
+            playsinline
+            preload="metadata"
+          ></video>
+        </div>
+      </div>
+    </div>
+  </div>
+
 
   <script>
     const root = document.documentElement;
@@ -459,6 +504,60 @@ document.addEventListener('DOMContentLoaded', () => {
     .then(r => r.ok ? r.json() : null)
     .then(d => { if (d?.artist) el.textContent = d.artist; })
     .catch(() => {});
+});
+</script>
+
+<script>
+// Video lightbox wiring
+const modal = document.getElementById('videoModal');
+const backdrop = document.getElementById('videoBackdrop');
+const closeBtn = document.getElementById('videoCloseBtn');
+const video = document.getElementById('modalVideo');
+const titleEl = document.getElementById('videoModalTitle');
+
+function openVideo({ src, poster, title }) {
+  titleEl.textContent = title || 'Video';
+
+  // Only set src when opening so the 55MB file doesn't download on page load
+  if (video.getAttribute('src') !== src) {
+    video.pause();
+    video.removeAttribute('src');
+    video.load();
+
+    video.setAttribute('src', src);
+    if (poster) video.setAttribute('poster', poster);
+    video.load();
+  }
+
+  modal.classList.remove('hidden');
+
+  video.play().catch(() => {});
+}
+
+function closeVideo() {
+  modal.classList.add('hidden');
+  video.pause();
+  // Optional: free memory / stop buffering
+  video.removeAttribute('src');
+  video.load();
+}
+
+document.addEventListener('click', (e) => {
+  const btn = e.target.closest('[data-video]');
+  if (!btn) return;
+
+  openVideo({
+    src: btn.getAttribute('data-video'),
+    poster: btn.getAttribute('data-poster'),
+    title: btn.getAttribute('data-title'),
+  });
+});
+
+backdrop?.addEventListener('click', closeVideo);
+closeBtn?.addEventListener('click', closeVideo);
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && !modal.classList.contains('hidden')) closeVideo();
 });
 </script>
 
