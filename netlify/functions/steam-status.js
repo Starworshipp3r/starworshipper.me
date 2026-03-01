@@ -23,40 +23,13 @@ export async function handler() {
         statusCode: 200,
         headers: {
           "content-type": "application/json",
-          // short cache for "now playing"
-          "cache-control": "public, max-age=20",
+          "cache-control": "public, max-age=60",
         },
         body: JSON.stringify({ playing: player.gameextrainfo, mode: "now" }),
       };
     }
 
-    // 2) Otherwise: use "recently played" list first.
-    // This often matches what Steam shows in the client/profile (including some non-owned/free apps),
-    // while GetOwnedGames can miss entries or attribute time to the base game.
-    const rRes = await fetch(
-      `https://api.steampowered.com/IPlayerService/GetRecentlyPlayedGames/v1/?key=${key}&steamid=${steamid}&count=1`
-    );
-    const rJson = await rRes.json();
-    const recent = rJson?.response?.games?.[0];
-
-    if (recent?.name) {
-      return {
-        statusCode: 200,
-        headers: {
-          "content-type": "application/json",
-          // moderate cache is fine here
-          "cache-control": "public, max-age=60",
-        },
-        body: JSON.stringify({
-          playing: recent.name,
-          mode: "recent",
-          appid: recent.appid ?? null,
-          playtime2Weeks: recent.playtime_2weeks ?? null,
-        }),
-      };
-    }
-
-    // 3) Fallback: find most recently played from owned games (has rtime_last_played)
+    // 2) Otherwise: find most recently played from owned games
     const gRes = await fetch(
       `https://api.steampowered.com/IPlayerService/GetOwnedGames/v1/?key=${key}&steamid=${steamid}&include_appinfo=1&include_played_free_games=1`
     );
@@ -73,13 +46,12 @@ export async function handler() {
       statusCode: 200,
       headers: {
         "content-type": "application/json",
-        "cache-control": "public, max-age=180",
+        "cache-control": "public, max-age=300",
       },
       body: JSON.stringify({
         playing: latest?.name || null,
-        mode: "owned_fallback",
+        mode: "last",
         lastPlayed: latest?.rtime_last_played || null,
-        appid: latest?.appid ?? null,
       }),
     };
   } catch (e) {
