@@ -476,6 +476,28 @@
 
     function updateInspector() {}
 
+    function clearZoom() {
+      if (!zoomedCard) return;
+      zoomedCard.classList.remove('is-zoomed');
+      board.classList.remove('has-zoomed');
+      zoomedCard = null;
+    }
+
+    function toggleZoom(card) {
+      if (zoomedCard === card) {
+        clearZoom();
+        return;
+      }
+
+      if (zoomedCard) {
+        zoomedCard.classList.remove('is-zoomed');
+      }
+
+      zoomedCard = card;
+      board.classList.add('has-zoomed');
+      card.classList.add('is-zoomed');
+      card.style.zIndex = String(++zCounter);
+    }
 
     function setEmptyState(visible, message) {
       emptyState.classList.toggle('is-visible', visible);
@@ -562,12 +584,16 @@
 
     function wireDrag(card, photo) {
       let dragState = null;
+      let moved = false;
 
       card.addEventListener('pointerdown', (event) => {
         if (event.button !== 0) return;
+        if (card.classList.contains('is-zoomed')) return;
 
         cancelAutoScatter();
+        clearZoom();
         focusCard(card, photo);
+        moved = false;
         card.classList.add('is-dragging');
         card.setPointerCapture(event.pointerId);
 
@@ -586,6 +612,7 @@
 
       card.addEventListener('pointermove', (event) => {
         if (!dragState || event.pointerId !== dragState.pointerId) return;
+        moved = true;
 
         const left = clamp(
           event.clientX - dragState.boardRect.left - dragState.offsetX,
@@ -611,13 +638,17 @@
 
       card.addEventListener('pointerup', stopDragging);
       card.addEventListener('pointercancel', stopDragging);
-      card.addEventListener('click', () => focusCard(card, photo));
+      card.addEventListener('click', () => {
+        focusCard(card, photo);
+        if (!moved) toggleZoom(card);
+      });
     }
 
     function clearBoard() {
       cards.forEach((entry) => entry.el.remove());
       cards = [];
       currentPhotos = [];
+      clearZoom();
     }
 
     function createCard(photo, index) {
@@ -745,6 +776,9 @@
   </script>
 </body>
 </html>
+
+
+
 
 
 
