@@ -256,7 +256,33 @@
       pointer-events: none;
     }
 
-    .polaroid.is-zoomed {`r`n      position: absolute;`r`n      left: 50% !important;`r`n      top: 50% !important;`r`n      display: flex;`r`n      flex-direction: column;`r`n      align-items: center;`r`n      justify-content: flex-start;`r`n      overflow: hidden;`r`n      transform: translate(-50%, -50%) rotate(0deg) scale(1.02) !important;`r`n      box-shadow: 0 34px 100px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.3);`r`n      z-index: 40 !important;`r`n    }`r`n`r`n    .polaroid.is-zoomed img {`r`n      width: auto;`r`n      height: auto;`r`n      aspect-ratio: auto;`r`n      object-fit: contain;`r`n      margin: 0 auto;`r`n      flex: 0 0 auto;`r`n    }`r`n`r`n    .polaroid.is-zoomed .polaroid-footer {`r`n      flex: 0 0 30px;`r`n      width: 100%;`r`n    }
+    .polaroid.is-zoomed {
+      position: absolute;
+      left: 50% !important;
+      top: 50% !important;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      overflow: hidden;
+      transform: translate(-50%, -50%) rotate(0deg) scale(1.02) !important;
+      box-shadow: 0 34px 100px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.3);
+      z-index: 40 !important;
+    }
+
+    .polaroid.is-zoomed img {
+      width: auto;
+      height: auto;
+      aspect-ratio: auto;
+      object-fit: contain;
+      margin: 0 auto;
+      flex: 0 0 auto;
+    }
+
+    .polaroid.is-zoomed .polaroid-footer {
+      flex: 0 0 30px;
+      width: 100%;
+    }
 
     .board.has-zoomed .note,
     .board.has-zoomed .empty-state {
@@ -807,6 +833,7 @@
   </script>
 </body>
 </html>
+
 
 
 
