@@ -247,22 +247,8 @@
       background: #d8d3cc;
     }
 
-    .polaroid-caption{
-      font-family: "Caveat", cursive;
-      font-size: clamp(1.35rem, 1.8vw, 1.7rem);
-      line-height: 1;
-      margin-top: 10px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      text-transform: capitalize;
-    }
-
-    .polaroid-subcaption{
-      font-size: .74rem;
-      color: rgba(43, 34, 28, .7);
-      margin-top: 4px;
-      letter-spacing: .02em;
+    .polaroid-footer{
+      height: 30px;
     }
 
     .polaroid-pin{
@@ -626,8 +612,7 @@
       card.innerHTML = `
         <span class="polaroid-pin"></span>
         <img src="${photo.src}" alt="${photo.title || 'Unsplash photo'}" loading="lazy">
-        <div class="polaroid-caption">${photo.title || 'Untitled shot'}</div>
-        <div class="polaroid-subcaption">${photo.meta || 'Unsplash'}</div>
+        <div class="polaroid-footer" aria-hidden="true"></div>
       `;
 
       board.appendChild(card);
@@ -737,3 +722,5 @@
   </script>
 </body>
 </html>
+
+
