@@ -510,7 +510,7 @@
       const profileUrl = withReferral(photo.userProfile || 'https://unsplash.com');
       const photoUrl = withReferral(photo.photoPage || 'https://unsplash.com');
       const unsplashUrl = withReferral('https://unsplash.com');
-      attributionChip.innerHTML = `Photo by <a href="${profileUrl}" target="_blank" rel="noopener noreferrer">${photographer}</a> on <a href="${unsplashUrl}" target="_blank" rel="noopener noreferrer">Unsplash</a> · <a href="${photoUrl}" target="_blank" rel="noopener noreferrer">Open photo</a>`;
+      attributionChip.innerHTML = `<span class="attribution-label">Photo</span><a href="${profileUrl}" target="_blank" rel="noopener noreferrer">${photographer}</a> on <a href="${unsplashUrl}" target="_blank" rel="noopener noreferrer">Unsplash</a> · <a href="${photoUrl}" target="_blank" rel="noopener noreferrer">View</a>`;
     }
 
     function clearZoom() {
@@ -851,6 +851,8 @@
   </script>
 </body>
 </html>
+
+
 
 
 
