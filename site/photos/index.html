@@ -290,6 +290,48 @@
       pointer-events: none;
     }
 
+    .attribution-chip {
+      position: absolute;
+      right: 18px;
+      bottom: 18px;
+      max-width: min(360px, calc(100% - 36px));
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: linear-gradient(180deg, rgba(18, 21, 28, .78), rgba(12, 14, 20, .7));
+      backdrop-filter: blur(14px);
+      box-shadow: 0 14px 34px rgba(0,0,0,.24);
+      color: rgba(255,255,255,.74);
+      font-size: .72rem;
+      line-height: 1.35;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .2s ease, transform .2s ease;
+      transform: translateY(6px);
+      z-index: 41;
+    }
+
+    .board.has-zoomed .attribution-chip {
+      opacity: 1;
+      pointer-events: auto;
+      transform: none;
+    }
+
+    .attribution-chip a {
+      color: rgba(255,255,255,.94);
+      text-decoration: underline;
+      text-decoration-color: rgba(255,255,255,.28);
+      text-underline-offset: 2px;
+    }
+
+    .attribution-label {
+      display: inline-block;
+      margin-right: 8px;
+      color: rgba(255,255,255,.5);
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      font-size: .6rem;
+    }
     .polaroid img{
       width: 100%;
       aspect-ratio: 1 / 1;
@@ -851,6 +893,8 @@
   </script>
 </body>
 </html>
+
+
 
 
 
