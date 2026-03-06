@@ -252,7 +252,8 @@
     }
 
     .board.has-zoomed .polaroid:not(.is-zoomed){
-      filter: blur(1.2px) brightness(.72);
+      opacity: 0;
+      pointer-events: none;
     }
 
     .polaroid.is-zoomed{
@@ -269,6 +270,12 @@
     .polaroid.is-zoomed img{
       aspect-ratio: auto;
       max-height: min(68vh, 820px);
+    }
+
+    .board.has-zoomed .note,
+    .board.has-zoomed .empty-state {
+      opacity: 0;
+      pointer-events: none;
     }
 
     .polaroid img{
@@ -776,6 +783,9 @@
   </script>
 </body>
 </html>
+
+
+
 
 
 
