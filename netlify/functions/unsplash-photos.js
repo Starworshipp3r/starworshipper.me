@@ -16,11 +16,10 @@ export async function handler(event) {
     ? Math.min(Math.max(Math.trunc(requestedCount), 1), 30)
     : 8;
 
-  const url = new URL('https://api.unsplash.com/photos/random');
-  url.searchParams.set('username', username);
-  url.searchParams.set('count', String(count));
-  url.searchParams.set('orientation', 'squarish');
-  url.searchParams.set('content_filter', 'high');
+  const url = new URL(`https://api.unsplash.com/users/${encodeURIComponent(username)}/photos`);
+  url.searchParams.set('per_page', String(Math.max(count, 12)));
+  url.searchParams.set('page', '1');
+  url.searchParams.set('order_by', 'latest');
 
   try {
     const res = await fetch(url, {
@@ -34,14 +33,26 @@ export async function handler(event) {
       return {
         statusCode: res.status,
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ error: 'Unsplash fetch failed', status: res.status }),
+        body: JSON.stringify({
+          error: 'Unsplash fetch failed',
+          status: res.status,
+          username,
+          hint: res.status === 404
+            ? 'Unsplash could not find that username, or the account has no accessible photos via the API.'
+            : null,
+        }),
       };
     }
 
-    const json = await res.json();
-    const items = Array.isArray(json) ? json : [json];
+    const items = await res.json();
+    const pool = Array.isArray(items) ? items.slice() : [];
 
-    const photos = items.map((photo, index) => ({
+    for (let i = pool.length - 1; i > 0; i -= 1) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [pool[i], pool[j]] = [pool[j], pool[i]];
+    }
+
+    const photos = pool.slice(0, count).map((photo, index) => ({
       id: photo.id,
       src: photo.urls?.regular || photo.urls?.small || photo.urls?.full || null,
       thumb: photo.urls?.small || photo.urls?.thumb || photo.urls?.regular || null,
@@ -49,7 +60,6 @@ export async function handler(event) {
       meta: photo.user?.name || username,
       caption: photo.description || photo.alt_description || 'Freshly pulled from Unsplash.',
       photoPage: photo.links?.html || null,
-      downloadLocation: photo.links?.download_location || null,
       userName: photo.user?.name || username,
       userProfile: photo.user?.links?.html || `https://unsplash.com/@${username}`,
     })).filter((photo) => photo.src);
@@ -66,7 +76,7 @@ export async function handler(event) {
     return {
       statusCode: 500,
       headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ error: 'Unsplash request failed' }),
+      body: JSON.stringify({ error: 'Unsplash request failed', username }),
     };
   }
 }
