@@ -256,38 +256,7 @@
       pointer-events: none;
     }
 
-    .polaroid.is-zoomed{
-      position: absolute;
-      left: 50% !important;
-      top: 50% !important;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      width: auto;
-      max-width: calc(100% - 56px);
-      max-height: calc(100% - 56px);
-      padding: 12px 12px 16px;
-      overflow: hidden;
-      transform: translate(-50%, -50%) rotate(0deg) scale(1.02) !important;
-      box-shadow: 0 34px 100px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.3);
-      z-index: 40 !important;
-    }
-
-    .polaroid.is-zoomed img{
-      width: auto;
-      max-width: min(72vw, calc(100% - 24px));
-      max-height: calc(100% - 58px);
-      aspect-ratio: auto;
-      object-fit: contain;
-      margin: 0 auto;
-      flex: 0 1 auto;
-    }
-
-    .polaroid.is-zoomed .polaroid-footer{
-      flex: 0 0 30px;
-      width: 100%;
-    }
+    .polaroid.is-zoomed {`r`n      position: absolute;`r`n      left: 50% !important;`r`n      top: 50% !important;`r`n      display: flex;`r`n      flex-direction: column;`r`n      align-items: center;`r`n      justify-content: flex-start;`r`n      overflow: hidden;`r`n      transform: translate(-50%, -50%) rotate(0deg) scale(1.02) !important;`r`n      box-shadow: 0 34px 100px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.3);`r`n      z-index: 40 !important;`r`n    }`r`n`r`n    .polaroid.is-zoomed img {`r`n      width: auto;`r`n      height: auto;`r`n      aspect-ratio: auto;`r`n      object-fit: contain;`r`n      margin: 0 auto;`r`n      flex: 0 0 auto;`r`n    }`r`n`r`n    .polaroid.is-zoomed .polaroid-footer {`r`n      flex: 0 0 30px;`r`n      width: 100%;`r`n    }
 
     .board.has-zoomed .note,
     .board.has-zoomed .empty-state {
@@ -503,8 +472,41 @@
     function clearZoom() {
       if (!zoomedCard) return;
       zoomedCard.classList.remove('is-zoomed');
+      zoomedCard.style.width = '';
+      zoomedCard.style.height = '';
+      const img = zoomedCard.querySelector('img');
+      if (img) {
+        img.style.width = '';
+        img.style.height = '';
+      }
       board.classList.remove('has-zoomed');
       zoomedCard = null;
+    }
+
+    function sizeZoomedCard(card) {
+      const img = card.querySelector('img');
+      const footer = card.querySelector('.polaroid-footer');
+      if (!img || !footer) return;
+
+      const boardRect = board.getBoundingClientRect();
+      const padX = 24;
+      const padTop = 12;
+      const padBottom = 16;
+      const footerH = footer.offsetHeight || 30;
+      const maxCardW = Math.max(220, boardRect.width - 56);
+      const maxCardH = Math.max(220, boardRect.height - 56);
+      const maxImgW = maxCardW - padX;
+      const maxImgH = maxCardH - padTop - padBottom - footerH;
+      const naturalW = img.naturalWidth || img.clientWidth || 1;
+      const naturalH = img.naturalHeight || img.clientHeight || 1;
+      const scale = Math.min(maxImgW / naturalW, maxImgH / naturalH);
+      const imgW = Math.max(1, Math.floor(naturalW * scale));
+      const imgH = Math.max(1, Math.floor(naturalH * scale));
+
+      img.style.width = `${imgW}px`;
+      img.style.height = `${imgH}px`;
+      card.style.width = `${imgW + padX}px`;
+      card.style.height = `${imgH + padTop + padBottom + footerH}px`;
     }
 
     function toggleZoom(card) {
@@ -514,13 +516,14 @@
       }
 
       if (zoomedCard) {
-        zoomedCard.classList.remove('is-zoomed');
+        clearZoom();
       }
 
       zoomedCard = card;
       board.classList.add('has-zoomed');
       card.classList.add('is-zoomed');
       card.style.zIndex = String(++zCounter);
+      sizeZoomedCard(card);
     }
 
     function setEmptyState(visible, message) {
@@ -782,6 +785,10 @@
       window.addEventListener('resize', () => {
         clearTimeout(resizeTimer);
         resizeTimer = setTimeout(() => {
+          if (zoomedCard) {
+            sizeZoomedCard(zoomedCard);
+            return;
+          }
           if (cards.length) scatterCards();
         }, 120);
       });
@@ -800,6 +807,8 @@
   </script>
 </body>
 </html>
+
+
 
 
 
