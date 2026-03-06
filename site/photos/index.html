@@ -594,9 +594,6 @@
       board.appendChild(card);
       cards.push({ el: card, photo });
       wireDrag(card, photo);
-
-      const layout = computeLayout(index, currentPhotos.length, card.offsetWidth, card.offsetHeight);
-      setCardPosition(card, layout);
     }
 
     function renderBoard(photos) {
@@ -701,6 +698,7 @@
   </script>
 </body>
 </html>
+
 
 
 
