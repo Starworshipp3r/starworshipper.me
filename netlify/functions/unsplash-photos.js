@@ -16,18 +16,43 @@ export async function handler(event) {
     ? Math.min(Math.max(Math.trunc(requestedCount), 1), 30)
     : 8;
 
-  const url = new URL(`https://api.unsplash.com/users/${encodeURIComponent(username)}/photos`);
-  url.searchParams.set('per_page', String(Math.max(count, 12)));
-  url.searchParams.set('page', '1');
-  url.searchParams.set('order_by', 'latest');
+  const headers = {
+    Authorization: `Client-ID ${accessKey}`,
+    'Accept-Version': 'v1',
+  };
 
   try {
-    const res = await fetch(url, {
-      headers: {
-        Authorization: `Client-ID ${accessKey}`,
-        'Accept-Version': 'v1',
-      },
-    });
+    const userUrl = new URL(`https://api.unsplash.com/users/${encodeURIComponent(username)}`);
+    const userRes = await fetch(userUrl, { headers });
+
+    if (!userRes.ok) {
+      return {
+        statusCode: userRes.status,
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          error: 'Unsplash user lookup failed',
+          status: userRes.status,
+          username,
+          hint: userRes.status === 404
+            ? 'Unsplash could not find that username, or the account is not API-visible.'
+            : null,
+        }),
+      };
+    }
+
+    const user = await userRes.json();
+    const totalPhotos = Number(user?.total_photos) || 0;
+    const perPage = Math.max(count, 30);
+    const totalPages = Math.max(1, Math.ceil(totalPhotos / perPage));
+    const randomPage = Math.max(1, Math.floor(Math.random() * totalPages) + 1);
+
+    const photosUrl = new URL(`https://api.unsplash.com/users/${encodeURIComponent(username)}/photos`);
+    photosUrl.searchParams.set('per_page', String(perPage));
+    photosUrl.searchParams.set('page', String(randomPage));
+    photosUrl.searchParams.set('order_by', 'latest');
+    photosUrl.searchParams.set('t', String(Date.now()));
+
+    const res = await fetch(photosUrl, { headers });
 
     if (!res.ok) {
       return {
@@ -37,9 +62,8 @@ export async function handler(event) {
           error: 'Unsplash fetch failed',
           status: res.status,
           username,
-          hint: res.status === 404
-            ? 'Unsplash could not find that username, or the account has no accessible photos via the API.'
-            : null,
+          randomPage,
+          totalPages,
         }),
       };
     }
@@ -68,9 +92,9 @@ export async function handler(event) {
       statusCode: 200,
       headers: {
         'content-type': 'application/json',
-        'cache-control': 'public, max-age=300',
+        'cache-control': 'no-store, max-age=0',
       },
-      body: JSON.stringify({ photos, username, count: photos.length }),
+      body: JSON.stringify({ photos, username, count: photos.length, randomPage, totalPages, totalPhotos }),
     };
   } catch {
     return {
