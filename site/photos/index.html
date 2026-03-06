@@ -432,6 +432,8 @@
           </div>
         </div>
 
+        <div id="attributionChip" class="attribution-chip" aria-live="polite"></div>
+
       </div>
     </div>
   </div>
@@ -444,6 +446,7 @@
     const resetBtn = document.getElementById('resetBtn');
     const emptyState = document.getElementById('emptyState');
     const focusBackdrop = document.getElementById('focusBackdrop');
+    const attributionChip = document.getElementById('attributionChip');
 
     let zCounter = 10;
     let cards = [];
@@ -493,7 +496,22 @@
 
     function setStatus() {}
 
-    function updateInspector() {}
+    function withReferral(url) {
+      if (!url) return '';
+      const ref = new URL(url);
+      ref.searchParams.set('utm_source', 'dumbdog_photos');
+      ref.searchParams.set('utm_medium', 'referral');
+      return ref.toString();
+    }
+
+    function updateInspector(photo) {
+      if (!attributionChip || !photo) return;
+      const photographer = photo.userName || photo.meta || 'Photographer';
+      const profileUrl = withReferral(photo.userProfile || 'https://unsplash.com');
+      const photoUrl = withReferral(photo.photoPage || 'https://unsplash.com');
+      const unsplashUrl = withReferral('https://unsplash.com');
+      attributionChip.innerHTML = `Photo by <a href="${profileUrl}" target="_blank" rel="noopener noreferrer">${photographer}</a> on <a href="${unsplashUrl}" target="_blank" rel="noopener noreferrer">Unsplash</a> · <a href="${photoUrl}" target="_blank" rel="noopener noreferrer">Open photo</a>`;
+    }
 
     function clearZoom() {
       if (!zoomedCard) return;
@@ -833,6 +851,9 @@
   </script>
 </body>
 </html>
+
+
+
 
 
 
