@@ -263,12 +263,6 @@
       pointer-events:none;
     }
 
-    .inspector{
-      position: absolute;
-      right: 18px;
-      bottom: 18px;
-      width: min(320px, calc(100% - 36px));
-    }
 
     .status-pill{
       display: inline-flex;
@@ -327,11 +321,6 @@
         min-height: calc(100dvh - 230px);
       }
 
-      .inspector{
-        position: static;
-        width: 100%;
-        margin-top: 14px;
-      }
     }
 
     @media (prefers-reduced-motion: reduce){
@@ -387,16 +376,6 @@
           </div>
         </div>
 
-        <div id="inspector" class="inspector note px-4 py-4 text-white/80">
-          <div class="flex items-center justify-between gap-3">
-            <div class="text-xs uppercase tracking-[0.18em] text-white/45">Selected shot</div>
-            <div id="statusPill" class="status-pill"><i class="fa-solid fa-camera"></i><span>Waiting</span></div>
-          </div>
-          <div id="inspectorTitle" class="mt-2 text-xl font-semibold text-white">Pull a photo set</div>
-          <div id="inspectorMeta" class="mt-1 text-sm text-white/55">The board will fill from your Unsplash account.</div>
-          <div id="inspectorCaption" class="mt-3 text-sm leading-relaxed text-white/70">This page now depends on the Netlify function `/.netlify/functions/unsplash-photos` and an `UNSPLASH_ACCESS_KEY` environment variable.</div>
-          <div id="inspectorAttribution" class="mt-3 text-xs leading-relaxed text-white/55"></div>
-        </div>
       </div>
     </div>
   </div>
@@ -408,11 +387,6 @@
     const shuffleBtn = document.getElementById('shuffleBtn');
     const resetBtn = document.getElementById('resetBtn');
     const emptyState = document.getElementById('emptyState');
-    const inspectorTitle = document.getElementById('inspectorTitle');
-    const inspectorMeta = document.getElementById('inspectorMeta');
-    const inspectorCaption = document.getElementById('inspectorCaption');
-    const inspectorAttribution = document.getElementById('inspectorAttribution');
-    const statusPill = document.getElementById('statusPill');
 
     let zCounter = 10;
     let cards = [];
@@ -458,25 +432,10 @@
       root.style.setProperty('--bg-delay', `-${elapsed}s`);
     }
 
-    function setStatus(text, icon) {
-      statusPill.innerHTML = `<i class="fa-solid ${icon}"></i><span>${text}</span>`;
-    }
+    function setStatus() {}
 
-    function updateInspector(photo) {
-      if (!photo) return;
-      inspectorTitle.textContent = photo.title || 'Untitled shot';
-      inspectorMeta.textContent = photo.meta || 'Unsplash';
-      inspectorCaption.textContent = photo.caption || 'Freshly pulled from Unsplash.';
+    function updateInspector() {}
 
-      const photoLink = photo.photoPage
-        ? `<a class="inline-link" href="${photo.photoPage}" target="_blank" rel="noopener noreferrer">Open on Unsplash</a>`
-        : '';
-      const userLink = photo.userProfile
-        ? `<a class="inline-link" href="${photo.userProfile}" target="_blank" rel="noopener noreferrer">${photo.userName || photo.meta || 'Photographer'}</a>`
-        : (photo.userName || photo.meta || 'Photographer');
-
-      inspectorAttribution.innerHTML = `Photo by ${userLink} on <a class="inline-link" href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>${photoLink ? ` · ${photoLink}` : ''}`;
-    }
 
     function setEmptyState(visible, message) {
       emptyState.classList.toggle('is-visible', visible);
@@ -629,7 +588,6 @@
 
       if (!currentPhotos.length) {
         setEmptyState(true, 'No photos came back from Unsplash.');
-        setStatus('No photos', 'triangle-exclamation');
         return;
       }
 
@@ -640,11 +598,7 @@
 
     async function fetchPhotos() {
       refreshBtn.disabled = true;
-      setStatus('Loading', 'spinner fa-spin');
-      inspectorTitle.textContent = 'Pulling a new batch';
-      inspectorMeta.textContent = 'Talking to the Unsplash function now.';
-      inspectorCaption.textContent = 'If this fails, check your Netlify env vars and deploy logs.';
-      inspectorAttribution.innerHTML = '';
+      setStatus('loading');
 
       try {
         const res = await fetch('/.netlify/functions/unsplash-photos?count=8');
@@ -658,12 +612,9 @@
       } catch (error) {
         clearBoard();
         setEmptyState(true, 'Unable to load photos from Unsplash right now.');
-        setStatus('Load failed', 'triangle-exclamation');
-        inspectorTitle.textContent = 'Photo fetch failed';
-        inspectorMeta.textContent = 'The board is empty because the Unsplash request did not succeed.';
-        inspectorCaption.textContent = error.message || 'Unknown error';
-        inspectorAttribution.innerHTML = 'Set `UNSPLASH_ACCESS_KEY` in Netlify and redeploy before testing again.';
+        setStatus('error');
       } finally {
+        setStatus('ready');
         refreshBtn.disabled = false;
       }
     }
@@ -722,5 +673,8 @@
   </script>
 </body>
 </html>
+
+
+
 
 
