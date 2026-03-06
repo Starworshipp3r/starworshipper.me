@@ -220,7 +220,7 @@
       cursor: grab;
       user-select: none;
       touch-action: none;
-      transition: box-shadow .18s ease, transform .18s ease;
+      transition: left .9s cubic-bezier(.22,.82,.26,1), top .9s cubic-bezier(.22,.82,.26,1), transform .9s cubic-bezier(.22,.82,.26,1), box-shadow .18s ease;
     }
 
     .polaroid:active{
@@ -391,6 +391,7 @@
     let zCounter = 10;
     let cards = [];
     let currentPhotos = [];
+    let autoScatterTimer = null;
 
     function applyTheme(t) {
       root.style.setProperty('--color-1', `hsla(${t.h1}, ${t.s}%, ${t.l}%, 0.75)`);
@@ -484,6 +485,21 @@
       card.style.transform = `rotate(${layout.rotation})`;
     }
 
+    function cancelAutoScatter() {
+      if (autoScatterTimer) {
+        clearTimeout(autoScatterTimer);
+        autoScatterTimer = null;
+      }
+    }
+
+    function scheduleAutoScatter(delay = 1800) {
+      cancelAutoScatter();
+      autoScatterTimer = setTimeout(() => {
+        autoScatterTimer = null;
+        scatterCards();
+      }, delay);
+    }
+
     function scatterCards() {
       cards.forEach((entry, index) => {
         const layout = computeLayout(index, cards.length, entry.el.offsetWidth, entry.el.offsetHeight);
@@ -511,6 +527,7 @@
       card.addEventListener('pointerdown', (event) => {
         if (event.button !== 0) return;
 
+        cancelAutoScatter();
         focusCard(card, photo);
         card.classList.add('is-dragging');
         card.setPointerCapture(event.pointerId);
@@ -593,7 +610,9 @@
 
       setEmptyState(false);
       currentPhotos.forEach(createCard);
+      resetStack();
       focusCard(cards[0].el, cards[0].photo);
+      scheduleAutoScatter();
     }
 
     async function fetchPhotos() {
@@ -655,9 +674,18 @@
       syncSharedTheme();
       enablePageTransitions();
 
-      refreshBtn.addEventListener('click', fetchPhotos);
-      shuffleBtn.addEventListener('click', scatterCards);
-      resetBtn.addEventListener('click', resetStack);
+      refreshBtn.addEventListener('click', () => {
+        cancelAutoScatter();
+        fetchPhotos();
+      });
+      shuffleBtn.addEventListener('click', () => {
+        cancelAutoScatter();
+        scatterCards();
+      });
+      resetBtn.addEventListener('click', () => {
+        cancelAutoScatter();
+        resetStack();
+      });
 
       let resizeTimer = null;
       window.addEventListener('resize', () => {
@@ -673,6 +701,7 @@
   </script>
 </body>
 </html>
+
 
 
 
