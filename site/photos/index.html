@@ -236,6 +236,41 @@
       transform: scale(1.04) rotate(var(--rotation, 0deg)) !important;
     }
 
+    .focus-backdrop{
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at center, rgba(0,0,0,.18), rgba(0,0,0,.48));
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .35s ease;
+      z-index: 30;
+    }
+
+    .board.has-zoomed .focus-backdrop{
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .board.has-zoomed .polaroid:not(.is-zoomed){
+      filter: blur(1.2px) brightness(.72);
+    }
+
+    .polaroid.is-zoomed{
+      position: absolute;
+      left: 50% !important;
+      top: 50% !important;
+      width: min(68vw, 700px);
+      max-width: calc(100vw - 64px);
+      transform: translate(-50%, -50%) rotate(0deg) scale(1.04) !important;
+      box-shadow: 0 34px 100px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.3);
+      z-index: 40 !important;
+    }
+
+    .polaroid.is-zoomed img{
+      aspect-ratio: auto;
+      max-height: min(68vh, 820px);
+    }
+
     .polaroid img{
       width: 100%;
       aspect-ratio: 1 / 1;
@@ -367,8 +402,10 @@
     <div class="p-4 sm:p-5 lg:p-6 flex-1">
       <div id="board" class="board h-full min-h-[680px]">
         <div class="note absolute left-4 top-4 sm:left-6 sm:top-6 max-w-sm px-4 py-3 text-white/75 text-sm">
-          Click a polaroid to bring it forward. Drag anywhere on the card to toss it around the board.
+          Click a polaroid to focus it. Drag anywhere on the card to toss it around the board.
         </div>
+
+        <div id="focusBackdrop" class="focus-backdrop"></div>
 
         <div id="emptyState" class="empty-state">
           <div class="note max-w-md px-5 py-4 text-white/78 text-sm text-center">
@@ -387,11 +424,13 @@
     const shuffleBtn = document.getElementById('shuffleBtn');
     const resetBtn = document.getElementById('resetBtn');
     const emptyState = document.getElementById('emptyState');
+    const focusBackdrop = document.getElementById('focusBackdrop');
 
     let zCounter = 10;
     let cards = [];
     let currentPhotos = [];
     let autoScatterTimer = null;
+    let zoomedCard = null;
 
     function applyTheme(t) {
       root.style.setProperty('--color-1', `hsla(${t.h1}, ${t.s}%, ${t.l}%, 0.75)`);
@@ -692,12 +731,27 @@
         }, 120);
       });
 
+      focusBackdrop.addEventListener('click', clearZoom);
+      board.addEventListener('click', (event) => {
+        if (event.target === board) clearZoom();
+      });
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') clearZoom();
+      });
+
       requestAnimationFrame(() => document.body.classList.add('is-ready'));
       fetchPhotos();
     });
   </script>
 </body>
 </html>
+
+
+
+
+
+
+
 
 
 
