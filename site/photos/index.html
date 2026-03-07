@@ -333,23 +333,20 @@
     }
 
     .mobile-focus{
-      position: fixed;
-      inset: 0;
-      padding: 14px;
+      position: absolute;
+      inset: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
       opacity: 0;
       pointer-events: none;
-      transition: opacity .16s ease;
-      transform: none;
+      transition: opacity .18s ease;
       z-index: 42;
     }
 
     .board.has-mobile-focus .mobile-focus{
       opacity: 1;
       pointer-events: auto;
-      transform: none;
     }
 
     .board.has-mobile-focus .focus-backdrop{
@@ -365,8 +362,9 @@
     }
 
     .mobile-focus-card{
-      width: min(calc(100vw - 28px), 560px);
-      max-height: 100%;
+      width: min(calc(100% - 20px), 520px);
+      max-width: 100%;
+      max-height: calc(100% - 20px);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -375,8 +373,15 @@
       border-radius: 6px;
       background: linear-gradient(180deg, rgba(255,255,255,.98), rgba(247,244,239,.96));
       box-shadow: 0 18px 44px rgba(0,0,0,.34), 0 2px 0 rgba(255,255,255,.45) inset;
-      transform: translateZ(0);
+      transform: translateY(12px) scale(.975) translateZ(0);
       backface-visibility: hidden;
+      transition: transform .24s cubic-bezier(.2,.8,.2,1), opacity .18s ease;
+      opacity: 0;
+    }
+
+    .board.has-mobile-focus .mobile-focus-card{
+      transform: translateY(0) scale(1) translateZ(0);
+      opacity: 1;
     }
 
     .mobile-focus-image{
@@ -483,17 +488,26 @@
         min-height: calc(100dvh - 230px);
       }
 
-      .focus-backdrop,
-      .mobile-focus,
-      .attribution-chip{
-        transition: none;
+      .focus-backdrop{
+        transition: opacity .16s ease;
       }
 
       .mobile-focus{
-        padding: 10px;
+        inset: 8px;
+      }
+
+      .mobile-focus-card{
+        width: min(calc(100% - 12px), 500px);
+        max-height: calc(100% - 12px);
+        box-shadow: 0 14px 34px rgba(0,0,0,.28), 0 2px 0 rgba(255,255,255,.45) inset;
+      }
+
+      .attribution-chip{
+        max-width: calc(100% - 24px);
+        right: 12px;
+        bottom: 12px;
       }
     }
-
     @media (prefers-reduced-motion: reduce){
       body::before{ animation: none; }
       html.js .mica-shell{
@@ -1022,6 +1036,8 @@
   </script>
 </body>
 </html>
+
+
 
 
 
