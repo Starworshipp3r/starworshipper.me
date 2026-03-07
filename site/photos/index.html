@@ -330,6 +330,54 @@
       letter-spacing: .12em;
       font-size: .6rem;
     }
+
+    .mobile-focus{
+      position: absolute;
+      inset: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .22s ease, transform .22s ease;
+      transform: scale(.985);
+      z-index: 42;
+    }
+
+    .board.has-mobile-focus .mobile-focus{
+      opacity: 1;
+      pointer-events: auto;
+      transform: none;
+    }
+
+    .mobile-focus-card{
+      width: min(100%, 560px);
+      max-height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 12px 12px 16px;
+      border-radius: 6px;
+      background: linear-gradient(180deg, rgba(255,255,255,.98), rgba(247,244,239,.96));
+      box-shadow: 0 22px 60px rgba(0,0,0,.4), 0 2px 0 rgba(255,255,255,.45) inset;
+    }
+
+    .mobile-focus-image{
+      width: 100%;
+      flex: 1 1 auto;
+      min-height: 0;
+      object-fit: contain;
+      border-radius: 2px;
+      background: #d8d3cc;
+      box-shadow: 0 1px 0 rgba(0,0,0,.12);
+    }
+
+    .mobile-focus-footer{
+      width: 100%;
+      height: 30px;
+      flex: 0 0 30px;
+    }
     .polaroid img{
       width: 100%;
       aspect-ratio: 1 / 1;
@@ -474,6 +522,13 @@
 
         <div id="attributionChip" class="attribution-chip" aria-live="polite"></div>
 
+        <div id="mobileFocus" class="mobile-focus" hidden>
+          <article class="mobile-focus-card" aria-modal="true" role="dialog" aria-label="Focused photo">
+            <img id="mobileFocusImage" class="mobile-focus-image" alt="Focused photo" />
+            <div class="mobile-focus-footer" aria-hidden="true"></div>
+          </article>
+        </div>
+
       </div>
     </div>
   </div>
@@ -487,12 +542,16 @@
     const emptyState = document.getElementById('emptyState');
     const focusBackdrop = document.getElementById('focusBackdrop');
     const attributionChip = document.getElementById('attributionChip');
+    const mobileFocus = document.getElementById('mobileFocus');
+    const mobileFocusImage = document.getElementById('mobileFocusImage');
+    const mobileFocusMedia = window.matchMedia('(max-width: 768px)');
 
     let zCounter = 10;
     let cards = [];
     let currentPhotos = [];
     let autoScatterTimer = null;
     let zoomedCard = null;
+    let mobileFocusPhoto = null;
 
     function applyTheme(t) {
       root.style.setProperty('--color-1', `hsla(${t.h1}, ${t.s}%, ${t.l}%, 0.75)`);
@@ -553,7 +612,27 @@
       attributionChip.innerHTML = `<span class="attribution-label">Photo</span><a href="${profileUrl}" target="_blank" rel="noopener noreferrer">${photographer}</a> on <a href="${unsplashUrl}" target="_blank" rel="noopener noreferrer">Unsplash</a> · <a href="${photoUrl}" target="_blank" rel="noopener noreferrer">View</a>`;
     }
 
+    function isMobileFocusMode() {
+      return mobileFocusMedia.matches;
+    }
+
+    function clearMobileFocus() {
+      mobileFocusPhoto = null;
+      if (mobileFocus) {
+        mobileFocus.hidden = true;
+      }
+      if (mobileFocusImage) {
+        mobileFocusImage.removeAttribute('src');
+        mobileFocusImage.alt = 'Focused photo';
+      }
+      board.classList.remove('has-mobile-focus');
+    }
+
     function clearZoom() {
+      if (mobileFocusPhoto) {
+        board.classList.remove('has-zoomed');
+        clearMobileFocus();
+      }
       if (!zoomedCard) return;
       zoomedCard.classList.remove('is-zoomed');
       zoomedCard.style.width = '';
@@ -565,6 +644,21 @@
       }
       board.classList.remove('has-zoomed');
       zoomedCard = null;
+    }
+
+    function openMobileFocus(photo) {
+      if (!mobileFocus || !mobileFocusImage) return;
+      if (mobileFocusPhoto?.src === photo.src) {
+        clearZoom();
+        return;
+      }
+      clearZoom();
+      mobileFocusPhoto = photo;
+      mobileFocus.hidden = false;
+      mobileFocusImage.src = photo.src;
+      mobileFocusImage.alt = photo.title || 'Unsplash photo';
+      board.classList.add('has-zoomed');
+      board.classList.add('has-mobile-focus');
     }
 
     function sizeZoomedCard(card) {
@@ -593,7 +687,12 @@
       card.style.height = `${imgH + padTop + padBottom + footerH}px`;
     }
 
-    function toggleZoom(card) {
+    function toggleZoom(card, photo) {
+      if (isMobileFocusMode()) {
+        openMobileFocus(photo);
+        return;
+      }
+
       if (zoomedCard === card) {
         clearZoom();
         return;
@@ -751,7 +850,7 @@
       card.addEventListener('pointercancel', stopDragging);
       card.addEventListener('click', () => {
         focusCard(card, photo);
-        if (!moved) toggleZoom(card);
+        if (!moved) toggleZoom(card, photo);
       });
     }
 
@@ -873,17 +972,20 @@
             sizeZoomedCard(zoomedCard);
             return;
           }
+          if (mobileFocusPhoto) return;
           if (cards.length) scatterCards();
         }, 120);
       });
 
       focusBackdrop.addEventListener('click', clearZoom);
+      mobileFocus?.addEventListener('click', clearZoom);
       board.addEventListener('click', (event) => {
         if (event.target === board) clearZoom();
       });
       document.addEventListener('keydown', (event) => {
         if (event.key === 'Escape') clearZoom();
       });
+      mobileFocusMedia.addEventListener('change', clearZoom);
 
       requestAnimationFrame(() => document.body.classList.add('is-ready'));
       fetchPhotos();
@@ -891,6 +993,9 @@
   </script>
 </body>
 </html>
+
+
+
 
 
 
