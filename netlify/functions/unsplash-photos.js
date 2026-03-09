@@ -14,7 +14,7 @@ export async function handler(event) {
   const requestedCount = Number(params.get('count'));
   const count = Number.isFinite(requestedCount)
     ? Math.min(Math.max(Math.trunc(requestedCount), 1), 30)
-    : 8;
+    : 9;
 
   const headers = {
     Authorization: `Client-ID ${accessKey}`,
@@ -104,3 +104,4 @@ export async function handler(event) {
     };
   }
 }
+

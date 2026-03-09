@@ -939,7 +939,7 @@
       setStatus('loading');
 
       try {
-        const res = await fetch('/.netlify/functions/unsplash-photos?count=8');
+        const res = await fetch('/.netlify/functions/unsplash-photos?count=9');
         const data = res.ok ? await res.json() : null;
 
         if (!res.ok || !data?.photos?.length) {
@@ -1035,6 +1035,7 @@
   </script>
 </body>
 </html>
+
 
 
 
