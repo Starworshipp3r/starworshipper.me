@@ -656,22 +656,29 @@
             }
 
             // --- SEASONAL THEME SCRIPT ---
-            const month = new Date().getMonth();
+            const today = new Date();
+            const month = today.getMonth();
+            const easter = getEasterDate(today.getFullYear());
+
+            // Easter (date changes every year, so match the exact day)
+            if (isSameCalendarDate(today, easter)) {
+                createSeasonalTheme(['🥚'], 36, 'flutter');
+            }
 
             // Halloween
             if (month === 9) { 
-                createSeasonalTheme(['🎃', '👻', '🦇', '🕷️', '💀','🦴'], 30);
+                createSeasonalTheme(['🎃', '👻', '🦇', '🕷️', '💀','🦴'], 30, 'flutter');
             }
 
             // Christmas
             if (month === 11) {
-                createSeasonalTheme(['❄️'], 80);
+                createSeasonalTheme(['❄️'], 80, 'flutter');
             }
 
             // Fall
             if (month === 10) { 
                 createSeasonalTheme(['🍂', '🍁', '🍃'], 35, 'flutter');
-}
+            }
 
             // Fade in once theme vars are applied
             requestAnimationFrame(() => document.body.classList.add('is-ready'));
@@ -697,6 +704,30 @@
 
                 container.appendChild(seasonalItem);
             }
+        }
+
+        function isSameCalendarDate(a, b) {
+            return a.getFullYear() === b.getFullYear()
+                && a.getMonth() === b.getMonth()
+                && a.getDate() === b.getDate();
+        }
+
+        function getEasterDate(year) {
+            const a = year % 19;
+            const b = Math.floor(year / 100);
+            const c = year % 100;
+            const d = Math.floor(b / 4);
+            const e = b % 4;
+            const f = Math.floor((b + 8) / 25);
+            const g = Math.floor((b - f + 1) / 3);
+            const h = (19 * a + b - d - g + 15) % 30;
+            const i = Math.floor(c / 4);
+            const k = c % 4;
+            const l = (32 + 2 * e + 2 * i - h - k) % 7;
+            const m = Math.floor((a + 11 * h + 22 * l) / 451);
+            const month = Math.floor((h + l - 7 * m + 114) / 31);
+            const day = ((h + l - 7 * m + 114) % 31) + 1;
+            return new Date(year, month - 1, day);
         }
     
 
@@ -746,3 +777,5 @@
 </body>
 
 </html>
+
+
