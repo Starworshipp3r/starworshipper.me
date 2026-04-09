@@ -1,3 +1,12 @@
+const NAME_ALIASES = {
+  "Source SDK Base 2007": "FiveM",
+};
+
+function getDisplayName(name) {
+  if (!name) return null;
+  return NAME_ALIASES[name] || name;
+}
+
 export async function handler() {
   const key = process.env.STEAM_API_KEY;
   const steamid = process.env.STEAM_ID64;
@@ -25,11 +34,37 @@ export async function handler() {
           "content-type": "application/json",
           "cache-control": "public, max-age=60",
         },
-        body: JSON.stringify({ playing: player.gameextrainfo, mode: "now" }),
+        body: JSON.stringify({ playing: getDisplayName(player.gameextrainfo), mode: "now" }),
       };
     }
 
-    // 2) Otherwise: find most recently played from owned games
+    // 2) Otherwise: prefer Steam's recent activity feed
+    const recentRes = await fetch(
+      `https://api.steampowered.com/IPlayerService/GetRecentlyPlayedGames/v1/?key=${key}&steamid=${steamid}`
+    );
+
+    if (recentRes.ok) {
+      const recentJson = await recentRes.json();
+      const recentGames = recentJson?.response?.games || [];
+      const latestRecent = recentGames[0];
+
+      if (latestRecent?.name) {
+        return {
+          statusCode: 200,
+          headers: {
+            "content-type": "application/json",
+            "cache-control": "public, max-age=300",
+          },
+          body: JSON.stringify({
+            playing: getDisplayName(latestRecent.name),
+            mode: "recent",
+            lastPlayed: latestRecent.rtime_last_played || null,
+          }),
+        };
+      }
+    }
+
+    // 3) Last resort: find most recently played from owned games
     const gRes = await fetch(
       `https://api.steampowered.com/IPlayerService/GetOwnedGames/v1/?key=${key}&steamid=${steamid}&include_appinfo=1&include_played_free_games=1`
     );
@@ -49,7 +84,7 @@ export async function handler() {
         "cache-control": "public, max-age=300",
       },
       body: JSON.stringify({
-        playing: latest?.name || null,
+        playing: getDisplayName(latest?.name),
         mode: "last",
         lastPlayed: latest?.rtime_last_played || null,
       }),
