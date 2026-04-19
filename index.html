@@ -325,6 +325,365 @@
       transform: none !important;
       opacity: 1 !important;
     }
+
+    .aero-bubble,
+    .aero-fish{
+      animation: none !important;
+    }
+  }
+
+  body,
+  body::before,
+  body::after,
+  .mica-window,
+  .mica-window::before,
+  .mica-window::after,
+  .mica-link,
+  .mica-icon-btn,
+  .profile-avatar{
+    transition:
+      background .45s ease,
+      border-color .45s ease,
+      box-shadow .45s ease,
+      color .45s ease,
+      opacity .45s ease,
+      filter .45s ease,
+      transform .45s ease;
+  }
+
+  .aero-bubbles{
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0;
+    transition: opacity .45s ease;
+    overflow: hidden;
+  }
+
+  .aero-bubble{
+    position: absolute;
+    border-radius: 9999px;
+    border: 1px solid rgba(214,255,255,.34);
+    background:
+      radial-gradient(circle at 30% 30%, rgba(255,255,255,.88), rgba(180,255,255,.22) 24%, rgba(71,224,255,.14) 54%, rgba(255,255,255,0) 72%);
+    box-shadow:
+      inset 0 1px 18px rgba(255,255,255,.26),
+      0 0 24px rgba(86,231,255,.18),
+      0 0 84px rgba(86,231,255,.16);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    animation: aero-float 18s ease-in-out infinite;
+    mix-blend-mode: screen;
+  }
+
+  .aero-bubble:nth-child(1){ width: 240px; height: 240px; bottom: 4%; left: 6%; animation-duration: 22s; }
+  .aero-bubble:nth-child(2){ width: 128px; height: 128px; top: 12%; right: 10%; animation-duration: 18s; animation-delay: -4s; }
+  .aero-bubble:nth-child(3){ width: 320px; height: 320px; bottom: 8%; right: 12%; animation-duration: 28s; animation-delay: -8s; }
+  .aero-bubble:nth-child(4){ width: 154px; height: 154px; bottom: 28%; left: 30%; animation-duration: 20s; animation-delay: -3s; }
+  .aero-bubble:nth-child(5){ width: 72px; height: 72px; top: 36%; left: 14%; animation-duration: 15s; animation-delay: -9s; }
+  .aero-bubble:nth-child(6){ width: 52px; height: 52px; top: 42%; right: 20%; animation-duration: 12s; animation-delay: -2s; }
+
+  @keyframes aero-float {
+    0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+    50% { transform: translate3d(0, -24px, 0) scale(1.04); }
+  }
+
+  .aero-fish-school{
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0;
+    transition: opacity .45s ease;
+    overflow: hidden;
+  }
+
+  .aero-fish{
+    position: absolute;
+    width: var(--fish-size, 140px);
+    max-width: none;
+    height: auto;
+    opacity: var(--fish-opacity, .72);
+    filter:
+      saturate(1.08)
+      drop-shadow(0 10px 24px rgba(8, 18, 42, .22));
+    transform-origin: center;
+    will-change: transform, opacity;
+    animation: fish-drift var(--fish-duration, 20s) ease-in-out infinite;
+  }
+
+  @keyframes fish-drift {
+    0%, 100% {
+      transform: translate3d(0, 0, 0) scaleX(var(--fish-flip, 1)) rotate(0deg);
+    }
+    50% {
+      transform: translate3d(var(--fish-x, 20px), var(--fish-y, -16px), 0) scaleX(var(--fish-flip, 1)) rotate(var(--fish-tilt, -2deg));
+    }
+  }
+
+  .fish-1{
+    left: -2%;
+    bottom: 5%;
+    --fish-size: 198px;
+    --fish-duration: 24s;
+    --fish-x: 24px;
+    --fish-y: -10px;
+    --fish-tilt: -3deg;
+    --fish-opacity: .78;
+  }
+
+  .fish-2{
+    left: 10%;
+    bottom: 22%;
+    --fish-size: 116px;
+    --fish-duration: 19s;
+    --fish-flip: -1;
+    --fish-x: -14px;
+    --fish-y: -8px;
+    --fish-tilt: 2deg;
+    --fish-opacity: .58;
+  }
+
+  .fish-3{
+    right: 2%;
+    bottom: 15%;
+    --fish-size: 132px;
+    --fish-duration: 22s;
+    --fish-flip: -1;
+    --fish-x: -20px;
+    --fish-y: -6px;
+    --fish-tilt: 3deg;
+    --fish-opacity: .60;
+  }
+
+  .fish-4{
+    left: 12%;
+    bottom: 8%;
+    --fish-size: 140px;
+    --fish-duration: 20s;
+    --fish-x: 18px;
+    --fish-y: -8px;
+    --fish-tilt: -2deg;
+    --fish-opacity: .66;
+  }
+
+  .fish-5{
+    right: 12%;
+    bottom: 9%;
+    --fish-size: 148px;
+    --fish-duration: 23s;
+    --fish-flip: -1;
+    --fish-x: -22px;
+    --fish-y: -10px;
+    --fish-tilt: 3deg;
+    --fish-opacity: .68;
+  }
+
+  .fish-6{
+    left: 44%;
+    bottom: 4%;
+    --fish-size: 108px;
+    --fish-duration: 18s;
+    --fish-x: 12px;
+    --fish-y: -7px;
+    --fish-tilt: -2deg;
+    --fish-opacity: .52;
+  }
+
+  #aero-toggle.is-active{
+    box-shadow:
+      0 0 0 3px rgba(255,255,255,.22),
+      0 0 0 7px rgba(89,236,255,.24),
+      0 18px 44px rgba(32,150,186,.26);
+  }
+
+  body.aero-mode{
+    --fg: rgba(234, 244, 255, .92);
+    --muted: rgba(194, 220, 240, .76);
+    --accent: #73e5ff;
+    --accent-glow: rgba(115,229,255,.34);
+    --glass: rgba(12, 22, 46, .66);
+    --glass-2: rgba(10, 20, 40, .42);
+    --border: rgba(176,230,255,.30);
+    --border-2: rgba(176,230,255,.20);
+    --shadow: 0 28px 90px rgba(7, 20, 52, .48);
+    --shadow-soft: 0 14px 36px rgba(10, 32, 74, .32);
+    background:
+      radial-gradient(circle at 14% 16%, rgba(255, 176, 58, .95), rgba(255, 118, 72, .42) 14%, transparent 34%),
+      radial-gradient(circle at 34% 44%, rgba(255, 101, 145, .48), transparent 28%),
+      radial-gradient(circle at 72% 18%, rgba(180, 97, 255, .52), transparent 26%),
+      linear-gradient(180deg, #20103a 0%, #34225a 18%, #1c3d61 52%, #1d6f87 74%, #63cae6 100%);
+  }
+
+  body.aero-mode::before{
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    margin-top: 0;
+    margin-left: 0;
+    background-image:
+      linear-gradient(180deg, rgba(8,18,40,.18), rgba(8,18,40,.52)),
+      radial-gradient(circle at 12% 10%, rgba(255,255,255,.18), transparent 16%),
+      linear-gradient(108deg, transparent 18%, rgba(255,255,255,.28) 19%, transparent 20%),
+      linear-gradient(130deg, transparent 34%, rgba(255,255,255,.20) 35%, transparent 36%),
+      url('/aero/aero.png');
+    background-size: auto, auto, auto, auto, cover;
+    background-position: center;
+    animation: none;
+    filter: saturate(1.2) contrast(1.08) brightness(.78);
+  }
+
+  body.aero-mode::after{
+    opacity: .05;
+    background-size: 360px 360px;
+    mix-blend-mode: screen;
+  }
+
+  body.aero-mode .aero-bubbles{
+    opacity: 1;
+  }
+
+  body.aero-mode .aero-fish-school{
+    opacity: 1;
+  }
+
+  body.aero-mode .mica-window{
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.16) 0%, rgba(255,255,255,.08) 9%, rgba(124,214,255,.08) 24%, rgba(24,48,92,.44) 58%, rgba(10,19,39,.78) 100%),
+      radial-gradient(130% 64% at 50% -8%, rgba(255,255,255,.18), rgba(170,230,255,.08) 34%, rgba(255,255,255,0) 62%),
+      linear-gradient(135deg, rgba(92,228,255,.10), rgba(14,28,56,.18) 42%, rgba(176,112,255,.10) 100%);
+    border-color: rgba(184,237,255,.30);
+    box-shadow:
+      0 34px 100px rgba(7, 16, 40, .42),
+      0 0 0 1px rgba(126,237,255,.14),
+      inset 0 1px 0 rgba(255,255,255,.26),
+      inset 0 -18px 36px rgba(5,12,26,.16);
+    backdrop-filter: blur(28px) saturate(1.35);
+    -webkit-backdrop-filter: blur(22px) saturate(1.35);
+  }
+
+  body.aero-mode .mica-window::before{
+    background:
+      linear-gradient(140deg, rgba(255,255,255,.24) 0%, rgba(255,255,255,.10) 16%, rgba(255,255,255,0) 34%),
+      radial-gradient(88% 34% at 50% 0%, rgba(255,255,255,.14), rgba(255,255,255,0) 70%);
+    opacity: .72;
+  }
+
+  body.aero-mode .mica-window::after{
+    opacity: .05;
+  }
+
+  body.aero-mode .mica-link{
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.03) 14%, rgba(83,226,255,.06) 55%, rgba(17,49,91,.20)),
+      radial-gradient(420px 120px at 50% 0%, rgba(255,255,255,.18), transparent 54%);
+    border-color: rgba(165,245,255,.22);
+    box-shadow:
+      0 14px 34px rgba(5, 18, 44, .24),
+      0 0 0 1px rgba(83,226,255,.08),
+      inset 0 1px 0 rgba(255,255,255,.16);
+  }
+
+  body.aero-mode .mica-link:hover{
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.20), rgba(255,255,255,.06) 16%, rgba(104,239,255,.12) 58%, rgba(17,49,91,.24)),
+      radial-gradient(500px 140px at 50% 0%, rgba(255,255,255,.28), transparent 58%);
+    box-shadow:
+      0 18px 38px rgba(6, 20, 50, .28),
+      0 0 0 1px rgba(114,231,255,.42),
+      0 0 22px rgba(86,231,255,.18),
+      inset 0 1px 0 rgba(255,255,255,.24);
+  }
+
+  body.aero-mode .mica-icon-btn{
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,.04) 18%, rgba(87,232,255,.12)),
+      rgba(17,49,91,.22);
+    border-color: rgba(165,245,255,.30);
+    box-shadow:
+      0 12px 30px rgba(7, 20, 44, .28),
+      0 0 16px rgba(80,225,255,.12),
+      inset 0 1px 0 rgba(255,255,255,.22);
+    color: rgba(234,244,255,.92);
+  }
+
+  body.aero-mode .profile-avatar{
+    border-color: rgba(255,255,255,.54);
+    box-shadow:
+      0 18px 60px rgba(4, 16, 36, .34),
+      0 0 0 8px rgba(112,232,255,.10);
+    filter: saturate(1.08) contrast(1.04);
+  }
+
+  body.aero-mode .mica-window > .p-8{
+    position: relative;
+    padding: 2rem;
+    background: none;
+  }
+
+  body.aero-mode .mica-window > .p-8::before{
+    content: none;
+  }
+
+  body.aero-mode .mica-window > .p-8::after{
+    content: none;
+  }
+
+  body.aero-mode header{
+    position: relative;
+    margin-bottom: 2rem;
+    padding: 0;
+    border: none;
+    background: none;
+    box-shadow: none;
+    overflow: visible;
+  }
+
+  body.aero-mode header::before{
+    content: none;
+  }
+
+  body.aero-mode main{
+    position: relative;
+    padding: 0;
+    border: none;
+    background: none;
+    box-shadow: none;
+  }
+
+  body.aero-mode main::before{
+    content: none;
+  }
+
+  body.aero-mode footer{
+    position: relative;
+    margin-top: 3rem;
+    padding-top: 0;
+    z-index: 1;
+  }
+
+  body.aero-mode h1{
+    text-shadow: 0 1px 0 rgba(0,0,0,.42), 0 0 16px rgba(91,224,255,.12);
+  }
+
+  body.aero-mode .text-white,
+  body.aero-mode .text-gray-300,
+  body.aero-mode .text-gray-400,
+  body.aero-mode .hover\:text-white:hover{
+    color: rgba(234,244,255,.92) !important;
+  }
+
+  body.aero-mode .mica-link,
+  body.aero-mode .mica-window,
+  body.aero-mode .mica-icon-btn,
+  body.aero-mode h1,
+  body.aero-mode p,
+  body.aero-mode span,
+  body.aero-mode button,
+  body.aero-mode i{
+    color: rgba(234,244,255,.92);
   }
 
 
@@ -334,18 +693,46 @@
 <body class="text-white min-h-screen p-4 sm:p-6 sm:flex sm:items-center sm:justify-center">
 
     <div id="seasonal-container"></div>
+    <audio id="aero-audio" src="/aero/aero.mp3" preload="auto"></audio>
+    <div class="aero-bubbles" aria-hidden="true">
+        <span class="aero-bubble"></span>
+        <span class="aero-bubble"></span>
+        <span class="aero-bubble"></span>
+        <span class="aero-bubble"></span>
+        <span class="aero-bubble"></span>
+        <span class="aero-bubble"></span>
+    </div>
+    <div class="aero-fish-school" aria-hidden="true">
+        <img class="aero-fish fish-1" src="/aero/fish/Fish1.png" alt="" decoding="async">
+        <img class="aero-fish fish-2" src="/aero/fish/Fish2.png" alt="" decoding="async">
+        <img class="aero-fish fish-3" src="/aero/fish/Fish3.png" alt="" decoding="async">
+        <img class="aero-fish fish-4" src="/aero/fish/Fish4.png" alt="" decoding="async">
+        <img class="aero-fish fish-5" src="/aero/fish/Fish5.png" alt="" decoding="async">
+        <img class="aero-fish fish-6" src="/aero/fish/Fish6.png" alt="" decoding="async">
+    </div>
     
     <div class="w-full max-w-md mx-auto my-8 mica-window relative">
         <div class="p-8">
 
         <a
-        href="https://www.youtube.com/watch?v=tu0PIt7eREM"
+        href="https://www.youtube.com/watch?v=avD5sUMslFk"
         target="_blank" rel="noopener noreferrer"
         aria-label="Open my music" title="Current obsession"
         class="absolute top-3 right-3 sm:top-4 sm:right-4 z-10 mica-icon-btn"
         >
         <i class="fa-solid fa-music text-lg leading-none"></i>
         </a>
+
+        <button
+        id="aero-toggle"
+        type="button"
+        aria-label="Toggle Frutiger Aero mode"
+        aria-pressed="false"
+        title="Toggle Frutiger Aero"
+        class="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 z-10 mica-icon-btn"
+        >
+        <i class="fa-solid fa-water text-lg leading-none"></i>
+        </button>
 
         <a
         href="/site/"
@@ -729,6 +1116,41 @@
             const day = ((h + l - 7 * m + 114) % 31) + 1;
             return new Date(year, month - 1, day);
         }
+
+        function startAeroAudio() {
+            const audio = document.getElementById('aero-audio');
+            if (!audio) return;
+
+            audio.pause();
+            audio.currentTime = 0;
+            audio.volume = 0.5;
+            audio.play().catch(() => {});
+        }
+
+        function stopAeroAudio() {
+            const audio = document.getElementById('aero-audio');
+            if (!audio) return;
+
+            audio.pause();
+            audio.currentTime = 0;
+        }
+
+        function setAeroMode(enabled) {
+            document.body.classList.toggle('aero-mode', enabled);
+
+            const toggle = document.getElementById('aero-toggle');
+            if (toggle) {
+                toggle.classList.toggle('is-active', enabled);
+                toggle.setAttribute('aria-pressed', String(enabled));
+                toggle.title = enabled ? 'Disable Frutiger Aero' : 'Toggle Frutiger Aero';
+            }
+
+            if (enabled) {
+                startAeroAudio();
+            } else {
+                stopAeroAudio();
+            }
+        }
     
 
         // Smoothly fade between internal pages (keeps external links untouched)
@@ -772,10 +1194,21 @@
         // Safety net: don't ever stay hidden
         setTimeout(() => document.body.classList.add('is-ready'), 1200);
 
+        document.addEventListener('DOMContentLoaded', () => {
+            const aeroToggle = document.getElementById('aero-toggle');
+            if (!aeroToggle) return;
+
+            aeroToggle.addEventListener('click', () => {
+                const next = !document.body.classList.contains('aero-mode');
+                setAeroMode(next);
+            });
+        });
+
+        window.addEventListener('pagehide', stopAeroAudio);
+
 </script>
 
 </body>
 
 </html>
-
 
