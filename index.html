@@ -40,6 +40,7 @@
 <link rel="icon" href="/favicon.ico" sizes="any">
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="preload" as="image" href="/aero/aero-mobile.jpg" media="(max-width: 768px)" fetchpriority="low">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
@@ -528,7 +529,7 @@
       radial-gradient(circle at 12% 10%, rgba(255,255,255,.18), transparent 16%),
       linear-gradient(108deg, transparent 18%, rgba(255,255,255,.28) 19%, transparent 20%),
       linear-gradient(130deg, transparent 34%, rgba(255,255,255,.20) 35%, transparent 36%),
-      url('/aero/aero.png');
+      url('/aero/aero.jpg');
     background-size: auto, auto, auto, auto, cover;
     background-position: center;
     animation: none;
@@ -684,6 +685,59 @@
   body.aero-mode button,
   body.aero-mode i{
     color: rgba(234,244,255,.92);
+  }
+
+  @media (max-width: 768px){
+    body,
+    body::before,
+    body::after,
+    .mica-window,
+    .mica-window::before,
+    .mica-window::after,
+    .mica-link,
+    .mica-icon-btn,
+    .profile-avatar{
+      transition-duration: .24s;
+    }
+
+    body::before,
+    body::after{
+      transition: opacity .24s ease;
+    }
+
+    body.aero-mode::before{
+      background-image:
+        linear-gradient(180deg, rgba(8,18,40,.16), rgba(8,18,40,.46)),
+        radial-gradient(circle at 12% 10%, rgba(255,255,255,.12), transparent 16%),
+        linear-gradient(108deg, transparent 18%, rgba(255,255,255,.18) 19%, transparent 20%),
+        linear-gradient(130deg, transparent 34%, rgba(255,255,255,.13) 35%, transparent 36%),
+        url('/aero/aero-mobile.jpg');
+      filter: none;
+      transform: translateZ(0);
+      will-change: opacity;
+    }
+
+    body.aero-mode .mica-window{
+      backdrop-filter: blur(18px) saturate(1.15);
+      -webkit-backdrop-filter: blur(16px) saturate(1.15);
+    }
+
+    .aero-bubbles,
+    .aero-fish-school{
+      transition-duration: .24s;
+    }
+
+    .aero-bubble{
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      box-shadow:
+        inset 0 1px 12px rgba(255,255,255,.22),
+        0 0 36px rgba(86,231,255,.14);
+    }
+
+    .aero-fish{
+      filter: drop-shadow(0 8px 18px rgba(8, 18, 42, .20));
+    }
   }
 
 
@@ -1117,6 +1171,31 @@
             return new Date(year, month - 1, day);
         }
 
+        let aeroWarmupStarted = false;
+
+        function warmAeroAssets() {
+            if (aeroWarmupStarted) return;
+            aeroWarmupStarted = true;
+
+            const useMobileWallpaper = window.matchMedia('(max-width: 768px)').matches;
+            const imageUrls = [
+                useMobileWallpaper ? '/aero/aero-mobile.jpg' : '/aero/aero.jpg',
+                '/aero/fish/Fish1.png',
+                '/aero/fish/Fish2.png',
+                '/aero/fish/Fish3.png',
+                '/aero/fish/Fish4.png',
+                '/aero/fish/Fish5.png',
+                '/aero/fish/Fish6.png',
+            ];
+
+            imageUrls.forEach((src) => {
+                const img = new Image();
+                img.decoding = 'async';
+                img.src = src;
+                if (img.decode) img.decode().catch(() => {});
+            });
+        }
+
         function startAeroAudio() {
             const audio = document.getElementById('aero-audio');
             if (!audio) return;
@@ -1198,7 +1277,15 @@
             const aeroToggle = document.getElementById('aero-toggle');
             if (!aeroToggle) return;
 
+            const warmup = () => warmAeroAssets();
+            if ('requestIdleCallback' in window) {
+                window.requestIdleCallback(warmup, { timeout: 1800 });
+            } else {
+                setTimeout(warmup, 800);
+            }
+
             aeroToggle.addEventListener('click', () => {
+                warmAeroAssets();
                 const next = !document.body.classList.contains('aero-mode');
                 setAeroMode(next);
             });
