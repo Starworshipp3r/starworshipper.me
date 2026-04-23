@@ -492,6 +492,49 @@
     --fish-opacity: .52;
   }
 
+  .aero-dew-layer{
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity .35s ease;
+    z-index: 0;
+  }
+
+  .aero-dew{
+    position: absolute;
+    border-radius: 9999px;
+    border: 1px solid rgba(255,255,255,.26);
+    background:
+      radial-gradient(circle at 32% 28%, rgba(255,255,255,.92), rgba(255,255,255,.42) 20%, rgba(159,228,255,.20) 44%, rgba(255,255,255,0) 74%),
+      radial-gradient(circle at 68% 74%, rgba(68,122,184,.18), rgba(255,255,255,0) 58%);
+    box-shadow:
+      inset 0 1px 10px rgba(255,255,255,.24),
+      inset 0 -4px 10px rgba(62, 120, 182, .10),
+      0 8px 18px rgba(5, 16, 38, .12);
+    transform: rotate(var(--dew-tilt, 0deg));
+  }
+
+  .aero-dew::before{
+    content: '';
+    position: absolute;
+    top: 18%;
+    left: 20%;
+    width: 24%;
+    height: 24%;
+    border-radius: 9999px;
+    background: rgba(255,255,255,.78);
+    opacity: .9;
+  }
+
+  .dew-1{ left: 7%; top: 8%; width: 18px; height: 14px; --dew-tilt: -12deg; }
+  .dew-2{ left: 16%; top: 18%; width: 10px; height: 10px; --dew-tilt: 8deg; opacity: .86; }
+  .dew-3{ right: 16%; top: 12%; width: 14px; height: 14px; --dew-tilt: -6deg; }
+  .dew-4{ left: 10%; bottom: 21%; width: 22px; height: 16px; --dew-tilt: 14deg; opacity: .82; }
+  .dew-5{ right: 12%; bottom: 24%; width: 12px; height: 12px; --dew-tilt: -8deg; opacity: .8; }
+  .dew-6{ right: 18%; bottom: 11%; width: 18px; height: 14px; --dew-tilt: 10deg; }
+  .dew-7{ left: 24%; bottom: 9%; width: 10px; height: 10px; --dew-tilt: -4deg; opacity: .84; }
+
   #aero-toggle.is-active{
     box-shadow:
       0 0 0 3px rgba(255,255,255,.22),
@@ -548,6 +591,10 @@
 
   body.aero-mode .aero-fish-school{
     opacity: 1;
+  }
+
+  body.aero-mode .aero-dew-layer{
+    opacity: .96;
   }
 
   body.aero-mode .mica-window{
@@ -640,6 +687,7 @@
     background: none;
     box-shadow: none;
     overflow: visible;
+    z-index: 1;
   }
 
   body.aero-mode header::before{
@@ -652,6 +700,7 @@
     border: none;
     background: none;
     box-shadow: none;
+    z-index: 1;
   }
 
   body.aero-mode main::before{
@@ -738,6 +787,13 @@
     .aero-fish{
       filter: drop-shadow(0 8px 18px rgba(8, 18, 42, .20));
     }
+
+    .aero-dew{
+      box-shadow:
+        inset 0 1px 8px rgba(255,255,255,.22),
+        inset 0 -3px 8px rgba(62, 120, 182, .08),
+        0 6px 14px rgba(5, 16, 38, .10);
+    }
   }
 
 
@@ -767,6 +823,15 @@
     
     <div class="w-full max-w-md mx-auto my-8 mica-window relative">
         <div class="p-8">
+        <div class="aero-dew-layer" aria-hidden="true">
+            <span class="aero-dew dew-1"></span>
+            <span class="aero-dew dew-2"></span>
+            <span class="aero-dew dew-3"></span>
+            <span class="aero-dew dew-4"></span>
+            <span class="aero-dew dew-5"></span>
+            <span class="aero-dew dew-6"></span>
+            <span class="aero-dew dew-7"></span>
+        </div>
 
         <a
         href="https://www.youtube.com/watch?v=avD5sUMslFk"
