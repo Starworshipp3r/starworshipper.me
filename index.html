@@ -534,6 +534,12 @@
   .dew-5{ right: 12%; bottom: 24%; width: 12px; height: 12px; --dew-tilt: -8deg; opacity: .8; }
   .dew-6{ right: 18%; bottom: 11%; width: 18px; height: 14px; --dew-tilt: 10deg; }
   .dew-7{ left: 24%; bottom: 9%; width: 10px; height: 10px; --dew-tilt: -4deg; opacity: .84; }
+  .dew-8{ left: 6%; top: 31%; width: 9px; height: 9px; --dew-tilt: 6deg; opacity: .8; }
+  .dew-9{ right: 8%; top: 30%; width: 14px; height: 11px; --dew-tilt: -10deg; opacity: .78; }
+  .dew-10{ left: 31%; top: 7%; width: 12px; height: 10px; --dew-tilt: 12deg; opacity: .82; }
+  .dew-11{ right: 28%; bottom: 8%; width: 9px; height: 9px; --dew-tilt: -5deg; opacity: .86; }
+  .dew-12{ left: 7%; bottom: 37%; width: 15px; height: 12px; --dew-tilt: 9deg; opacity: .76; }
+  .dew-13{ right: 6%; bottom: 38%; width: 11px; height: 9px; --dew-tilt: -7deg; opacity: .8; }
 
   #aero-toggle.is-active{
     box-shadow:
@@ -736,7 +742,7 @@
     color: rgba(234,244,255,.92);
   }
 
-  @media (max-width: 768px){
+  @media (max-width: 768px), (hover: none) and (pointer: coarse){
     body,
     body::before,
     body::after,
@@ -773,7 +779,7 @@
 
     .aero-bubbles,
     .aero-fish-school{
-      transition-duration: .24s;
+      display: none !important;
     }
 
     .aero-bubble{
@@ -813,12 +819,12 @@
         <span class="aero-bubble"></span>
     </div>
     <div class="aero-fish-school" aria-hidden="true">
-        <img class="aero-fish fish-1" src="/aero/fish/Fish1.png" alt="" decoding="async">
-        <img class="aero-fish fish-2" src="/aero/fish/Fish2.png" alt="" decoding="async">
-        <img class="aero-fish fish-3" src="/aero/fish/Fish3.png" alt="" decoding="async">
-        <img class="aero-fish fish-4" src="/aero/fish/Fish4.png" alt="" decoding="async">
-        <img class="aero-fish fish-5" src="/aero/fish/Fish5.png" alt="" decoding="async">
-        <img class="aero-fish fish-6" src="/aero/fish/Fish6.png" alt="" decoding="async">
+        <img class="aero-fish fish-1" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" data-fish-src="/aero/fish/Fish1.png" alt="" decoding="async">
+        <img class="aero-fish fish-2" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" data-fish-src="/aero/fish/Fish2.png" alt="" decoding="async">
+        <img class="aero-fish fish-3" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" data-fish-src="/aero/fish/Fish3.png" alt="" decoding="async">
+        <img class="aero-fish fish-4" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" data-fish-src="/aero/fish/Fish4.png" alt="" decoding="async">
+        <img class="aero-fish fish-5" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" data-fish-src="/aero/fish/Fish5.png" alt="" decoding="async">
+        <img class="aero-fish fish-6" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" data-fish-src="/aero/fish/Fish6.png" alt="" decoding="async">
     </div>
     
     <div class="w-full max-w-md mx-auto my-8 mica-window relative">
@@ -831,6 +837,12 @@
             <span class="aero-dew dew-5"></span>
             <span class="aero-dew dew-6"></span>
             <span class="aero-dew dew-7"></span>
+            <span class="aero-dew dew-8"></span>
+            <span class="aero-dew dew-9"></span>
+            <span class="aero-dew dew-10"></span>
+            <span class="aero-dew dew-11"></span>
+            <span class="aero-dew dew-12"></span>
+            <span class="aero-dew dew-13"></span>
         </div>
 
         <a
@@ -1237,21 +1249,44 @@
         }
 
         let aeroWarmupStarted = false;
+        let aeroFishHydrated = false;
+
+        function shouldUseLiteAeroScene() {
+            return window.matchMedia('(max-width: 768px), (hover: none) and (pointer: coarse)').matches;
+        }
+
+        function hydrateAeroFish() {
+            if (aeroFishHydrated || shouldUseLiteAeroScene()) return;
+
+            document.querySelectorAll('.aero-fish[data-fish-src]').forEach((img) => {
+                if (!img.getAttribute('src') || img.getAttribute('src').startsWith('data:image/gif')) {
+                    img.src = img.dataset.fishSrc;
+                }
+            });
+
+            aeroFishHydrated = true;
+        }
 
         function warmAeroAssets() {
             if (aeroWarmupStarted) return;
             aeroWarmupStarted = true;
 
-            const useMobileWallpaper = window.matchMedia('(max-width: 768px)').matches;
+            const useMobileWallpaper = shouldUseLiteAeroScene();
             const imageUrls = [
                 useMobileWallpaper ? '/aero/aero-mobile.jpg' : '/aero/aero.jpg',
-                '/aero/fish/Fish1.png',
-                '/aero/fish/Fish2.png',
-                '/aero/fish/Fish3.png',
-                '/aero/fish/Fish4.png',
-                '/aero/fish/Fish5.png',
-                '/aero/fish/Fish6.png',
             ];
+
+            if (!useMobileWallpaper) {
+                hydrateAeroFish();
+                imageUrls.push(
+                    '/aero/fish/Fish1.png',
+                    '/aero/fish/Fish2.png',
+                    '/aero/fish/Fish3.png',
+                    '/aero/fish/Fish4.png',
+                    '/aero/fish/Fish5.png',
+                    '/aero/fish/Fish6.png',
+                );
+            }
 
             imageUrls.forEach((src) => {
                 const img = new Image();
@@ -1341,6 +1376,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             const aeroToggle = document.getElementById('aero-toggle');
             if (!aeroToggle) return;
+            const liteSceneQuery = window.matchMedia('(max-width: 768px), (hover: none) and (pointer: coarse)');
 
             const warmup = () => warmAeroAssets();
             if ('requestIdleCallback' in window) {
@@ -1349,11 +1385,27 @@
                 setTimeout(warmup, 800);
             }
 
+            if (!shouldUseLiteAeroScene()) {
+                hydrateAeroFish();
+            }
+
             aeroToggle.addEventListener('click', () => {
                 warmAeroAssets();
                 const next = !document.body.classList.contains('aero-mode');
                 setAeroMode(next);
             });
+
+            const onLiteSceneChange = (event) => {
+                if (!event.matches) {
+                    hydrateAeroFish();
+                }
+            };
+
+            if (typeof liteSceneQuery.addEventListener === 'function') {
+                liteSceneQuery.addEventListener('change', onLiteSceneChange);
+            } else if (typeof liteSceneQuery.addListener === 'function') {
+                liteSceneQuery.addListener(onLiteSceneChange);
+            }
         });
 
         window.addEventListener('pagehide', stopAeroAudio);
