@@ -336,6 +336,7 @@
   body,
   body::before,
   body::after,
+  .aero-wallpaper,
   .mica-window,
   .mica-window::before,
   .mica-window::after,
@@ -350,6 +351,24 @@
       opacity .45s ease,
       filter .45s ease,
       transform .45s ease;
+  }
+
+  .aero-wallpaper{
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity .45s ease;
+    background-image:
+      linear-gradient(180deg, rgba(8,18,40,.18), rgba(8,18,40,.52)),
+      radial-gradient(circle at 12% 10%, rgba(255,255,255,.18), transparent 16%),
+      linear-gradient(108deg, transparent 18%, rgba(255,255,255,.28) 19%, transparent 20%),
+      linear-gradient(130deg, transparent 34%, rgba(255,255,255,.20) 35%, transparent 36%),
+      url('/aero/aero.jpg');
+    background-size: auto, auto, auto, auto, cover;
+    background-position: center;
+    filter: saturate(1.2) contrast(1.08) brightness(.78);
   }
 
   .aero-bubbles{
@@ -567,22 +586,11 @@
   }
 
   body.aero-mode::before{
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    margin-top: 0;
-    margin-left: 0;
-    background-image:
-      linear-gradient(180deg, rgba(8,18,40,.18), rgba(8,18,40,.52)),
-      radial-gradient(circle at 12% 10%, rgba(255,255,255,.18), transparent 16%),
-      linear-gradient(108deg, transparent 18%, rgba(255,255,255,.28) 19%, transparent 20%),
-      linear-gradient(130deg, transparent 34%, rgba(255,255,255,.20) 35%, transparent 36%),
-      url('/aero/aero.jpg');
-    background-size: auto, auto, auto, auto, cover;
-    background-position: center;
-    animation: none;
-    filter: saturate(1.2) contrast(1.08) brightness(.78);
+    opacity: 0;
+  }
+
+  body.aero-mode .aero-wallpaper{
+    opacity: 1;
   }
 
   body.aero-mode::after{
@@ -760,7 +768,7 @@
       transition: opacity .24s ease;
     }
 
-    body.aero-mode::before{
+    body.aero-mode .aero-wallpaper{
       background-image:
         linear-gradient(180deg, rgba(8,18,40,.16), rgba(8,18,40,.46)),
         radial-gradient(circle at 12% 10%, rgba(255,255,255,.12), transparent 16%),
@@ -768,7 +776,6 @@
         linear-gradient(130deg, transparent 34%, rgba(255,255,255,.13) 35%, transparent 36%),
         url('/aero/aero-mobile.jpg');
       filter: none;
-      transform: translateZ(0);
       will-change: opacity;
     }
 
@@ -809,6 +816,7 @@
 <body class="text-white min-h-screen p-4 sm:p-6 sm:flex sm:items-center sm:justify-center">
 
     <div id="seasonal-container"></div>
+    <div class="aero-wallpaper" aria-hidden="true"></div>
     <audio id="aero-audio" src="/aero/aero.mp3" preload="auto"></audio>
     <div class="aero-bubbles" aria-hidden="true">
         <span class="aero-bubble"></span>
