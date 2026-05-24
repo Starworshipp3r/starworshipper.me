@@ -925,42 +925,6 @@
     align-items: center;
   }
 
-  .dumbdog-shortcuts{
-    position: absolute;
-    top: clamp(8px, 1.8vw, 18px);
-    left: clamp(8px, 1.8vw, 18px);
-    display: grid;
-    gap: 13px;
-    width: 68px;
-  }
-
-  .dumbdog-shortcut{
-    display: grid;
-    justify-items: center;
-    gap: 5px;
-    color: rgba(244, 252, 255, .94);
-    font-size: 11px;
-    line-height: 1.15;
-    text-align: center;
-    text-shadow: 0 1px 4px rgba(0,0,0,.72);
-  }
-
-  .dumbdog-shortcut i{
-    display: grid;
-    place-items: center;
-    width: 34px;
-    height: 34px;
-    border-radius: 6px;
-    border: 0;
-    background: transparent;
-    box-shadow: none;
-    color: rgba(240, 252, 255, .96);
-    filter:
-      drop-shadow(0 1px 1px rgba(0,0,0,.88))
-      drop-shadow(0 4px 8px rgba(0,0,0,.24));
-    font-size: 28px;
-  }
-
   .dumbdog-window,
   .dumbdog-widget,
   .dumbdog-taskbar{
@@ -1165,8 +1129,8 @@
       radial-gradient(circle, #fbfaf1 0 59%, #dedbd0 60% 70%, #242424 71%);
     box-shadow:
       inset 0 1px 7px rgba(0,0,0,.28),
-      0 3px 0 rgba(0,0,0,.46),
-      0 10px 20px rgba(0,0,0,.42);
+      0 2px 0 rgba(0,0,0,.32),
+      0 5px 10px rgba(0,0,0,.22);
   }
 
   .dumbdog-clock-face::after{
@@ -1258,8 +1222,8 @@
     width: 8px;
     height: 8px;
     border-radius: 9999px;
-    background: #76ff9b;
-    box-shadow: 0 0 12px rgba(118,255,155,.78);
+    background: var(--dumbdog-status-color, #76ff9b);
+    box-shadow: 0 0 12px var(--dumbdog-status-glow, rgba(118,255,155,.78));
     flex: 0 0 auto;
   }
 
@@ -1337,6 +1301,242 @@
       radial-gradient(circle at 50% 60%, rgba(70,205,255,.98), rgba(20,122,190,.90) 58%, rgba(3,37,80,.96));
   }
 
+  .dumbdog-start-menu{
+    position: fixed;
+    left: 9px;
+    bottom: 38px;
+    z-index: 3;
+    width: min(430px, calc(100vw - 18px));
+    color: #111;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(10px) scale(.98);
+    transform-origin: left bottom;
+    transition:
+      opacity .18s ease,
+      transform .18s ease,
+      visibility 0s linear .18s;
+  }
+
+  body.dumbdog-start-open .dumbdog-start-menu{
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: none;
+    transition-delay: 0s;
+  }
+
+  body.dumbdog-start-open .dumbdog-start{
+    background:
+      radial-gradient(circle at 34% 26%, rgba(255,255,255,.92), rgba(255,255,255,0) 28%),
+      radial-gradient(circle at 50% 60%, rgba(70,205,255,.98), rgba(20,122,190,.90) 58%, rgba(3,37,80,.96));
+  }
+
+  .dumbdog-start-menu-shell{
+    display: grid;
+    grid-template-columns: minmax(0, 1.18fr) minmax(132px, .82fr);
+    min-height: 420px;
+    overflow: visible;
+    border-radius: 8px 8px 0 0;
+    border: 1px solid rgba(226, 247, 255, .66);
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.36), rgba(255,255,255,.12) 10%, rgba(3,24,41,.58)),
+      rgba(11, 37, 55, .70);
+    box-shadow:
+      0 18px 38px rgba(0,0,0,.42),
+      inset 0 1px 0 rgba(255,255,255,.46),
+      inset 0 -1px 0 rgba(0,0,0,.42);
+    backdrop-filter: blur(16px) saturate(1.3);
+    -webkit-backdrop-filter: blur(14px) saturate(1.3);
+  }
+
+  .dumbdog-start-left{
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    margin: 7px 0 7px 7px;
+    overflow: hidden;
+    border-radius: 4px 0 0 4px;
+    background: rgba(250,250,246,.96);
+    box-shadow: inset -1px 0 0 rgba(0,0,0,.15);
+  }
+
+  .dumbdog-start-programs{
+    flex: 1 1 auto;
+    padding: 6px;
+  }
+
+  .dumbdog-start-program,
+  .dumbdog-all-programs{
+    width: 100%;
+    min-height: 30px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: 0;
+    border-radius: 3px;
+    background: transparent;
+    color: #111;
+    cursor: default;
+    padding: 4px 7px;
+    text-align: left;
+    text-decoration: none;
+    font: inherit;
+  }
+
+  .dumbdog-start-program:hover,
+  .dumbdog-all-programs:hover,
+  .dumbdog-start-right-link:hover{
+    background: linear-gradient(180deg, #d9efff, #b7d9f2);
+    color: #061b2b;
+  }
+
+  .dumbdog-start-program i{
+    width: 24px;
+    display: grid;
+    place-items: center;
+    flex: 0 0 auto;
+    color: #1682c5;
+    font-size: 18px;
+  }
+
+  .dumbdog-start-program strong{
+    display: block;
+    color: inherit;
+    font-size: 12px;
+    line-height: 1.15;
+  }
+
+  .dumbdog-start-program small{
+    display: none;
+  }
+
+  .dumbdog-start-divider{
+    height: 1px;
+    margin: 5px 2px;
+    background: rgba(0,0,0,.14);
+  }
+
+  .dumbdog-all-programs{
+    min-height: 30px;
+    justify-content: flex-start;
+    border-top: 1px solid rgba(0,0,0,.12);
+    border-radius: 0;
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  .dumbdog-start-search{
+    padding: 4px;
+    border-top: 1px solid rgba(0,0,0,.18);
+    background: linear-gradient(180deg, rgba(238,238,232,.96), rgba(211,214,208,.96));
+  }
+
+  .dumbdog-start-search input{
+    width: 100%;
+    height: 24px;
+    border: 1px solid rgba(60,75,82,.52);
+    border-radius: 2px;
+    padding: 0 8px;
+    background: #fff;
+    color: #333;
+    font-size: 11px;
+  }
+
+  .dumbdog-start-right{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    padding: 40px 7px 7px;
+    color: rgba(245,252,255,.96);
+  }
+
+  .dumbdog-start-user{
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    display: grid;
+    justify-items: center;
+    gap: 5px;
+    transform: translateX(-50%);
+    color: rgba(245,252,255,.98);
+    font-size: 12px;
+    font-weight: 700;
+    text-shadow: 0 1px 4px rgba(0,0,0,.72);
+  }
+
+  .dumbdog-start-user img{
+    width: 58px;
+    height: 58px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,.72);
+    background: rgba(255,255,255,.12);
+    box-shadow:
+      0 5px 16px rgba(0,0,0,.35),
+      inset 0 1px 0 rgba(255,255,255,.34);
+  }
+
+  .dumbdog-start-right-link,
+  .dumbdog-start-power{
+    width: 100%;
+    min-height: 28px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: 0;
+    border-radius: 3px;
+    background: transparent;
+    color: rgba(245,252,255,.96);
+    cursor: default;
+    padding: 4px 7px;
+    text-align: left;
+    text-decoration: none;
+    text-shadow: 0 1px 3px rgba(0,0,0,.62);
+    font: inherit;
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  .dumbdog-start-right-link i,
+  .dumbdog-start-power i{
+    width: 16px;
+    display: grid;
+    place-items: center;
+    flex: 0 0 auto;
+    color: rgba(224,246,255,.86);
+  }
+
+  .dumbdog-start-right-divider{
+    height: 1px;
+    margin: 6px 4px;
+    background: rgba(255,255,255,.18);
+    box-shadow: 0 1px 0 rgba(0,0,0,.22);
+  }
+
+  .dumbdog-start-power-row{
+    display: flex;
+    gap: 5px;
+    margin-top: auto;
+    padding-top: 8px;
+  }
+
+  .dumbdog-start-power{
+    justify-content: center;
+    min-height: 30px;
+    border: 1px solid rgba(255,255,255,.24);
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,.04)),
+      rgba(4, 18, 28, .42);
+  }
+
+  .dumbdog-start-power:hover{
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.30), rgba(255,255,255,.08)),
+      rgba(117, 19, 18, .68);
+  }
+
   .dumbdog-task-button{
     display: flex;
     align-items: center;
@@ -1375,28 +1575,6 @@
       align-items: stretch;
       gap: 14px;
       padding: 12px 10px calc(52px + env(safe-area-inset-bottom));
-    }
-
-    .dumbdog-shortcuts{
-      position: relative;
-      top: auto;
-      left: auto;
-      width: 100%;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 8px;
-      order: 1;
-    }
-
-    .dumbdog-shortcut{
-      min-width: 0;
-      font-size: 10px;
-    }
-
-    .dumbdog-shortcut i{
-      width: 36px;
-      height: 36px;
-      border-radius: 12px;
-      font-size: 17px;
     }
 
     .dumbdog-window{
@@ -1512,6 +1690,65 @@
       min-width: 66px;
       font-size: 11px;
     }
+
+    .dumbdog-start-menu{
+      left: 7px;
+      bottom: 38px;
+      width: calc(100vw - 14px);
+    }
+
+    .dumbdog-start-menu-shell{
+      grid-template-columns: minmax(0, 1.05fr) minmax(118px, .95fr);
+      min-height: 394px;
+    }
+
+    .dumbdog-start-left{
+      margin: 6px 0 6px 6px;
+    }
+
+    .dumbdog-start-programs{
+      padding: 5px;
+    }
+
+    .dumbdog-start-program{
+      min-height: 31px;
+      gap: 7px;
+      padding: 3px 6px;
+    }
+
+    .dumbdog-start-program i{
+      width: 21px;
+      font-size: 16px;
+    }
+
+    .dumbdog-start-program strong{
+      font-size: 11px;
+    }
+
+    .dumbdog-start-program small{
+      display: none;
+    }
+
+    .dumbdog-start-right{
+      padding: 36px 6px 6px;
+    }
+
+    .dumbdog-start-user{
+      top: -34px;
+      font-size: 11px;
+    }
+
+    .dumbdog-start-user img{
+      width: 50px;
+      height: 50px;
+    }
+
+    .dumbdog-start-right-link,
+    .dumbdog-start-power{
+      min-height: 26px;
+      padding: 3px 6px;
+      font-size: 10px;
+    }
   }
 
   @media (max-width: 768px), (hover: none) and (pointer: coarse){
@@ -1626,21 +1863,6 @@
 
     <section id="dumbdog-os" class="dumbdog-os" aria-label="Dumbdog OS desktop" aria-hidden="true">
         <div class="dumbdog-desktop">
-            <nav class="dumbdog-shortcuts" aria-label="Dumbdog OS shortcuts">
-                <a class="dumbdog-shortcut" href="/site/">
-                    <i class="fa-solid fa-folder-open" aria-hidden="true"></i>
-                    <span>Site</span>
-                </a>
-                <a class="dumbdog-shortcut" href="/site/photos/">
-                    <i class="fa-solid fa-image" aria-hidden="true"></i>
-                    <span>Photos</span>
-                </a>
-                <a class="dumbdog-shortcut" href="/site/hikes/">
-                    <i class="fa-solid fa-person-hiking" aria-hidden="true"></i>
-                    <span>Hikes</span>
-                </a>
-            </nav>
-
             <section class="dumbdog-window" aria-label="Dumbdog links window">
                 <div class="dumbdog-titlebar">
                     <span><i class="fa-solid fa-window-maximize" aria-hidden="true"></i>Dumbdog Links</span>
@@ -1706,24 +1928,97 @@
                     <span class="dumbdog-widget-label">Weather</span>
                     <div class="dumbdog-widget-main">
                         <i class="fa-solid fa-sun" aria-hidden="true"></i>
-                        <span class="dumbdog-weather-temp">72&deg;</span>
+                        <span class="dumbdog-weather-temp" data-dumbdog-weather-temp>72&deg;</span>
                     </div>
-                    <p class="dumbdog-widget-sub">Clear, optimism rising</p>
+                    <p class="dumbdog-widget-sub" data-dumbdog-weather-caption>Clear, optimism rising</p>
                 </section>
 
                 <section class="dumbdog-widget">
                     <span class="dumbdog-widget-label">MSN</span>
                     <div class="dumbdog-widget-main">
                         <span class="dumbdog-status-avatar" aria-hidden="true"></span>
-                        <span class="dumbdog-status-dot" aria-hidden="true"></span>
-                        <span>Star is online</span>
+                        <span class="dumbdog-status-dot" data-dumbdog-status-dot aria-hidden="true"></span>
+                        <span data-dumbdog-status-text>Star is online</span>
                     </div>
                 </section>
             </aside>
         </div>
 
+        <div id="dumbdog-start-menu" class="dumbdog-start-menu" aria-hidden="true">
+            <div class="dumbdog-start-menu-shell">
+                <div class="dumbdog-start-left">
+                    <div class="dumbdog-start-programs">
+                        <button class="dumbdog-start-program" type="button">
+                            <i class="fa-solid fa-compass" aria-hidden="true"></i>
+                            <span><strong>Internet</strong><small>Dumbdog Browser</small></span>
+                        </button>
+                        <button class="dumbdog-start-program" type="button">
+                            <i class="fa-solid fa-envelope" aria-hidden="true"></i>
+                            <span><strong>E-mail</strong><small>Dumbdog Mail</small></span>
+                        </button>
+                        <div class="dumbdog-start-divider"></div>
+                        <a class="dumbdog-start-program" href="/site/">
+                            <i class="fa-solid fa-folder-open" aria-hidden="true"></i>
+                            <span><strong>Site</strong><small>Open the main site</small></span>
+                        </a>
+                        <a class="dumbdog-start-program" href="/site/photos/">
+                            <i class="fa-solid fa-image" aria-hidden="true"></i>
+                            <span><strong>Photos</strong><small>Photo gallery</small></span>
+                        </a>
+                        <a class="dumbdog-start-program" href="/site/hikes/">
+                            <i class="fa-solid fa-person-hiking" aria-hidden="true"></i>
+                            <span><strong>Hikes</strong><small>Trail log</small></span>
+                        </a>
+                        <button class="dumbdog-start-program" type="button">
+                            <i class="fa-solid fa-circle-play" aria-hidden="true"></i>
+                            <span><strong>Media Center</strong><small>Now playing</small></span>
+                        </button>
+                        <button class="dumbdog-start-program" type="button">
+                            <i class="fa-solid fa-music" aria-hidden="true"></i>
+                            <span><strong>Music Library</strong><small>Frutiger Aero Mix</small></span>
+                        </button>
+                        <button class="dumbdog-start-program" type="button">
+                            <i class="fa-brands fa-windows" aria-hidden="true"></i>
+                            <span><strong>Dumbdog Gallery</strong><small>Desktop extras</small></span>
+                        </button>
+                    </div>
+                    <button class="dumbdog-all-programs" type="button">
+                        <i class="fa-solid fa-caret-right" aria-hidden="true"></i>
+                        <span>All Programs</span>
+                    </button>
+                    <label class="dumbdog-start-search">
+                        <input type="text" placeholder="Start Search" aria-label="Start Search">
+                    </label>
+                </div>
+
+                <div class="dumbdog-start-right">
+                    <div class="dumbdog-start-user">
+                        <img src="av.jpg" alt="">
+                        <span>Starworshipper</span>
+                    </div>
+                    <button class="dumbdog-start-right-link" type="button"><i class="fa-solid fa-user" aria-hidden="true"></i><span>Profile</span></button>
+                    <button class="dumbdog-start-right-link" type="button"><i class="fa-solid fa-folder" aria-hidden="true"></i><span>Documents</span></button>
+                    <a class="dumbdog-start-right-link" href="/site/photos/"><i class="fa-solid fa-image" aria-hidden="true"></i><span>Pictures</span></a>
+                    <button class="dumbdog-start-right-link" type="button"><i class="fa-solid fa-music" aria-hidden="true"></i><span>Music</span></button>
+                    <button class="dumbdog-start-right-link" type="button"><i class="fa-solid fa-gamepad" aria-hidden="true"></i><span>Games</span></button>
+                    <button class="dumbdog-start-right-link" type="button"><i class="fa-solid fa-clock-rotate-left" aria-hidden="true"></i><span>Recent Items</span></button>
+                    <div class="dumbdog-start-right-divider"></div>
+                    <button class="dumbdog-start-right-link" type="button"><i class="fa-solid fa-computer" aria-hidden="true"></i><span>Computer</span></button>
+                    <button class="dumbdog-start-right-link" type="button"><i class="fa-solid fa-network-wired" aria-hidden="true"></i><span>Network</span></button>
+                    <button class="dumbdog-start-right-link" type="button"><i class="fa-solid fa-sliders" aria-hidden="true"></i><span>Control Panel</span></button>
+                    <button class="dumbdog-start-right-link" type="button"><i class="fa-solid fa-circle-question" aria-hidden="true"></i><span>Help and Support</span></button>
+                    <div class="dumbdog-start-power-row">
+                        <button class="dumbdog-start-power" type="button" data-dumbdog-exit>
+                            <i class="fa-solid fa-power-off" aria-hidden="true"></i>
+                            <span>Shut Down</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="dumbdog-taskbar" role="toolbar" aria-label="Dumbdog OS taskbar">
-            <button class="dumbdog-start" type="button" data-dumbdog-exit aria-label="Exit Dumbdog OS" title="Exit Dumbdog OS">
+            <button id="dumbdog-start-button" class="dumbdog-start" type="button" aria-label="Open Start menu" aria-controls="dumbdog-start-menu" aria-expanded="false" title="Open Start menu">
                 <img class="dumbdog-start-logo" src="/aero/logo.png" alt="" decoding="async">
                 <span>Dumbdog</span>
             </button>
@@ -2263,7 +2558,32 @@
                 os.setAttribute('aria-hidden', String(!enabled));
             }
 
+            if (!enabled) {
+                setDumbdogStartMenu(false);
+            }
+
             setDumbdogToggleState(enabled, enabled ? 'Dumbdog OS is running' : 'Launch Dumbdog OS');
+        }
+
+        function setDumbdogStartMenu(enabled) {
+            const isOpen = Boolean(enabled && document.body.classList.contains('dumbdog-os-active'));
+            document.body.classList.toggle('dumbdog-start-open', isOpen);
+
+            const menu = document.getElementById('dumbdog-start-menu');
+            if (menu) {
+                menu.setAttribute('aria-hidden', String(!isOpen));
+            }
+
+            const button = document.getElementById('dumbdog-start-button');
+            if (button) {
+                button.setAttribute('aria-expanded', String(isOpen));
+                button.setAttribute('aria-label', isOpen ? 'Close Start menu' : 'Open Start menu');
+                button.title = isOpen ? 'Close Start menu' : 'Open Start menu';
+            }
+        }
+
+        function toggleDumbdogStartMenu() {
+            setDumbdogStartMenu(!document.body.classList.contains('dumbdog-start-open'));
         }
 
         function updateDumbdogBootStatus() {
@@ -2301,9 +2621,56 @@
         function exitDumbdogOS() {
             clearTimeout(dumbdogBootTimer);
             clearInterval(dumbdogBootMessageTimer);
+            setDumbdogStartMenu(false);
             setDumbdogBooting(false);
             setDumbdogOSActive(false);
             stopAeroAudio();
+        }
+
+        function pickRandomItem(items) {
+            return items[Math.floor(Math.random() * items.length)];
+        }
+
+        function randomizeDumbdogWidgets() {
+            const weather = pickRandomItem([
+                { temp: 67, caption: 'Sunny, optimism rising' },
+                { temp: 69, caption: 'Clear, glassy skies' },
+                { temp: 70, caption: 'Mild, breezy desktop' },
+                { temp: 72, caption: 'Clear, optimism rising' },
+                { temp: 73, caption: 'Warm, blue-sky mode' },
+                { temp: 75, caption: 'Sunny, vibes stable' },
+                { temp: 76, caption: 'Bright, low humidity' },
+                { temp: 78, caption: 'Warm, perfect pixels' },
+            ]);
+
+            const temp = document.querySelector('[data-dumbdog-weather-temp]');
+            if (temp) {
+                temp.innerHTML = `${weather.temp}&deg;`;
+            }
+
+            const caption = document.querySelector('[data-dumbdog-weather-caption]');
+            if (caption) {
+                caption.textContent = weather.caption;
+            }
+
+            const status = pickRandomItem([
+                { text: 'Star is online', color: '#76ff9b', glow: 'rgba(118,255,155,.78)' },
+                { text: 'Star is on DND', color: '#ff6464', glow: 'rgba(255,100,100,.72)' },
+                { text: 'Star is away', color: '#6fc7ff', glow: 'rgba(111,199,255,.72)' },
+                { text: 'Star is offline', color: '#a9b4bd', glow: 'rgba(169,180,189,.46)' },
+            ]);
+
+            const statusText = document.querySelector('[data-dumbdog-status-text]');
+            if (statusText) {
+                statusText.textContent = status.text;
+            }
+
+            const statusDot = document.querySelector('[data-dumbdog-status-dot]');
+            if (statusDot) {
+                statusDot.style.setProperty('--dumbdog-status-color', status.color);
+                statusDot.style.setProperty('--dumbdog-status-glow', status.glow);
+                statusDot.title = status.text;
+            }
         }
 
         function updateDumbdogClock() {
@@ -2378,6 +2745,8 @@
         document.addEventListener('DOMContentLoaded', () => {
             const aeroToggle = document.getElementById('aero-toggle');
             if (!aeroToggle) return;
+            const dumbdogStartButton = document.getElementById('dumbdog-start-button');
+            const dumbdogStartMenu = document.getElementById('dumbdog-start-menu');
             const liteSceneQuery = window.matchMedia('(max-width: 768px), (hover: none) and (pointer: coarse)');
 
             const warmup = () => warmAeroAssets();
@@ -2404,13 +2773,32 @@
                 button.addEventListener('click', exitDumbdogOS);
             });
 
+            if (dumbdogStartButton) {
+                dumbdogStartButton.addEventListener('click', (event) => {
+                    event.stopPropagation();
+                    toggleDumbdogStartMenu();
+                });
+            }
+
+            document.addEventListener('click', (event) => {
+                if (!document.body.classList.contains('dumbdog-start-open')) return;
+                if (dumbdogStartMenu && dumbdogStartMenu.contains(event.target)) return;
+                if (dumbdogStartButton && dumbdogStartButton.contains(event.target)) return;
+                setDumbdogStartMenu(false);
+            });
+
             document.addEventListener('keydown', (event) => {
                 if (event.key !== 'Escape') return;
                 if (!document.body.classList.contains('dumbdog-os-active') && !document.body.classList.contains('dumbdog-os-booting')) return;
+                if (document.body.classList.contains('dumbdog-start-open')) {
+                    setDumbdogStartMenu(false);
+                    return;
+                }
                 exitDumbdogOS();
             });
 
             updateDumbdogClock();
+            randomizeDumbdogWidgets();
             window.setInterval(updateDumbdogClock, 1000);
 
             const onLiteSceneChange = (event) => {
