@@ -766,6 +766,14 @@
     overflow: hidden;
   }
 
+  body.dumbdog-os-booting > .mica-window,
+  body.dumbdog-os-booting > #seasonal-container,
+  body.dumbdog-os-active > .mica-window,
+  body.dumbdog-os-active > #seasonal-container{
+    visibility: hidden;
+    pointer-events: none;
+  }
+
   .dumbdog-boot{
     position: fixed;
     inset: 0;
@@ -1824,10 +1832,34 @@
   }
 
   @media (max-width: 840px){
+    body.dumbdog-os-booting,
+    body.dumbdog-os-active{
+      position: fixed;
+      inset: 0;
+      width: 100%;
+    }
+
     .dumbdog-os{
-      background: var(--dumbdog-os-wallpaper);
-      background-size: cover;
+      background: #0f8dcc;
       overflow-y: auto;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+      transform: translateZ(0);
+      contain: paint;
+    }
+
+    .dumbdog-os::before,
+    .dumbdog-os::after{
+      position: fixed;
+    }
+
+    .dumbdog-os::before{
+      background:
+        linear-gradient(96deg, transparent 0 14%, rgba(255,255,255,.17) 15%, transparent 16% 26%, rgba(255,255,255,.10) 27%, transparent 28%),
+        linear-gradient(116deg, transparent 0 66%, rgba(126,255,184,.38) 67%, rgba(90,231,255,.18) 72%, transparent 77%),
+        radial-gradient(90% 46% at 52% 100%, rgba(255,255,255,.34), transparent 34%),
+        var(--dumbdog-os-wallpaper) center top / cover no-repeat;
+      mix-blend-mode: normal;
     }
 
     .dumbdog-sidebar-rail{
