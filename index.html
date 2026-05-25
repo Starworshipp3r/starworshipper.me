@@ -873,6 +873,7 @@
     position: fixed;
     inset: 0;
     z-index: 70;
+    isolation: isolate;
     color: var(--dumbdog-text);
     background: var(--dumbdog-os-wallpaper);
     background-size: cover;
@@ -895,6 +896,7 @@
     content: '';
     position: absolute;
     inset: 0;
+    z-index: 0;
     pointer-events: none;
   }
 
@@ -912,15 +914,27 @@
     opacity: .030;
   }
 
+  .dumbdog-sidebar-rail{
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 38px;
+    z-index: 0;
+    width: clamp(220px, 25vw, 320px);
+    pointer-events: none;
+    background: linear-gradient(90deg, rgba(0,0,0,0), rgba(3,14,26,.08) 34%, rgba(2,10,19,.30) 68%, rgba(0,4,10,.58));
+    opacity: .9;
+  }
+
   .dumbdog-desktop{
     position: relative;
     z-index: 1;
     min-height: 100dvh;
     width: min(1280px, 100%);
     margin: 0 auto;
-    padding: clamp(12px, 2.2vw, 26px) clamp(14px, 2.8vw, 36px) calc(52px + env(safe-area-inset-bottom));
+    padding: clamp(12px, 2.2vw, 26px) clamp(210px, 26vw, 332px) calc(52px + env(safe-area-inset-bottom)) clamp(14px, 2.8vw, 36px);
     display: grid;
-    grid-template-columns: minmax(280px, 1fr) minmax(190px, 230px);
+    grid-template-columns: minmax(280px, 1fr);
     gap: clamp(18px, 5vw, 58px);
     align-items: center;
   }
@@ -992,12 +1006,10 @@
   }
 
   .dumbdog-window-body{
-    margin: 5px;
-    padding: 18px;
-    border: 1px solid rgba(255,255,255,.16);
-    background:
-      linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.04)),
-      rgba(5, 33, 54, .42);
+    margin: 0;
+    padding: 22px 24px 24px;
+    border: 0;
+    background: transparent;
   }
 
   .dumbdog-profile{
@@ -1059,10 +1071,22 @@
   }
 
   .dumbdog-widget-stack{
+    position: fixed;
+    top: clamp(36px, 6vh, 54px);
+    right: clamp(12px, 2vw, 26px);
+    bottom: 48px;
+    z-index: 2;
     display: grid;
+    align-content: start;
     gap: 10px;
-    justify-self: end;
-    width: min(172px, 100%);
+    width: clamp(142px, 12vw, 176px);
+    max-height: calc(100dvh - 92px);
+    overflow-y: auto;
+    scrollbar-width: none;
+  }
+
+  .dumbdog-widget-stack::-webkit-scrollbar{
+    display: none;
   }
 
   .dumbdog-widget{
@@ -1075,8 +1099,8 @@
       linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.02) 45%, rgba(1,7,16,.50)),
       rgba(5, 12, 23, .36);
     box-shadow:
-      0 10px 22px rgba(0,0,0,.34),
-      inset 0 1px 0 rgba(255,255,255,.18);
+      inset 0 1px 0 rgba(255,255,255,.18),
+      inset 0 -10px 18px rgba(0,0,0,.16);
   }
 
   .dumbdog-widget-label{
@@ -1118,19 +1142,240 @@
     -webkit-backdrop-filter: none;
   }
 
+  .dumbdog-calendar-widget{
+    padding: 0 6px 2px;
+    overflow: visible;
+    border-color: transparent;
+    background: none;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .dumbdog-calendar-toggle{
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    text-align: center;
+    cursor: pointer;
+  }
+
+  .dumbdog-calendar-card{
+    position: relative;
+    display: block;
+    width: 100%;
+    min-height: 128px;
+    border-radius: 3px;
+    border: 1px solid rgba(9, 33, 42, .72);
+    background: #f46a05;
+    box-shadow:
+      0 1px 0 rgba(255,255,255,.34),
+      0 2px 7px rgba(0,0,0,.42),
+      inset 0 1px 0 rgba(255,255,255,.30);
+  }
+
+  .dumbdog-calendar-card::before{
+    content: '';
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    top: -8px;
+    height: 15px;
+    z-index: 2;
+    background:
+      repeating-linear-gradient(90deg, transparent 0 6px, rgba(48,58,60,.82) 6px 8px, rgba(250,254,255,.95) 8px 10px, transparent 10px 16px);
+    filter: drop-shadow(0 1px 1px rgba(0,0,0,.28));
+  }
+
+  .dumbdog-calendar-date-view,
+  .dumbdog-calendar-month-view{
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    border-radius: 2px;
+  }
+
+  .dumbdog-calendar-date-view{
+    display: grid;
+    align-content: center;
+    padding: 18px 10px 9px;
+    color: #fff;
+    background:
+      linear-gradient(180deg, #ff7a0d, #f36500 45%, #e65400),
+      #f06400;
+    text-shadow: 0 1px 0 rgba(0,0,0,.22);
+  }
+
+  .dumbdog-calendar-month{
+    font-size: 13px;
+    line-height: 1.1;
+    font-weight: 700;
+  }
+
+  .dumbdog-calendar-date-number{
+    display: block;
+    margin: 2px 0 5px;
+    font-size: 64px;
+    line-height: .86;
+    font-weight: 400;
+  }
+
+  .dumbdog-calendar-weekday{
+    font-size: 13px;
+    line-height: 1.1;
+    font-weight: 700;
+  }
+
+  .dumbdog-calendar-month-view{
+    display: none;
+    padding: 15px 7px 5px;
+    color: #1f3133;
+    background:
+      linear-gradient(180deg, #f9fbf8, #e8f3f1),
+      #eef6f4;
+    text-shadow: none;
+  }
+
+  .dumbdog-calendar-toggle.is-month .dumbdog-calendar-date-view{
+    display: none;
+  }
+
+  .dumbdog-calendar-toggle.is-month .dumbdog-calendar-month-view{
+    display: grid;
+    grid-template-rows: auto auto 1fr;
+    gap: 2px;
+  }
+
+  .dumbdog-calendar-month-bar{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 13px;
+    color: #45595d;
+    font-size: 10px;
+    line-height: 1;
+  }
+
+  .dumbdog-calendar-weekdays,
+  .dumbdog-calendar-grid{
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+  }
+
+  .dumbdog-calendar-weekdays span{
+    color: #66787a;
+    font-size: 10px;
+    line-height: 1;
+  }
+
+  .dumbdog-calendar-weekdays span:first-child{
+    color: #e75a25;
+  }
+
+  .dumbdog-calendar-grid{
+    align-items: center;
+    gap: 1px 0;
+  }
+
+  .dumbdog-calendar-grid span{
+    display: grid;
+    place-items: center;
+    min-height: 12px;
+    color: #102527;
+    font-size: 10px;
+    line-height: 1;
+    border-radius: 1px;
+  }
+
+  .dumbdog-calendar-grid .is-outside{
+    color: rgba(72,91,94,.28);
+  }
+
+  .dumbdog-calendar-grid .is-today{
+    background: #ff6b0a;
+    color: #fff;
+    box-shadow: inset 0 0 0 1px rgba(170,50,0,.24);
+  }
+
+  .dumbdog-photo-widget{
+    padding: 6px;
+    border-radius: 4px;
+    border-color: rgba(210, 240, 255, .42);
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,.05)),
+      rgba(5, 14, 24, .44);
+  }
+
+  .dumbdog-photo-frame{
+    position: relative;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    border-radius: 2px;
+    border: 1px solid rgba(3, 9, 16, .82);
+    background:
+      linear-gradient(135deg, rgba(107,230,255,.18), rgba(2,10,20,.58)),
+      rgba(0, 5, 12, .42);
+    box-shadow:
+      inset 0 0 0 1px rgba(255,255,255,.24),
+      0 0 0 1px rgba(255,255,255,.16);
+  }
+
+  .dumbdog-photo-frame img{
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 1;
+    transform: scale(1);
+    transition: opacity .6s ease, transform .6s ease;
+  }
+
+  .dumbdog-photo-frame img.is-changing{
+    opacity: .12;
+    transform: scale(1.03);
+  }
+
+  .dumbdog-photo-frame::after{
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(135deg, rgba(255,255,255,.32), rgba(255,255,255,0) 34%),
+      linear-gradient(0deg, rgba(0,0,0,.26), rgba(0,0,0,0) 34%);
+    box-shadow: inset 0 0 14px rgba(0,0,0,.34);
+  }
+
   .dumbdog-clock-face{
     position: relative;
-    width: 118px;
+    width: 124px;
     aspect-ratio: 1;
     border-radius: 9999px;
-    border: 7px solid rgba(22,22,22,.82);
+    border: 0;
     background:
-      radial-gradient(circle at 35% 25%, rgba(255,255,255,.82), transparent 25%),
-      radial-gradient(circle, #fbfaf1 0 59%, #dedbd0 60% 70%, #242424 71%);
+      radial-gradient(circle at 34% 22%, rgba(255,255,255,.72), rgba(255,255,255,0) 20%),
+      radial-gradient(circle at 50% 50%, #faf8ef 0 55%, #e8e3d6 56% 63%, #6b6961 64% 67%, #262626 68% 75%, #0f1010 76% 100%);
     box-shadow:
-      inset 0 1px 7px rgba(0,0,0,.28),
-      0 2px 0 rgba(0,0,0,.32),
-      0 5px 10px rgba(0,0,0,.22);
+      inset 0 1px 7px rgba(255,255,255,.28),
+      inset 0 -7px 14px rgba(0,0,0,.28),
+      0 2px 0 rgba(255,255,255,.08),
+      0 6px 12px rgba(0,0,0,.36);
+  }
+
+  .dumbdog-clock-face::before{
+    content: '';
+    position: absolute;
+    inset: 16px;
+    border-radius: inherit;
+    background:
+      radial-gradient(circle at 50% 50%, transparent 0 55%, rgba(28,28,28,.15) 56%, transparent 58%),
+      repeating-conic-gradient(from -1deg, rgba(40,40,40,.46) 0deg 2deg, transparent 2deg 30deg);
+    -webkit-mask: radial-gradient(circle, transparent 0 77%, #000 78% 88%, transparent 89%);
+    mask: radial-gradient(circle, transparent 0 77%, #000 78% 88%, transparent 89%);
+    pointer-events: none;
   }
 
   .dumbdog-clock-face::after{
@@ -1138,18 +1383,33 @@
     position: absolute;
     left: 50%;
     top: 50%;
-    width: 8px;
-    height: 8px;
+    width: 7px;
+    height: 7px;
     border-radius: 9999px;
-    background: #141414;
-    box-shadow: 0 0 0 2px rgba(255,255,255,.46);
+    z-index: 4;
+    background: #111;
+    box-shadow: 0 0 0 2px rgba(255,255,255,.58), 0 1px 3px rgba(0,0,0,.32);
     transform: translate(-50%, -50%);
+  }
+
+  .dumbdog-clock-number{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 2;
+    color: #504d46;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 15px;
+    line-height: 1;
+    text-shadow: 0 1px 0 rgba(255,255,255,.72);
+    transform: translate(-50%, -50%) rotate(var(--clock-angle)) translateY(-42px) rotate(calc(var(--clock-angle) * -1));
   }
 
   .dumbdog-clock-hand{
     position: absolute;
     left: 50%;
     bottom: 50%;
+    z-index: 3;
     border-radius: 9999px;
     transform-origin: 50% 100%;
     transform: translateX(-50%) rotate(0deg);
@@ -1157,20 +1417,22 @@
 
   .dumbdog-clock-hand.hour{
     width: 4px;
-    height: 29px;
-    background: #171717;
+    height: 30px;
+    background: linear-gradient(90deg, #050505, #2b2b2b, #050505);
+    box-shadow: 0 1px 2px rgba(0,0,0,.28);
   }
 
   .dumbdog-clock-hand.minute{
     width: 3px;
-    height: 38px;
-    background: #1d1d1d;
+    height: 43px;
+    background: linear-gradient(90deg, #070707, #343434, #070707);
+    box-shadow: 0 1px 2px rgba(0,0,0,.25);
   }
 
   .dumbdog-clock-hand.second{
     width: 1px;
-    height: 43px;
-    background: #111;
+    height: 46px;
+    background: #6d1b1b;
     box-shadow: none;
   }
 
@@ -1568,6 +1830,10 @@
       overflow-y: auto;
     }
 
+    .dumbdog-sidebar-rail{
+      display: none;
+    }
+
     .dumbdog-desktop{
       min-height: 100dvh;
       display: flex;
@@ -1622,8 +1888,11 @@
     }
 
     .dumbdog-widget-stack{
+      position: static;
       order: 3;
       width: 100%;
+      max-height: none;
+      overflow: visible;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       justify-self: stretch;
       gap: 10px;
@@ -1632,6 +1901,15 @@
     .dumbdog-widget{
       border-radius: 15px;
       padding: 12px;
+    }
+
+    .dumbdog-calendar-widget{
+      padding: 0 6px 2px;
+      border-radius: 4px;
+    }
+
+    .dumbdog-calendar-card{
+      min-height: 124px;
     }
 
     .dumbdog-widget-main{
@@ -1646,15 +1924,22 @@
       grid-column: auto;
       grid-template-columns: 1fr;
       justify-items: center;
+      align-content: center;
+      min-height: 124px;
     }
 
     .dumbdog-clock-face{
-      width: 54px;
+      width: min(108px, 30vw);
     }
 
-    .dumbdog-clock-hand.hour{ height: 15px; }
-    .dumbdog-clock-hand.minute{ height: 20px; }
-    .dumbdog-clock-hand.second{ height: 23px; }
+    .dumbdog-clock-number{
+      font-size: 13px;
+      transform: translate(-50%, -50%) rotate(var(--clock-angle)) translateY(-36px) rotate(calc(var(--clock-angle) * -1));
+    }
+
+    .dumbdog-clock-hand.hour{ height: 25px; }
+    .dumbdog-clock-hand.minute{ height: 34px; }
+    .dumbdog-clock-hand.second{ height: 38px; }
 
     .dumbdog-taskbar{
       min-height: 38px;
@@ -1862,6 +2147,7 @@
     </div>
 
     <section id="dumbdog-os" class="dumbdog-os" aria-label="Dumbdog OS desktop" aria-hidden="true">
+        <div class="dumbdog-sidebar-rail" aria-hidden="true"></div>
         <div class="dumbdog-desktop">
             <section class="dumbdog-window" aria-label="Dumbdog links window">
                 <div class="dumbdog-titlebar">
@@ -1905,9 +2191,46 @@
             <aside class="dumbdog-widget-stack" aria-label="Dumbdog OS widgets">
                 <section class="dumbdog-widget dumbdog-clock-widget">
                     <div class="dumbdog-clock-face" aria-hidden="true">
+                        <span class="dumbdog-clock-number" style="--clock-angle: 0deg">12</span>
+                        <span class="dumbdog-clock-number" style="--clock-angle: 30deg">1</span>
+                        <span class="dumbdog-clock-number" style="--clock-angle: 60deg">2</span>
+                        <span class="dumbdog-clock-number" style="--clock-angle: 90deg">3</span>
+                        <span class="dumbdog-clock-number" style="--clock-angle: 120deg">4</span>
+                        <span class="dumbdog-clock-number" style="--clock-angle: 150deg">5</span>
+                        <span class="dumbdog-clock-number" style="--clock-angle: 180deg">6</span>
+                        <span class="dumbdog-clock-number" style="--clock-angle: 210deg">7</span>
+                        <span class="dumbdog-clock-number" style="--clock-angle: 240deg">8</span>
+                        <span class="dumbdog-clock-number" style="--clock-angle: 270deg">9</span>
+                        <span class="dumbdog-clock-number" style="--clock-angle: 300deg">10</span>
+                        <span class="dumbdog-clock-number" style="--clock-angle: 330deg">11</span>
                         <span id="dumbdog-clock-hour" class="dumbdog-clock-hand hour"></span>
                         <span id="dumbdog-clock-minute" class="dumbdog-clock-hand minute"></span>
                         <span id="dumbdog-clock-second" class="dumbdog-clock-hand second"></span>
+                    </div>
+                </section>
+
+                <section class="dumbdog-widget dumbdog-calendar-widget" aria-label="Calendar">
+                    <button id="dumbdog-calendar-toggle" class="dumbdog-calendar-toggle" type="button" aria-label="Show month calendar" aria-expanded="false">
+                        <span class="dumbdog-calendar-card">
+                            <span class="dumbdog-calendar-date-view">
+                                <span class="dumbdog-calendar-month" data-dumbdog-calendar-month>May 2026</span>
+                                <span class="dumbdog-calendar-date-number" data-dumbdog-calendar-day>24</span>
+                                <span class="dumbdog-calendar-weekday" data-dumbdog-calendar-weekday>Sunday</span>
+                            </span>
+                            <span class="dumbdog-calendar-month-view" aria-hidden="true">
+                                <span class="dumbdog-calendar-month-bar" data-dumbdog-calendar-month-label>May 2026</span>
+                                <span class="dumbdog-calendar-weekdays" aria-hidden="true">
+                                    <span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span>
+                                </span>
+                                <span class="dumbdog-calendar-grid" data-dumbdog-calendar-grid aria-hidden="true"></span>
+                            </span>
+                        </span>
+                    </button>
+                </section>
+
+                <section class="dumbdog-widget dumbdog-photo-widget" aria-label="Photo frame">
+                    <div class="dumbdog-photo-frame">
+                        <img src="/aero/slideshow/Dock.jpg" alt="Dock" data-dumbdog-photo-img decoding="async">
                     </div>
                 </section>
 
@@ -2521,12 +2844,33 @@
 
         let dumbdogBootTimer = null;
         let dumbdogBootMessageTimer = null;
+        let dumbdogPhotoTimer = null;
+        let dumbdogPhotoPool = [];
+        let dumbdogPhotoIndex = -1;
+        let dumbdogCalendarDateKey = '';
         const dumbdogBootMessages = [
             'Preparing desktop...',
             'Loading glass surfaces...',
             'Connecting to MSN...',
             'Calibrating optimism...',
             'Opening Dumbdog Links...'
+        ];
+        const dumbdogSlideshowPhotos = [
+            { src: '/aero/slideshow/Autumn_Leaves.jpg', title: 'Autumn Leaves' },
+            { src: '/aero/slideshow/Creek_(Windows_Vista).jpg', title: 'Creek' },
+            { src: '/aero/slideshow/Desert_Landscape_(Windows_Vista).jpg', title: 'Desert Landscape' },
+            { src: '/aero/slideshow/Dock.jpg', title: 'Dock' },
+            { src: '/aero/slideshow/Forest_(Windows_Vista).jpg', title: 'Forest' },
+            { src: '/aero/slideshow/Forest_Flowers.jpg', title: 'Forest Flowers' },
+            { src: '/aero/slideshow/Frangipani_Flowers.jpg', title: 'Frangipani Flowers' },
+            { src: '/aero/slideshow/Garden_(Windows_Vista).jpg', title: 'Garden' },
+            { src: '/aero/slideshow/Green_Sea_Turtle.jpg', title: 'Green Sea Turtle' },
+            { src: '/aero/slideshow/Humpback_Whale_(Windows_Vista).jpg', title: 'Humpback Whale' },
+            { src: '/aero/slideshow/Oryx_Antelope.jpg', title: 'Oryx Antelope' },
+            { src: '/aero/slideshow/Toco_Toucan_(Windows_Vista).jpg', title: 'Toco Toucan' },
+            { src: '/aero/slideshow/Tree_(Windows_Vista).jpg', title: 'Tree' },
+            { src: '/aero/slideshow/Waterfall_(Windows_Vista).jpg', title: 'Waterfall' },
+            { src: '/aero/slideshow/Winter_Leaves.jpg', title: 'Winter Leaves' },
         ];
 
         function setDumbdogToggleState(enabled, label) {
@@ -2615,6 +2959,8 @@
                 setDumbdogBooting(false);
                 setDumbdogOSActive(true);
                 updateDumbdogClock();
+                updateDumbdogCalendar(true);
+                startDumbdogPhotoFrame();
             }, bootDuration);
         }
 
@@ -2624,11 +2970,130 @@
             setDumbdogStartMenu(false);
             setDumbdogBooting(false);
             setDumbdogOSActive(false);
+            stopDumbdogPhotoFrame();
             stopAeroAudio();
         }
 
         function pickRandomItem(items) {
             return items[Math.floor(Math.random() * items.length)];
+        }
+
+        function updateDumbdogCalendar(force = false) {
+            const now = new Date();
+            const dateKey = now.toDateString();
+            if (!force && dateKey === dumbdogCalendarDateKey) return;
+
+            dumbdogCalendarDateKey = dateKey;
+
+            const monthYear = now.toLocaleDateString([], { month: 'long', year: 'numeric' });
+            const weekday = now.toLocaleDateString([], { weekday: 'long' });
+            const day = String(now.getDate());
+
+            document.querySelectorAll('[data-dumbdog-calendar-month]').forEach((el) => {
+                el.textContent = monthYear;
+            });
+
+            document.querySelectorAll('[data-dumbdog-calendar-day]').forEach((el) => {
+                el.textContent = day;
+            });
+
+            document.querySelectorAll('[data-dumbdog-calendar-weekday]').forEach((el) => {
+                el.textContent = weekday;
+            });
+
+            document.querySelectorAll('[data-dumbdog-calendar-month-label]').forEach((el) => {
+                el.textContent = monthYear;
+            });
+
+            const grid = document.querySelector('[data-dumbdog-calendar-grid]');
+            if (!grid) return;
+
+            const year = now.getFullYear();
+            const month = now.getMonth();
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const daysInPreviousMonth = new Date(year, month, 0).getDate();
+
+            grid.innerHTML = '';
+
+            for (let index = 0; index < 42; index += 1) {
+                const cell = document.createElement('span');
+                let cellDay = index - firstDay + 1;
+
+                if (index < firstDay) {
+                    cellDay = daysInPreviousMonth - firstDay + index + 1;
+                    cell.classList.add('is-outside');
+                } else if (cellDay > daysInMonth) {
+                    cellDay -= daysInMonth;
+                    cell.classList.add('is-outside');
+                } else if (cellDay === now.getDate()) {
+                    cell.classList.add('is-today');
+                }
+
+                cell.textContent = String(cellDay);
+                grid.appendChild(cell);
+            }
+        }
+
+        function setDumbdogCalendarMonthView(enabled) {
+            const toggle = document.getElementById('dumbdog-calendar-toggle');
+            if (!toggle) return;
+
+            toggle.classList.toggle('is-month', enabled);
+            toggle.setAttribute('aria-expanded', String(enabled));
+            toggle.setAttribute('aria-label', enabled ? 'Show date calendar' : 'Show month calendar');
+
+            const monthView = toggle.querySelector('.dumbdog-calendar-month-view');
+            if (monthView) {
+                monthView.setAttribute('aria-hidden', String(!enabled));
+            }
+        }
+
+        function setDumbdogPhoto(photo) {
+            const img = document.querySelector('[data-dumbdog-photo-img]');
+            if (!img || !photo?.src) return;
+
+            const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            const swapDelay = reducedMotion ? 0 : 180;
+
+            img.classList.add('is-changing');
+            window.setTimeout(() => {
+                img.src = photo.src;
+                img.alt = photo.title || 'Dumbdog photo frame';
+                img.classList.remove('is-changing');
+            }, swapDelay);
+        }
+
+        function advanceDumbdogPhoto() {
+            if (!dumbdogPhotoPool.length) return;
+
+            if (dumbdogPhotoPool.length === 1) {
+                dumbdogPhotoIndex = 0;
+            } else {
+                let nextIndex = dumbdogPhotoIndex;
+                while (nextIndex === dumbdogPhotoIndex) {
+                    nextIndex = Math.floor(Math.random() * dumbdogPhotoPool.length);
+                }
+                dumbdogPhotoIndex = nextIndex;
+            }
+
+            setDumbdogPhoto(dumbdogPhotoPool[dumbdogPhotoIndex]);
+        }
+
+        async function startDumbdogPhotoFrame() {
+            stopDumbdogPhotoFrame();
+            dumbdogPhotoPool = dumbdogSlideshowPhotos;
+            dumbdogPhotoIndex = -1;
+
+            if (!document.body.classList.contains('dumbdog-os-active')) return;
+
+            advanceDumbdogPhoto();
+            dumbdogPhotoTimer = window.setInterval(advanceDumbdogPhoto, 15000);
+        }
+
+        function stopDumbdogPhotoFrame() {
+            clearInterval(dumbdogPhotoTimer);
+            dumbdogPhotoTimer = null;
         }
 
         function randomizeDumbdogWidgets() {
@@ -2685,6 +3150,8 @@
             document.querySelectorAll('[data-dumbdog-date]').forEach((el) => {
                 el.textContent = date;
             });
+
+            updateDumbdogCalendar();
 
             const hourHand = document.getElementById('dumbdog-clock-hour');
             const minuteHand = document.getElementById('dumbdog-clock-minute');
@@ -2780,6 +3247,13 @@
                 });
             }
 
+            const dumbdogCalendarToggle = document.getElementById('dumbdog-calendar-toggle');
+            if (dumbdogCalendarToggle) {
+                dumbdogCalendarToggle.addEventListener('click', () => {
+                    setDumbdogCalendarMonthView(!dumbdogCalendarToggle.classList.contains('is-month'));
+                });
+            }
+
             document.addEventListener('click', (event) => {
                 if (!document.body.classList.contains('dumbdog-start-open')) return;
                 if (dumbdogStartMenu && dumbdogStartMenu.contains(event.target)) return;
@@ -2798,6 +3272,7 @@
             });
 
             updateDumbdogClock();
+            updateDumbdogCalendar(true);
             randomizeDumbdogWidgets();
             window.setInterval(updateDumbdogClock, 1000);
 
