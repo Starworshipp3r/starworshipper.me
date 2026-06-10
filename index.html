@@ -860,21 +860,13 @@
     display: block;
     height: 100%;
     border-radius: inherit;
-    transform: scaleX(0);
+    transform: scaleX(var(--dumbdog-boot-progress, 0));
     transform-origin: left center;
     background:
       linear-gradient(90deg, #56dfff, #f7ffff 52%, #69f2ff),
       linear-gradient(180deg, rgba(255,255,255,.52), rgba(255,255,255,0));
     box-shadow: 0 0 18px rgba(94, 235, 255, .72);
-  }
-
-  body.dumbdog-os-booting .dumbdog-progress span{
-    animation: dumbdog-progress-fill 2.8s cubic-bezier(.18,.78,.28,1) forwards;
-  }
-
-  @keyframes dumbdog-progress-fill {
-    from { transform: scaleX(.04); }
-    to { transform: scaleX(1); }
+    transition: transform var(--dumbdog-boot-step-duration, .46s) cubic-bezier(.18,.78,.28,1);
   }
 
   .dumbdog-os{
@@ -948,8 +940,7 @@
   }
 
   .dumbdog-window,
-  .dumbdog-widget,
-  .dumbdog-taskbar{
+  .dumbdog-widget{
     border: 1px solid var(--dumbdog-border);
     background:
       linear-gradient(180deg, rgba(255,255,255,.24), rgba(255,255,255,.06) 22%, var(--dumbdog-glass-deep)),
@@ -1502,63 +1493,84 @@
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: 2;
-    min-height: 38px;
+    z-index: 4;
+    min-height: 34px;
     border-radius: 0;
     display: flex;
     align-items: center;
-    gap: 7px;
-    padding: 3px 9px 4px;
-    border-width: 1px 0 0;
-    border-color: rgba(255,255,255,.34);
+    gap: 4px;
+    padding: 2px 8px 2px 7px;
+    border-top: 1px solid rgba(242, 255, 255, .46);
     background:
-      linear-gradient(180deg, rgba(255,255,255,.22), rgba(255,255,255,.06) 12%, rgba(12,30,24,.72) 48%, rgba(4,18,24,.88)),
-      linear-gradient(90deg, rgba(111,148,28,.42), rgba(12,71,70,.36) 35%, rgba(5,29,47,.46));
+      linear-gradient(180deg, rgba(255,255,255,.40) 0, rgba(255,255,255,.16) 9%, rgba(37,57,50,.74) 46%, rgba(12,25,27,.92) 50%, rgba(32,54,49,.92) 100%),
+      linear-gradient(90deg, rgba(93,126,33,.60), rgba(15,84,84,.58) 36%, rgba(7,39,60,.66));
     box-shadow:
       0 -1px 0 rgba(0,0,0,.48),
-      inset 0 1px 0 rgba(255,255,255,.35);
+      inset 0 1px 0 rgba(255,255,255,.50),
+      inset 0 -1px 0 rgba(0,0,0,.48);
+    backdrop-filter: blur(14px) saturate(1.35);
+    -webkit-backdrop-filter: blur(12px) saturate(1.35);
   }
 
-  .dumbdog-start,
   .dumbdog-task-button,
   .dumbdog-tray{
-    min-height: 28px;
-    border-radius: 3px;
-    border: 1px solid rgba(255,255,255,.22);
+    min-height: 24px;
+    border: 1px solid rgba(255,255,255,.18);
     background:
-      linear-gradient(180deg, rgba(255,255,255,.20), rgba(255,255,255,.04)),
-      rgba(8, 30, 42, .42);
+      linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,.04) 44%, rgba(0,0,0,.16)),
+      rgba(8, 30, 42, .34);
     color: var(--dumbdog-text);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,.18);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.20),
+      inset 0 -1px 0 rgba(0,0,0,.24);
   }
 
   .dumbdog-start{
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 48px;
-    height: 48px;
-    min-height: 48px;
-    margin: -18px 2px 0 0;
+    width: 44px;
+    height: 44px;
+    min-height: 44px;
+    margin: -13px 5px 0 0;
     padding: 0;
     border-radius: 9999px;
-    border-color: rgba(255,255,255,.38);
-    background:
-      radial-gradient(circle at 34% 26%, rgba(255,255,255,.80), rgba(255,255,255,0) 28%),
-      radial-gradient(circle at 50% 60%, rgba(45,173,236,.92), rgba(13,95,160,.82) 58%, rgba(2,30,67,.92));
+    border: 0;
+    background: transparent;
     box-shadow:
-      0 0 0 1px rgba(0,0,0,.46),
-      0 0 0 3px rgba(255,255,255,.14),
-      0 4px 16px rgba(0,0,0,.42),
-      inset 0 1px 0 rgba(255,255,255,.42);
+      0 5px 13px rgba(0,0,0,.50),
+      0 0 10px rgba(93,210,255,.18);
     font-weight: 700;
+    overflow: visible;
+  }
+
+  .dumbdog-start::before{
+    content: none;
+  }
+
+  .dumbdog-start::after{
+    content: "";
+    position: absolute;
+    inset: 3px;
+    border-radius: inherit;
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,.12),
+      0 0 14px rgba(90,210,255,.12);
+    opacity: 0;
+    transition: opacity .16s ease;
+    pointer-events: none;
   }
 
   .dumbdog-start-logo{
-    width: 34px;
-    height: 34px;
+    position: relative;
+    z-index: 1;
+    width: 44px;
+    height: 44px;
     object-fit: contain;
-    filter: drop-shadow(0 2px 5px rgba(0,0,0,.25));
+    filter:
+      drop-shadow(0 1px 0 rgba(255,255,255,.25))
+      drop-shadow(0 2px 4px rgba(0,0,0,.42));
   }
 
   .dumbdog-start span{
@@ -1566,15 +1578,21 @@
   }
 
   .dumbdog-start:hover{
-    background:
-      radial-gradient(circle at 34% 26%, rgba(255,255,255,.92), rgba(255,255,255,0) 28%),
-      radial-gradient(circle at 50% 60%, rgba(70,205,255,.98), rgba(20,122,190,.90) 58%, rgba(3,37,80,.96));
+    background: transparent;
+    box-shadow:
+      0 5px 13px rgba(0,0,0,.50),
+      0 0 15px rgba(96,218,255,.38);
+  }
+
+  .dumbdog-start:hover::after,
+  body.dumbdog-start-open .dumbdog-start::after{
+    opacity: 1;
   }
 
   .dumbdog-start-menu{
     position: fixed;
     left: 9px;
-    bottom: 38px;
+    bottom: 34px;
     z-index: 3;
     width: min(430px, calc(100vw - 18px));
     color: #111;
@@ -1598,9 +1616,10 @@
   }
 
   body.dumbdog-start-open .dumbdog-start{
-    background:
-      radial-gradient(circle at 34% 26%, rgba(255,255,255,.92), rgba(255,255,255,0) 28%),
-      radial-gradient(circle at 50% 60%, rgba(70,205,255,.98), rgba(20,122,190,.90) 58%, rgba(3,37,80,.96));
+    background: transparent;
+    box-shadow:
+      0 5px 13px rgba(0,0,0,.50),
+      0 0 15px rgba(96,218,255,.38);
   }
 
   .dumbdog-start-menu-shell{
@@ -1807,15 +1826,61 @@
       rgba(117, 19, 18, .68);
   }
 
+  .dumbdog-quick-launch{
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    height: 26px;
+    padding: 0 7px 0 0;
+    margin-right: 2px;
+    border-right: 1px solid rgba(255,255,255,.26);
+    box-shadow: 1px 0 0 rgba(0,0,0,.30);
+  }
+
+  .dumbdog-quick-icon{
+    width: 22px;
+    height: 22px;
+    display: grid;
+    place-items: center;
+    border-radius: 2px;
+    color: rgba(245,252,255,.96);
+    font-size: 14px;
+    text-shadow: 0 1px 2px rgba(0,0,0,.45);
+  }
+
+  .dumbdog-quick-icon:hover{
+    background: linear-gradient(180deg, rgba(255,255,255,.24), rgba(255,255,255,.05));
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.20);
+  }
+
+  .dumbdog-quick-icon.browser{ color: #5ed9ff; }
+  .dumbdog-quick-icon.desktop{ color: #d7f3ff; }
+  .dumbdog-quick-icon.photos{ color: #9cc7ff; }
+  .dumbdog-quick-icon.media{ color: #ff963d; }
+
   .dumbdog-task-button{
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 7px;
+    height: 26px;
     min-width: 0;
-    max-width: 260px;
-    padding: 0 11px;
-    font-size: 12px;
+    max-width: 188px;
+    padding: 0 12px 0 9px;
+    border-radius: 2px;
+    font-size: 11px;
     font-weight: 700;
+    text-shadow: 0 1px 2px rgba(0,0,0,.55);
+  }
+
+  .dumbdog-task-button i{
+    color: #bcefff;
+    font-size: 12px;
+  }
+
+  .dumbdog-task-button span{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .dumbdog-task-spacer{
@@ -1823,12 +1888,42 @@
   }
 
   .dumbdog-tray{
-    display: grid;
-    place-items: center;
-    min-width: 78px;
-    padding: 0 10px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 6px;
+    min-width: 132px;
+    height: 28px;
+    padding: 0 9px 0 10px;
+    border-width: 0 0 0 1px;
+    border-radius: 0;
+    border-color: rgba(255,255,255,.24);
+    background:
+      linear-gradient(90deg, rgba(255,255,255,.12), rgba(255,255,255,.02) 10%, rgba(10,28,37,.16)),
+      transparent;
+    box-shadow:
+      inset 1px 0 0 rgba(0,0,0,.30),
+      inset -1px 0 0 rgba(255,255,255,.08);
+    font-size: 11px;
+    font-weight: 600;
+    text-shadow: 0 1px 2px rgba(0,0,0,.70);
+  }
+
+  .dumbdog-tray-icons{
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: rgba(240,250,255,.94);
     font-size: 12px;
-    font-weight: 700;
+  }
+
+  .dumbdog-tray-icons .security{ color: #6dff8a; }
+  .dumbdog-tray-icons .network{ color: #8fd9ff; }
+  .dumbdog-tray-icons .volume{ color: #f7fbff; }
+
+  .dumbdog-tray-time{
+    min-width: 52px;
+    text-align: right;
   }
 
   @media (max-width: 840px){
@@ -1974,10 +2069,26 @@
     .dumbdog-clock-hand.second{ height: 38px; }
 
     .dumbdog-taskbar{
-      min-height: 38px;
+      min-height: 36px;
       border-radius: 0;
-      gap: 7px;
-      padding: 3px 7px 4px;
+      gap: 4px;
+      padding: 2px 6px;
+    }
+
+    .dumbdog-quick-launch{
+      gap: 2px;
+      padding-right: 5px;
+      margin-right: 0;
+    }
+
+    .dumbdog-quick-icon{
+      width: 21px;
+      height: 21px;
+      font-size: 13px;
+    }
+
+    .dumbdog-quick-icon:nth-child(n+3){
+      display: none;
     }
 
     .dumbdog-task-button span{
@@ -1985,32 +2096,43 @@
     }
 
     .dumbdog-task-button{
-      min-width: 38px;
-      width: 38px;
+      min-width: 30px;
+      width: 30px;
+      height: 24px;
       justify-content: center;
       padding: 0;
     }
 
     .dumbdog-start{
-      width: 44px;
-      height: 44px;
-      min-height: 44px;
-      margin-top: -15px;
+      width: 40px;
+      height: 40px;
+      min-height: 40px;
+      margin: -10px 4px 0 0;
     }
 
     .dumbdog-start-logo{
-      width: 30px;
-      height: 30px;
+      width: 40px;
+      height: 40px;
     }
 
     .dumbdog-tray{
-      min-width: 66px;
+      min-width: 76px;
+      gap: 4px;
+      padding: 0 6px;
       font-size: 11px;
+    }
+
+    .dumbdog-tray-icons i:not(.volume){
+      display: none;
+    }
+
+    .dumbdog-tray-time{
+      min-width: 48px;
     }
 
     .dumbdog-start-menu{
       left: 7px;
-      bottom: 38px;
+      bottom: 36px;
       width: calc(100vw - 14px);
     }
 
@@ -2136,8 +2258,8 @@
       transition: none !important;
     }
 
-    body.dumbdog-os-booting .dumbdog-progress span{
-      transform: scaleX(1);
+    .dumbdog-progress span{
+      transition: none !important;
     }
   }
 
@@ -2293,7 +2415,7 @@
                     <div class="dumbdog-widget-main">
                         <span class="dumbdog-status-avatar" aria-hidden="true"></span>
                         <span class="dumbdog-status-dot" data-dumbdog-status-dot aria-hidden="true"></span>
-                        <span data-dumbdog-status-text>Star is online</span>
+                        <span data-dumbdog-status-text>Online</span>
                     </div>
                 </section>
             </aside>
@@ -2377,12 +2499,25 @@
                 <img class="dumbdog-start-logo" src="/aero/logo.png" alt="" decoding="async">
                 <span>Dumbdog</span>
             </button>
+            <div class="dumbdog-quick-launch" aria-hidden="true">
+                <span class="dumbdog-quick-icon browser"><i class="fa-solid fa-globe"></i></span>
+                <span class="dumbdog-quick-icon desktop"><i class="fa-solid fa-desktop"></i></span>
+                <span class="dumbdog-quick-icon photos"><i class="fa-solid fa-image"></i></span>
+                <span class="dumbdog-quick-icon media"><i class="fa-solid fa-circle-play"></i></span>
+            </div>
             <div class="dumbdog-task-button" aria-hidden="true">
                 <i class="fa-solid fa-window-maximize"></i>
                 <span>Dumbdog Links</span>
             </div>
             <div class="dumbdog-task-spacer"></div>
-            <div class="dumbdog-tray" data-dumbdog-time>--:--</div>
+            <div class="dumbdog-tray" aria-label="Dumbdog OS tray">
+                <span class="dumbdog-tray-icons" aria-hidden="true">
+                    <i class="fa-solid fa-shield-halved security"></i>
+                    <i class="fa-solid fa-network-wired network"></i>
+                    <i class="fa-solid fa-volume-high volume"></i>
+                </span>
+                <span class="dumbdog-tray-time" data-dumbdog-time>--:--</span>
+            </div>
         </div>
     </section>
     
@@ -2876,16 +3011,25 @@
 
         let dumbdogBootTimer = null;
         let dumbdogBootMessageTimer = null;
+        let dumbdogBootStepTimers = [];
         let dumbdogPhotoTimer = null;
         let dumbdogPhotoPool = [];
         let dumbdogPhotoIndex = -1;
         let dumbdogCalendarDateKey = '';
-        const dumbdogBootMessages = [
-            'Preparing desktop...',
-            'Loading glass surfaces...',
-            'Connecting to MSN...',
-            'Calibrating optimism...',
-            'Opening Dumbdog Links...'
+        const dumbdogBootSteps = [
+            { at: 0, progress: .02, duration: 0, message: 'Preparing desktop...' },
+            { at: 520, progress: .12, duration: 260, message: 'Checking desktop profile...' },
+            { at: 1120, progress: .34, duration: 520, message: 'Loading glass surfaces...' },
+            { at: 1740, progress: .48, duration: 360, message: 'Mounting sample pictures...' },
+            { at: 2400, progress: .66, duration: 520, message: 'Starting sidebar gadgets...' },
+            { at: 3060, progress: .78, duration: 320, message: 'Connecting to MSN...' },
+            { at: 3720, progress: .92, duration: 520, message: 'Calibrating optimism...' },
+            { at: 4300, progress: 1, duration: 420, message: 'Opening Dumbdog Links...' },
+        ];
+        const dumbdogReducedBootSteps = [
+            { at: 0, progress: .18, duration: 0, message: 'Preparing desktop...' },
+            { at: 220, progress: .72, duration: 0, message: 'Starting sidebar gadgets...' },
+            { at: 520, progress: 1, duration: 0, message: 'Opening Dumbdog Links...' },
         ];
         const dumbdogSlideshowPhotos = [
             { src: '/aero/slideshow/Autumn_Leaves.jpg', title: 'Autumn Leaves' },
@@ -2921,6 +3065,11 @@
             const boot = document.getElementById('dumbdog-boot');
             if (boot) {
                 boot.setAttribute('aria-hidden', String(!enabled));
+            }
+
+            if (enabled) {
+                setDumbdogBootStatus('Preparing desktop...');
+                setDumbdogBootProgress(0, 0);
             }
 
             setDumbdogToggleState(enabled, enabled ? 'Dumbdog OS is starting' : 'Launch Dumbdog OS');
@@ -2962,17 +3111,57 @@
             setDumbdogStartMenu(!document.body.classList.contains('dumbdog-start-open'));
         }
 
-        function updateDumbdogBootStatus() {
+        function clearDumbdogBootTimers() {
+            clearTimeout(dumbdogBootTimer);
+            clearInterval(dumbdogBootMessageTimer);
+            dumbdogBootStepTimers.forEach((timer) => clearTimeout(timer));
+            dumbdogBootTimer = null;
+            dumbdogBootMessageTimer = null;
+            dumbdogBootStepTimers = [];
+        }
+
+        function setDumbdogBootStatus(message) {
             const status = document.getElementById('dumbdog-boot-status');
             if (!status) return;
 
-            let index = 0;
-            status.textContent = dumbdogBootMessages[index];
-            clearInterval(dumbdogBootMessageTimer);
-            dumbdogBootMessageTimer = window.setInterval(() => {
-                index = Math.min(index + 1, dumbdogBootMessages.length - 1);
-                status.textContent = dumbdogBootMessages[index];
-            }, 560);
+            status.textContent = message;
+        }
+
+        function setDumbdogBootProgress(progress, duration = 460) {
+            const progressBar = document.querySelector('.dumbdog-progress span');
+            if (!progressBar) return;
+
+            progressBar.style.setProperty('--dumbdog-boot-progress', String(progress));
+            progressBar.style.setProperty('--dumbdog-boot-step-duration', `${duration}ms`);
+        }
+
+        function applyDumbdogBootStep(step) {
+            setDumbdogBootStatus(step.message);
+            setDumbdogBootProgress(step.progress, step.duration);
+        }
+
+        function finishDumbdogBoot() {
+            clearDumbdogBootTimers();
+            setDumbdogBootProgress(1, 0);
+            setDumbdogBooting(false);
+            setDumbdogOSActive(true);
+            updateDumbdogClock();
+            updateDumbdogCalendar(true);
+            startDumbdogPhotoFrame();
+        }
+
+        function runDumbdogBootSequence() {
+            const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            const steps = reducedMotion ? dumbdogReducedBootSteps : dumbdogBootSteps;
+            const finishDelay = reducedMotion ? 780 : 4880;
+
+            clearDumbdogBootTimers();
+            steps.forEach((step) => {
+                const timer = window.setTimeout(() => applyDumbdogBootStep(step), step.at);
+                dumbdogBootStepTimers.push(timer);
+            });
+
+            dumbdogBootTimer = window.setTimeout(finishDumbdogBoot, finishDelay);
         }
 
         function startDumbdogOS() {
@@ -2982,23 +3171,11 @@
             startAeroAudio();
             setDumbdogOSActive(false);
             setDumbdogBooting(true);
-            updateDumbdogBootStatus();
-
-            const bootDuration = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 450 : 2850;
-            clearTimeout(dumbdogBootTimer);
-            dumbdogBootTimer = window.setTimeout(() => {
-                clearInterval(dumbdogBootMessageTimer);
-                setDumbdogBooting(false);
-                setDumbdogOSActive(true);
-                updateDumbdogClock();
-                updateDumbdogCalendar(true);
-                startDumbdogPhotoFrame();
-            }, bootDuration);
+            runDumbdogBootSequence();
         }
 
         function exitDumbdogOS() {
-            clearTimeout(dumbdogBootTimer);
-            clearInterval(dumbdogBootMessageTimer);
+            clearDumbdogBootTimers();
             setDumbdogStartMenu(false);
             setDumbdogBooting(false);
             setDumbdogOSActive(false);
@@ -3151,10 +3328,10 @@
             }
 
             const status = pickRandomItem([
-                { text: 'Star is online', color: '#76ff9b', glow: 'rgba(118,255,155,.78)' },
-                { text: 'Star is on DND', color: '#ff6464', glow: 'rgba(255,100,100,.72)' },
-                { text: 'Star is away', color: '#6fc7ff', glow: 'rgba(111,199,255,.72)' },
-                { text: 'Star is offline', color: '#a9b4bd', glow: 'rgba(169,180,189,.46)' },
+                { text: 'Online', color: '#76ff9b', glow: 'rgba(118,255,155,.78)' },
+                { text: 'Do not disturb', color: '#ff6464', glow: 'rgba(255,100,100,.72)' },
+                { text: 'Away', color: '#6fc7ff', glow: 'rgba(111,199,255,.72)' },
+                { text: 'Offline', color: '#a9b4bd', glow: 'rgba(169,180,189,.46)' },
             ]);
 
             const statusText = document.querySelector('[data-dumbdog-status-text]');
