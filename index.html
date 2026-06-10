@@ -1129,18 +1129,6 @@
     line-height: 1.25;
   }
 
-  .dumbdog-clock-widget{
-    display: grid;
-    justify-items: center;
-    gap: 10px;
-    padding: 8px 10px 12px;
-    background: none;
-    border-color: transparent;
-    box-shadow: none;
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-  }
-
   .dumbdog-calendar-widget{
     padding: 0 6px 2px;
     overflow: visible;
@@ -1299,6 +1287,97 @@
     box-shadow: inset 0 0 0 1px rgba(170,50,0,.24);
   }
 
+  .dumbdog-note-widget{
+    padding: 0 8px 3px;
+    overflow: visible;
+    border-color: transparent;
+    background: none;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .dumbdog-sticky-note{
+    position: relative;
+    min-height: 126px;
+    padding: 13px 12px 11px;
+    overflow: hidden;
+    border-radius: 2px;
+    border: 1px solid rgba(154, 137, 49, .48);
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.48), rgba(255,255,255,0) 17%),
+      repeating-linear-gradient(180deg, transparent 0 20px, rgba(142,126,39,.18) 20px 21px),
+      linear-gradient(180deg, #fffdb0, #fff58f 65%, #f5df72);
+    color: #4f4713;
+    box-shadow:
+      0 1px 0 rgba(255,255,255,.54),
+      0 8px 12px rgba(0,0,0,.30),
+      3px 3px 0 rgba(236, 211, 92, .70);
+    text-shadow: none;
+    transform: rotate(-.6deg);
+  }
+
+  .dumbdog-sticky-note::before{
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 12px;
+    background: linear-gradient(180deg, rgba(255,255,255,.42), rgba(255,255,255,0));
+    pointer-events: none;
+  }
+
+  .dumbdog-sticky-note::after{
+    content: "";
+    position: absolute;
+    right: -14px;
+    bottom: -14px;
+    width: 34px;
+    height: 34px;
+    background: linear-gradient(135deg, rgba(172,142,40,0) 50%, rgba(172,142,40,.28) 51%, rgba(255,249,162,.75));
+    transform: rotate(8deg);
+    pointer-events: none;
+  }
+
+  .dumbdog-sticky-title{
+    display: block;
+    margin-bottom: 6px;
+    color: #5d520f;
+    font-size: 12px;
+    line-height: 1;
+    font-weight: 800;
+    text-transform: uppercase;
+  }
+
+  .dumbdog-sticky-list{
+    display: grid;
+    gap: 4px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 10.5px;
+    line-height: 1.14;
+    font-weight: 700;
+  }
+
+  .dumbdog-sticky-list li{
+    position: relative;
+    padding-left: 13px;
+  }
+
+  .dumbdog-sticky-list li::before{
+    content: "";
+    position: absolute;
+    left: 0;
+    top: .2em;
+    width: 7px;
+    height: 7px;
+    border: 1px solid rgba(88, 77, 16, .58);
+    background: rgba(255,255,255,.30);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.45);
+  }
+
   .dumbdog-photo-widget{
     padding: 6px;
     border-radius: 4px;
@@ -1346,93 +1425,6 @@
       linear-gradient(135deg, rgba(255,255,255,.32), rgba(255,255,255,0) 34%),
       linear-gradient(0deg, rgba(0,0,0,.26), rgba(0,0,0,0) 34%);
     box-shadow: inset 0 0 14px rgba(0,0,0,.34);
-  }
-
-  .dumbdog-clock-face{
-    position: relative;
-    width: 124px;
-    aspect-ratio: 1;
-    border-radius: 9999px;
-    border: 0;
-    background:
-      radial-gradient(circle at 34% 22%, rgba(255,255,255,.72), rgba(255,255,255,0) 20%),
-      radial-gradient(circle at 50% 50%, #faf8ef 0 55%, #e8e3d6 56% 63%, #6b6961 64% 67%, #262626 68% 75%, #0f1010 76% 100%);
-    box-shadow:
-      inset 0 1px 7px rgba(255,255,255,.28),
-      inset 0 -7px 14px rgba(0,0,0,.28),
-      0 2px 0 rgba(255,255,255,.08),
-      0 6px 12px rgba(0,0,0,.36);
-  }
-
-  .dumbdog-clock-face::before{
-    content: '';
-    position: absolute;
-    inset: 16px;
-    border-radius: inherit;
-    background:
-      radial-gradient(circle at 50% 50%, transparent 0 55%, rgba(28,28,28,.15) 56%, transparent 58%),
-      repeating-conic-gradient(from -1deg, rgba(40,40,40,.46) 0deg 2deg, transparent 2deg 30deg);
-    -webkit-mask: radial-gradient(circle, transparent 0 77%, #000 78% 88%, transparent 89%);
-    mask: radial-gradient(circle, transparent 0 77%, #000 78% 88%, transparent 89%);
-    pointer-events: none;
-  }
-
-  .dumbdog-clock-face::after{
-    content: '';
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: 7px;
-    height: 7px;
-    border-radius: 9999px;
-    z-index: 4;
-    background: #111;
-    box-shadow: 0 0 0 2px rgba(255,255,255,.58), 0 1px 3px rgba(0,0,0,.32);
-    transform: translate(-50%, -50%);
-  }
-
-  .dumbdog-clock-number{
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    z-index: 2;
-    color: #504d46;
-    font-family: Georgia, 'Times New Roman', serif;
-    font-size: 15px;
-    line-height: 1;
-    text-shadow: 0 1px 0 rgba(255,255,255,.72);
-    transform: translate(-50%, -50%) rotate(var(--clock-angle)) translateY(-42px) rotate(calc(var(--clock-angle) * -1));
-  }
-
-  .dumbdog-clock-hand{
-    position: absolute;
-    left: 50%;
-    bottom: 50%;
-    z-index: 3;
-    border-radius: 9999px;
-    transform-origin: 50% 100%;
-    transform: translateX(-50%) rotate(0deg);
-  }
-
-  .dumbdog-clock-hand.hour{
-    width: 4px;
-    height: 30px;
-    background: linear-gradient(90deg, #050505, #2b2b2b, #050505);
-    box-shadow: 0 1px 2px rgba(0,0,0,.28);
-  }
-
-  .dumbdog-clock-hand.minute{
-    width: 3px;
-    height: 43px;
-    background: linear-gradient(90deg, #070707, #343434, #070707);
-    box-shadow: 0 1px 2px rgba(0,0,0,.25);
-  }
-
-  .dumbdog-clock-hand.second{
-    width: 1px;
-    height: 46px;
-    background: #6d1b1b;
-    box-shadow: none;
   }
 
   .dumbdog-eq{
@@ -2031,12 +2023,34 @@
     }
 
     .dumbdog-calendar-widget{
+      margin-top: 0;
       padding: 0 6px 2px;
       border-radius: 4px;
     }
 
     .dumbdog-calendar-card{
       min-height: 124px;
+    }
+
+    .dumbdog-note-widget{
+      padding: 0 7px 2px;
+      overflow: visible;
+      border-color: transparent;
+      background: none;
+      box-shadow: none;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+    }
+
+    .dumbdog-sticky-note{
+      min-height: 124px;
+      padding: 14px 13px 12px;
+      transform: none;
+    }
+
+    .dumbdog-sticky-list{
+      gap: 5px;
+      font-size: 12px;
     }
 
     .dumbdog-widget-main{
@@ -2046,27 +2060,6 @@
     .dumbdog-weather-temp{
       font-size: 25px;
     }
-
-    .dumbdog-clock-widget{
-      grid-column: auto;
-      grid-template-columns: 1fr;
-      justify-items: center;
-      align-content: center;
-      min-height: 124px;
-    }
-
-    .dumbdog-clock-face{
-      width: min(108px, 30vw);
-    }
-
-    .dumbdog-clock-number{
-      font-size: 13px;
-      transform: translate(-50%, -50%) rotate(var(--clock-angle)) translateY(-36px) rotate(calc(var(--clock-angle) * -1));
-    }
-
-    .dumbdog-clock-hand.hour{ height: 25px; }
-    .dumbdog-clock-hand.minute{ height: 34px; }
-    .dumbdog-clock-hand.second{ height: 38px; }
 
     .dumbdog-taskbar{
       min-height: 36px;
@@ -2343,26 +2336,6 @@
             </section>
 
             <aside class="dumbdog-widget-stack" aria-label="Dumbdog OS widgets">
-                <section class="dumbdog-widget dumbdog-clock-widget">
-                    <div class="dumbdog-clock-face" aria-hidden="true">
-                        <span class="dumbdog-clock-number" style="--clock-angle: 0deg">12</span>
-                        <span class="dumbdog-clock-number" style="--clock-angle: 30deg">1</span>
-                        <span class="dumbdog-clock-number" style="--clock-angle: 60deg">2</span>
-                        <span class="dumbdog-clock-number" style="--clock-angle: 90deg">3</span>
-                        <span class="dumbdog-clock-number" style="--clock-angle: 120deg">4</span>
-                        <span class="dumbdog-clock-number" style="--clock-angle: 150deg">5</span>
-                        <span class="dumbdog-clock-number" style="--clock-angle: 180deg">6</span>
-                        <span class="dumbdog-clock-number" style="--clock-angle: 210deg">7</span>
-                        <span class="dumbdog-clock-number" style="--clock-angle: 240deg">8</span>
-                        <span class="dumbdog-clock-number" style="--clock-angle: 270deg">9</span>
-                        <span class="dumbdog-clock-number" style="--clock-angle: 300deg">10</span>
-                        <span class="dumbdog-clock-number" style="--clock-angle: 330deg">11</span>
-                        <span id="dumbdog-clock-hour" class="dumbdog-clock-hand hour"></span>
-                        <span id="dumbdog-clock-minute" class="dumbdog-clock-hand minute"></span>
-                        <span id="dumbdog-clock-second" class="dumbdog-clock-hand second"></span>
-                    </div>
-                </section>
-
                 <section class="dumbdog-widget dumbdog-calendar-widget" aria-label="Calendar">
                     <button id="dumbdog-calendar-toggle" class="dumbdog-calendar-toggle" type="button" aria-label="Show month calendar" aria-expanded="false">
                         <span class="dumbdog-calendar-card">
@@ -2380,6 +2353,18 @@
                             </span>
                         </span>
                     </button>
+                </section>
+
+                <section class="dumbdog-widget dumbdog-note-widget" aria-label="Sticky note">
+                    <div class="dumbdog-sticky-note">
+                        <span class="dumbdog-sticky-title">To-do</span>
+                        <ul class="dumbdog-sticky-list">
+                            <li>Sort recyclables</li>
+                            <li>Burn new CD</li>
+                            <li>Watch clouds</li>
+                            <li>Wash fruit</li>
+                        </ul>
+                    </div>
                 </section>
 
                 <section class="dumbdog-widget dumbdog-photo-widget" aria-label="Photo frame">
@@ -3361,19 +3346,6 @@
             });
 
             updateDumbdogCalendar();
-
-            const hourHand = document.getElementById('dumbdog-clock-hour');
-            const minuteHand = document.getElementById('dumbdog-clock-minute');
-            const secondHand = document.getElementById('dumbdog-clock-second');
-            if (!hourHand || !minuteHand || !secondHand) return;
-
-            const seconds = now.getSeconds();
-            const minutes = now.getMinutes() + seconds / 60;
-            const hours = (now.getHours() % 12) + minutes / 60;
-
-            hourHand.style.transform = `translateX(-50%) rotate(${hours * 30}deg)`;
-            minuteHand.style.transform = `translateX(-50%) rotate(${minutes * 6}deg)`;
-            secondHand.style.transform = `translateX(-50%) rotate(${seconds * 6}deg)`;
         }
     
 
