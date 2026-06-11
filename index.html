@@ -561,11 +561,33 @@
   .dew-12{ left: 7%; bottom: 37%; width: 15px; height: 12px; --dew-tilt: 9deg; opacity: .76; }
   .dew-13{ right: 6%; bottom: 38%; width: 11px; height: 9px; --dew-tilt: -7deg; opacity: .8; }
 
+  #aero-toggle{
+    padding: 0;
+    overflow: visible;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+  }
+
+  #aero-toggle:hover{
+    background: transparent;
+    box-shadow: 0 0 14px rgba(89,236,255,.22);
+  }
+
   #aero-toggle.is-active{
     box-shadow:
       0 0 0 3px rgba(255,255,255,.22),
       0 0 0 7px rgba(89,236,255,.24),
       0 18px 44px rgba(32,150,186,.26);
+  }
+
+  .dumbdog-launch-icon{
+    display: block;
+    width: 44px;
+    height: 44px;
+    max-width: none;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,.34));
   }
 
   body.aero-mode{
@@ -2264,6 +2286,7 @@
 
     <div id="seasonal-container"></div>
     <div class="aero-wallpaper" aria-hidden="true"></div>
+    <audio id="dumbdog-boot-audio" src="/aero/boot.mp3" preload="auto"></audio>
     <audio id="aero-audio" src="/aero/aero.mp3" preload="auto"></audio>
     <div class="aero-bubbles" aria-hidden="true">
         <span class="aero-bubble"></span>
@@ -2541,7 +2564,7 @@
         title="Launch Dumbdog OS"
         class="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 z-10 mica-icon-btn"
         >
-        <i class="fa-solid fa-water text-lg leading-none"></i>
+        <img class="dumbdog-launch-icon" src="/aero/logo.png" alt="" decoding="async">
         </button>
 
         <a
@@ -2976,22 +2999,65 @@
             });
         }
 
-        function startAeroAudio() {
-            const audio = document.getElementById('aero-audio');
-            if (!audio) return;
+        function getDumbdogAudio(id) {
+            return document.getElementById(id);
+        }
 
+        function resetDumbdogAudio(audio) {
             audio.pause();
             audio.currentTime = 0;
-            audio.volume = 0.5;
+            audio.muted = false;
+            delete audio.dataset.dumbdogPrimed;
+        }
+
+        function playDumbdogAudio(id, volume) {
+            const audio = getDumbdogAudio(id);
+            if (!audio) return;
+
+            resetDumbdogAudio(audio);
+            audio.volume = volume;
             audio.play().catch(() => {});
         }
 
-        function stopAeroAudio() {
-            const audio = document.getElementById('aero-audio');
+        function primeAeroAudioForBoot() {
+            const audio = getDumbdogAudio('aero-audio');
             if (!audio) return;
 
             audio.pause();
             audio.currentTime = 0;
+            audio.muted = true;
+            audio.volume = 0;
+            audio.dataset.dumbdogPrimed = 'true';
+            audio.play().catch(() => {});
+        }
+
+        function stopDumbdogAudio(id) {
+            const audio = getDumbdogAudio(id);
+            if (!audio) return;
+
+            resetDumbdogAudio(audio);
+        }
+
+        function startDumbdogBootAudio() {
+            playDumbdogAudio('dumbdog-boot-audio', 0.7);
+        }
+
+        function startAeroAudio() {
+            const audio = getDumbdogAudio('aero-audio');
+            if (!audio) return;
+
+            delete audio.dataset.dumbdogPrimed;
+            audio.currentTime = 0;
+            audio.muted = false;
+            audio.volume = 0.5;
+            if (audio.paused) {
+                audio.play().catch(() => {});
+            }
+        }
+
+        function stopDumbdogAudioAll() {
+            stopDumbdogAudio('dumbdog-boot-audio');
+            stopDumbdogAudio('aero-audio');
         }
 
         let dumbdogBootTimer = null;
@@ -3130,6 +3196,8 @@
             setDumbdogBootProgress(1, 0);
             setDumbdogBooting(false);
             setDumbdogOSActive(true);
+            stopDumbdogAudio('dumbdog-boot-audio');
+            startAeroAudio();
             updateDumbdogClock();
             updateDumbdogCalendar(true);
             startDumbdogPhotoFrame();
@@ -3153,7 +3221,9 @@
             if (document.body.classList.contains('dumbdog-os-booting') || document.body.classList.contains('dumbdog-os-active')) return;
 
             warmAeroAssets();
-            startAeroAudio();
+            stopDumbdogAudioAll();
+            startDumbdogBootAudio();
+            primeAeroAudioForBoot();
             setDumbdogOSActive(false);
             setDumbdogBooting(true);
             runDumbdogBootSequence();
@@ -3165,7 +3235,7 @@
             setDumbdogBooting(false);
             setDumbdogOSActive(false);
             stopDumbdogPhotoFrame();
-            stopAeroAudio();
+            stopDumbdogAudioAll();
         }
 
         function pickRandomItem(items) {
@@ -3470,7 +3540,7 @@
             }
         });
 
-        window.addEventListener('pagehide', stopAeroAudio);
+        window.addEventListener('pagehide', stopDumbdogAudioAll);
 
 </script>
 
