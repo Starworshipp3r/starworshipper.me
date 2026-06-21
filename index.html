@@ -821,9 +821,11 @@
     inset: 0;
     z-index: 80;
     display: grid;
+    grid-template: minmax(0, 1fr) / minmax(0, 1fr);
     place-items: center;
     padding: 24px;
     color: var(--dumbdog-text);
+    overflow: hidden;
     background:
       radial-gradient(circle at 50% 42%, rgba(95, 206, 255, .28), transparent 22%),
       radial-gradient(circle at 50% 46%, rgba(61, 143, 212, .24), transparent 38%),
@@ -831,7 +833,30 @@
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
-    transition: opacity .35s ease, visibility 0s linear .35s;
+    transition: opacity .35s ease, visibility 0s linear .35s, background .55s ease;
+  }
+
+  .dumbdog-boot::before,
+  .dumbdog-boot::after{
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity .75s ease;
+  }
+
+  .dumbdog-boot::before{
+    background:
+      radial-gradient(circle at 50% 55%, rgba(44, 72, 34, .18), transparent 18%),
+      radial-gradient(circle at 50% 60%, rgba(92, 130, 38, .08), transparent 24%),
+      #000;
+  }
+
+  .dumbdog-boot::after{
+    background:
+      linear-gradient(180deg, transparent 0 42%, rgba(255,255,255,.035) 50%, transparent 58%),
+      linear-gradient(180deg, rgba(0,0,0,.18), rgba(0,0,0,.44));
   }
 
   body.dumbdog-os-booting .dumbdog-boot{
@@ -841,9 +866,134 @@
     transition-delay: 0s;
   }
 
+  body.dumbdog-bios-phase .dumbdog-boot{
+    background: #000;
+  }
+
+  body.dumbdog-aero-boot-phase .dumbdog-boot{
+    background: #000;
+  }
+
+  body.dumbdog-aero-boot-phase .dumbdog-boot::before,
+  body.dumbdog-aero-boot-phase .dumbdog-boot::after{
+    opacity: 1;
+  }
+
+  .dumbdog-bios-panel{
+    position: relative;
+    grid-area: 1 / 1;
+    z-index: 1;
+    width: min(620px, calc(100vw - 42px));
+    min-height: 310px;
+    padding: 20px 22px;
+    justify-self: start;
+    align-self: start;
+    margin: clamp(20px, 7vh, 62px) 0 0 clamp(8px, 4vw, 58px);
+    border: 1px solid rgba(74, 255, 169, .30);
+    background:
+      linear-gradient(180deg, rgba(12, 34, 24, .28), rgba(0,0,0,.18)),
+      #020504;
+    color: #7fffc5;
+    font: 13px/1.45 Consolas, "Lucida Console", monospace;
+    letter-spacing: 0;
+    text-shadow: 0 0 7px rgba(95, 255, 185, .42);
+    box-shadow:
+      inset 0 0 0 1px rgba(255,255,255,.04),
+      0 0 36px rgba(15, 255, 147, .10);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(4px);
+    transition: opacity .18s ease, transform .18s ease, visibility 0s linear .18s;
+  }
+
+  .dumbdog-bios-panel p{
+    margin: 0 0 4px;
+  }
+
+  .dumbdog-bios-line{
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-2px);
+    transition: opacity .08s linear, transform .08s linear, visibility 0s linear .08s;
+  }
+
+  body.dumbdog-bios-phase .dumbdog-bios-line.is-visible{
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition-delay: 0s;
+  }
+
+  .dumbdog-bios-panel strong{
+    color: #d8ffec;
+    font-weight: 700;
+  }
+
+  .dumbdog-bios-cursor::after{
+    content: "_";
+    animation: dumbdog-bios-blink .82s steps(1, end) infinite;
+  }
+
+  body.dumbdog-bios-phase .dumbdog-bios-panel{
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition-delay: 0s;
+  }
+
+  @keyframes dumbdog-bios-blink {
+    0%, 48% { opacity: 1; }
+    49%, 100% { opacity: 0; }
+  }
+
   .dumbdog-boot-panel{
+    position: relative;
+    grid-area: 1 / 1;
+    z-index: 1;
     width: min(420px, 100%);
     text-align: center;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(8px) scale(.985);
+    transition:
+      opacity .52s ease,
+      transform .52s ease,
+      visibility 0s linear .52s;
+  }
+
+  body.dumbdog-aero-boot-phase .dumbdog-boot-panel,
+  body.dumbdog-os-booting:not(.dumbdog-bios-phase):not(.dumbdog-aero-boot-phase) .dumbdog-boot-panel{
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition-delay: 0s;
+  }
+
+  body.dumbdog-boot-exiting .dumbdog-bios-panel,
+  body.dumbdog-boot-exiting .dumbdog-boot-panel{
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transition: none !important;
+  }
+
+  body.dumbdog-aero-boot-phase .dumbdog-boot-panel{
+    width: min(300px, calc(100vw - 48px));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transform: translateY(9vh);
+  }
+
+  body.dumbdog-aero-boot-phase .dumbdog-boot-panel::after{
+    content: "© Dumbdog Corporation";
+    display: block;
+    margin-top: 14px;
+    color: rgba(255,255,255,.86);
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 12px;
+    line-height: 1;
+    text-shadow: 0 1px 2px rgba(0,0,0,.75);
+    order: 2;
   }
 
   .dumbdog-boot-logo{
@@ -861,6 +1011,11 @@
       inset 0 1px 0 rgba(255,255,255,.35),
       inset 0 -20px 30px rgba(4, 14, 32, .22),
       0 22px 70px rgba(76, 205, 255, .28);
+  }
+
+  body.dumbdog-aero-boot-phase .dumbdog-boot-logo,
+  body.dumbdog-aero-boot-phase .dumbdog-boot-title{
+    display: none;
   }
 
   .dumbdog-boot-logo img{
@@ -883,6 +1038,18 @@
     margin: 12px 0 22px;
     color: var(--dumbdog-muted);
     font-size: 14px;
+  }
+
+  body.dumbdog-aero-boot-phase .dumbdog-boot-status{
+    order: 3;
+    min-height: 15px;
+    margin: 12px 0 0;
+    color: rgba(255,255,255,.70);
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 11px;
+    line-height: 1.25;
+    letter-spacing: 0;
+    text-shadow: 0 1px 2px rgba(0,0,0,.78);
   }
 
   .dumbdog-progress{
@@ -909,6 +1076,36 @@
       linear-gradient(180deg, rgba(255,255,255,.52), rgba(255,255,255,0));
     box-shadow: 0 0 18px rgba(94, 235, 255, .72);
     transition: transform var(--dumbdog-boot-step-duration, .46s) cubic-bezier(.18,.78,.28,1);
+  }
+
+  body.dumbdog-aero-boot-phase .dumbdog-progress{
+    order: 1;
+    width: 122px;
+    height: 11px;
+    border-radius: 0;
+    border: 1px solid rgba(255,255,255,.62);
+    padding: 1px;
+    background: #050505;
+    box-shadow:
+      inset 0 0 0 1px rgba(0,0,0,.82),
+      0 1px 2px rgba(0,0,0,.9);
+  }
+
+  body.dumbdog-aero-boot-phase .dumbdog-progress span{
+    width: 42px;
+    border-radius: 0;
+    transform: translateX(-46px);
+    background:
+      repeating-linear-gradient(90deg, #beca7a 0 3px, #6f8d27 3px 5px, transparent 5px 7px),
+      linear-gradient(180deg, rgba(255,255,255,.55), rgba(255,255,255,0));
+    box-shadow: 0 0 6px rgba(198, 225, 91, .50);
+    animation: dumbdog-vista-marquee 1.05s linear infinite;
+    transition: none;
+  }
+
+  @keyframes dumbdog-vista-marquee{
+    from { transform: translateX(-46px); }
+    to { transform: translateX(124px); }
   }
 
   .dumbdog-os{
@@ -2303,6 +2500,8 @@
   @media (prefers-reduced-motion: reduce){
     .dumbdog-boot,
     .dumbdog-os,
+    .dumbdog-bios-panel,
+    .dumbdog-boot-panel,
     .dumbdog-progress span,
     .dumbdog-eq span{
       animation: none !important;
@@ -2322,6 +2521,7 @@
 
     <div id="seasonal-container"></div>
     <div class="aero-wallpaper" aria-hidden="true"></div>
+    <audio id="dumbdog-bios-audio" src="/aero/bios.mp3" preload="auto"></audio>
     <audio id="dumbdog-boot-audio" src="/aero/boot.mp3" preload="auto"></audio>
     <audio id="aero-audio" src="/aero/aero.mp3" preload="auto"></audio>
     <div class="aero-bubbles" aria-hidden="true">
@@ -2342,6 +2542,18 @@
     </div>
 
     <div id="dumbdog-boot" class="dumbdog-boot" aria-hidden="true" role="status" aria-live="polite">
+        <div class="dumbdog-bios-panel" aria-hidden="true">
+            <p class="dumbdog-bios-line"><strong>DUMBDOG BIOS</strong> v2.006 AeroBoard</p>
+            <p class="dumbdog-bios-line">Copyright (C) 2006-2026 Dumbdog Systems</p>
+            <p class="dumbdog-bios-line" aria-hidden="true">&nbsp;</p>
+            <p class="dumbdog-bios-line">Memory Test: 4096MB OK</p>
+            <p class="dumbdog-bios-line">Detecting Primary Drive... AERO_SSD</p>
+            <p class="dumbdog-bios-line">USB Controller... Online</p>
+            <p class="dumbdog-bios-line">Network Adapter... Optimistic</p>
+            <p class="dumbdog-bios-line">Loading glass surfaces...</p>
+            <p class="dumbdog-bios-line" aria-hidden="true">&nbsp;</p>
+            <p class="dumbdog-bios-line dumbdog-bios-cursor">Booting from DUMBDOG_OS</p>
+        </div>
         <div class="dumbdog-boot-panel">
             <div class="dumbdog-boot-logo" aria-hidden="true">
                 <img src="/aero/logo.png" alt="" decoding="async">
@@ -3044,6 +3256,7 @@
             audio.pause();
             audio.currentTime = 0;
             audio.muted = false;
+            audio.loop = false;
             delete audio.dataset.dumbdogPrimed;
         }
 
@@ -3068,6 +3281,23 @@
             audio.play().catch(() => {});
         }
 
+        function startDumbdogBiosAudio() {
+            playDumbdogAudio('dumbdog-bios-audio', 0.45);
+        }
+
+        function primeDumbdogBootAudio() {
+            const audio = getDumbdogAudio('dumbdog-boot-audio');
+            if (!audio) return;
+
+            audio.pause();
+            audio.currentTime = 0;
+            audio.muted = false;
+            audio.loop = true;
+            audio.volume = 0;
+            audio.dataset.dumbdogPrimed = 'true';
+            audio.play().catch(() => {});
+        }
+
         function stopDumbdogAudio(id) {
             const audio = getDumbdogAudio(id);
             if (!audio) return;
@@ -3076,6 +3306,21 @@
         }
 
         function startDumbdogBootAudio() {
+            const audio = getDumbdogAudio('dumbdog-boot-audio');
+            if (!audio) return;
+
+            if (audio.dataset.dumbdogPrimed === 'true') {
+                audio.loop = false;
+                audio.currentTime = 0;
+                audio.muted = false;
+                audio.volume = 0.7;
+                delete audio.dataset.dumbdogPrimed;
+                if (audio.paused) {
+                    audio.play().catch(() => {});
+                }
+                return;
+            }
+
             playDumbdogAudio('dumbdog-boot-audio', 0.7);
         }
 
@@ -3093,17 +3338,22 @@
         }
 
         function stopDumbdogAudioAll() {
+            stopDumbdogAudio('dumbdog-bios-audio');
             stopDumbdogAudio('dumbdog-boot-audio');
             stopDumbdogAudio('aero-audio');
         }
 
         let dumbdogBootTimer = null;
         let dumbdogBootMessageTimer = null;
+        let dumbdogBiosTimer = null;
         let dumbdogBootStepTimers = [];
         let dumbdogPhotoTimer = null;
         let dumbdogPhotoPool = [];
         let dumbdogPhotoIndex = -1;
         let dumbdogCalendarDateKey = '';
+        const dumbdogBiosDelay = 6200;
+        const dumbdogReducedBiosDelay = 260;
+        const dumbdogBiosLineDelay = 540;
         const dumbdogBootSteps = [
             { at: 0, progress: .02, duration: 0, message: 'Preparing desktop...' },
             { at: 520, progress: .12, duration: 260, message: 'Checking desktop profile...' },
@@ -3147,7 +3397,36 @@
             }
         }
 
+        function setDumbdogBootPhase(phase) {
+            document.body.classList.toggle('dumbdog-bios-phase', phase === 'bios');
+            document.body.classList.toggle('dumbdog-aero-boot-phase', phase === 'aero');
+        }
+
+        function resetDumbdogBiosLines() {
+            document.querySelectorAll('.dumbdog-bios-line').forEach((line) => {
+                line.classList.remove('is-visible');
+            });
+        }
+
+        function revealDumbdogBiosLines(reducedMotion) {
+            const lines = [...document.querySelectorAll('.dumbdog-bios-line')];
+            resetDumbdogBiosLines();
+
+            if (reducedMotion) {
+                lines.forEach((line) => line.classList.add('is-visible'));
+                return;
+            }
+
+            lines.forEach((line, index) => {
+                const timer = window.setTimeout(() => {
+                    line.classList.add('is-visible');
+                }, index * dumbdogBiosLineDelay);
+                dumbdogBootStepTimers.push(timer);
+            });
+        }
+
         function setDumbdogBooting(enabled) {
+            document.body.classList.toggle('dumbdog-boot-exiting', !enabled);
             document.body.classList.toggle('dumbdog-os-booting', enabled);
 
             const boot = document.getElementById('dumbdog-boot');
@@ -3156,8 +3435,11 @@
             }
 
             if (enabled) {
-                setDumbdogBootStatus('Preparing desktop...');
+                setDumbdogBootStatus('Powering on...');
                 setDumbdogBootProgress(0, 0);
+            } else {
+                setDumbdogBootPhase(null);
+                resetDumbdogBiosLines();
             }
 
             setDumbdogToggleState(enabled, enabled ? 'Dumbdog OS is starting' : 'Launch Dumbdog OS');
@@ -3202,9 +3484,11 @@
         function clearDumbdogBootTimers() {
             clearTimeout(dumbdogBootTimer);
             clearInterval(dumbdogBootMessageTimer);
+            clearTimeout(dumbdogBiosTimer);
             dumbdogBootStepTimers.forEach((timer) => clearTimeout(timer));
             dumbdogBootTimer = null;
             dumbdogBootMessageTimer = null;
+            dumbdogBiosTimer = null;
             dumbdogBootStepTimers = [];
         }
 
@@ -3244,14 +3528,25 @@
             const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
             const steps = reducedMotion ? dumbdogReducedBootSteps : dumbdogBootSteps;
             const finishDelay = reducedMotion ? 780 : 4880;
+            const biosDelay = reducedMotion ? dumbdogReducedBiosDelay : dumbdogBiosDelay;
 
             clearDumbdogBootTimers();
-            steps.forEach((step) => {
-                const timer = window.setTimeout(() => applyDumbdogBootStep(step), step.at);
-                dumbdogBootStepTimers.push(timer);
-            });
+            setDumbdogBootPhase('bios');
+            setDumbdogBootStatus('Powering on...');
+            setDumbdogBootProgress(0, 0);
+            revealDumbdogBiosLines(reducedMotion);
 
-            dumbdogBootTimer = window.setTimeout(finishDumbdogBoot, finishDelay);
+            dumbdogBiosTimer = window.setTimeout(() => {
+                setDumbdogBootPhase('aero');
+                stopDumbdogAudio('dumbdog-bios-audio');
+                startDumbdogBootAudio();
+                steps.forEach((step) => {
+                    const timer = window.setTimeout(() => applyDumbdogBootStep(step), step.at);
+                    dumbdogBootStepTimers.push(timer);
+                });
+
+                dumbdogBootTimer = window.setTimeout(finishDumbdogBoot, finishDelay);
+            }, biosDelay);
         }
 
         function startDumbdogOS() {
@@ -3259,7 +3554,8 @@
 
             warmAeroAssets();
             stopDumbdogAudioAll();
-            startDumbdogBootAudio();
+            startDumbdogBiosAudio();
+            primeDumbdogBootAudio();
             primeAeroAudioForBoot();
             setDumbdogOSActive(false);
             setDumbdogBooting(true);
