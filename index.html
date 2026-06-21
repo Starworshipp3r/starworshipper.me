@@ -3177,6 +3177,7 @@
             audio.pause();
             audio.currentTime = 0;
             audio.muted = false;
+            audio.loop = false;
             delete audio.dataset.dumbdogPrimed;
         }
 
@@ -3201,6 +3202,19 @@
             audio.play().catch(() => {});
         }
 
+        function primeDumbdogBootAudio() {
+            const audio = getDumbdogAudio('dumbdog-boot-audio');
+            if (!audio) return;
+
+            audio.pause();
+            audio.currentTime = 0;
+            audio.muted = false;
+            audio.loop = true;
+            audio.volume = 0;
+            audio.dataset.dumbdogPrimed = 'true';
+            audio.play().catch(() => {});
+        }
+
         function stopDumbdogAudio(id) {
             const audio = getDumbdogAudio(id);
             if (!audio) return;
@@ -3209,6 +3223,21 @@
         }
 
         function startDumbdogBootAudio() {
+            const audio = getDumbdogAudio('dumbdog-boot-audio');
+            if (!audio) return;
+
+            if (audio.dataset.dumbdogPrimed === 'true') {
+                audio.loop = false;
+                audio.currentTime = 0;
+                audio.muted = false;
+                audio.volume = 0.7;
+                delete audio.dataset.dumbdogPrimed;
+                if (audio.paused) {
+                    audio.play().catch(() => {});
+                }
+                return;
+            }
+
             playDumbdogAudio('dumbdog-boot-audio', 0.7);
         }
 
@@ -3424,6 +3453,7 @@
 
             dumbdogBiosTimer = window.setTimeout(() => {
                 setDumbdogBootPhase('aero');
+                startDumbdogBootAudio();
                 steps.forEach((step) => {
                     const timer = window.setTimeout(() => applyDumbdogBootStep(step), step.at);
                     dumbdogBootStepTimers.push(timer);
@@ -3438,7 +3468,7 @@
 
             warmAeroAssets();
             stopDumbdogAudioAll();
-            startDumbdogBootAudio();
+            primeDumbdogBootAudio();
             primeAeroAudioForBoot();
             setDumbdogOSActive(false);
             setDumbdogBooting(true);
