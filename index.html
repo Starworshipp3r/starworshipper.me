@@ -969,6 +969,13 @@
     transition-delay: 0s;
   }
 
+  body.dumbdog-boot-exiting .dumbdog-bios-panel,
+  body.dumbdog-boot-exiting .dumbdog-boot-panel{
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transition: none !important;
+  }
+
   body.dumbdog-aero-boot-phase .dumbdog-boot-panel{
     width: min(300px, calc(100vw - 48px));
     display: flex;
@@ -3419,6 +3426,7 @@
         }
 
         function setDumbdogBooting(enabled) {
+            document.body.classList.toggle('dumbdog-boot-exiting', !enabled);
             document.body.classList.toggle('dumbdog-os-booting', enabled);
 
             const boot = document.getElementById('dumbdog-boot');
