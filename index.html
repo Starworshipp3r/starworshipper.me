@@ -1660,24 +1660,38 @@
   }
 
   .dumbdog-photo-frame img{
+    position: absolute;
+    inset: 0;
     display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    opacity: 1;
-    transform: scale(1);
-    transition: opacity .6s ease, transform .6s ease;
+    opacity: 0;
+    transform: scale(1.015);
+    z-index: 0;
+    will-change: opacity, transform;
+    transition:
+      opacity .9s ease,
+      transform 1.25s ease;
   }
 
-  .dumbdog-photo-frame img.is-changing{
-    opacity: .12;
-    transform: scale(1.03);
+  .dumbdog-photo-frame img.is-active{
+    opacity: 1;
+    transform: scale(1);
+    z-index: 2;
+  }
+
+  .dumbdog-photo-frame img.is-leaving{
+    opacity: 0;
+    transform: scale(1.045);
+    z-index: 1;
   }
 
   .dumbdog-photo-frame::after{
     content: '';
     position: absolute;
     inset: 0;
+    z-index: 3;
     pointer-events: none;
     background:
       linear-gradient(135deg, rgba(255,255,255,.32), rgba(255,255,255,0) 34%),
@@ -2514,6 +2528,7 @@
     .dumbdog-os,
     .dumbdog-bios-panel,
     .dumbdog-boot-panel,
+    .dumbdog-photo-frame img,
     .dumbdog-progress span,
     .dumbdog-eq span{
       animation: none !important;
@@ -2652,7 +2667,8 @@
 
                 <section class="dumbdog-widget dumbdog-photo-widget" aria-label="Photo frame">
                     <div class="dumbdog-photo-frame">
-                        <img src="/aero/slideshow/Dock.jpg" alt="Dock" data-dumbdog-photo-img decoding="async">
+                        <img class="is-active" src="/aero/slideshow/Dock.jpg" alt="Dock" data-dumbdog-photo-layer decoding="async">
+                        <img src="/aero/slideshow/Dock.jpg" alt="" data-dumbdog-photo-layer decoding="async" aria-hidden="true">
                     </div>
                 </section>
 
@@ -3360,6 +3376,8 @@
         let dumbdogBiosTimer = null;
         let dumbdogBootStepTimers = [];
         let dumbdogPhotoTimer = null;
+        let dumbdogPhotoTransitionTimer = null;
+        let dumbdogPhotoRequestId = 0;
         let dumbdogPhotoPool = [];
         let dumbdogPhotoIndex = -1;
         let dumbdogCalendarDateKey = '';
@@ -3658,19 +3676,60 @@
             }
         }
 
-        function setDumbdogPhoto(photo) {
-            const img = document.querySelector('[data-dumbdog-photo-img]');
-            if (!img || !photo?.src) return;
+        function preloadDumbdogPhoto(src) {
+            const img = new Image();
+            img.decoding = 'async';
+            img.src = src;
 
+            if (img.decode) {
+                return img.decode().catch(() => {});
+            }
+
+            return new Promise((resolve) => {
+                img.onload = resolve;
+                img.onerror = resolve;
+            });
+        }
+
+        async function setDumbdogPhoto(photo) {
+            if (!photo?.src) return;
+
+            const layers = [...document.querySelectorAll('[data-dumbdog-photo-layer]')];
+            if (!layers.length) return;
+
+            const requestId = ++dumbdogPhotoRequestId;
             const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-            const swapDelay = reducedMotion ? 0 : 180;
+            const active = layers.find((layer) => layer.classList.contains('is-active')) || layers[0];
+            const next = layers.find((layer) => layer !== active) || active;
+            const title = photo.title || 'Dumbdog photo frame';
 
-            img.classList.add('is-changing');
-            window.setTimeout(() => {
-                img.src = photo.src;
-                img.alt = photo.title || 'Dumbdog photo frame';
-                img.classList.remove('is-changing');
-            }, swapDelay);
+            await preloadDumbdogPhoto(photo.src);
+            if (requestId !== dumbdogPhotoRequestId) return;
+
+            clearTimeout(dumbdogPhotoTransitionTimer);
+            next.src = photo.src;
+            next.alt = title;
+            next.classList.remove('is-active', 'is-leaving');
+            next.setAttribute('aria-hidden', 'true');
+
+            if (next !== active) {
+                void next.offsetWidth;
+                active.classList.remove('is-active');
+                active.classList.add('is-leaving');
+                active.setAttribute('aria-hidden', 'true');
+            }
+
+            next.classList.add('is-active');
+            next.removeAttribute('aria-hidden');
+
+            if (reducedMotion || next === active) {
+                active.classList.remove('is-leaving');
+                return;
+            }
+
+            dumbdogPhotoTransitionTimer = window.setTimeout(() => {
+                active.classList.remove('is-leaving');
+            }, 1300);
         }
 
         function advanceDumbdogPhoto() {
@@ -3702,7 +3761,10 @@
 
         function stopDumbdogPhotoFrame() {
             clearInterval(dumbdogPhotoTimer);
+            clearTimeout(dumbdogPhotoTransitionTimer);
             dumbdogPhotoTimer = null;
+            dumbdogPhotoTransitionTimer = null;
+            dumbdogPhotoRequestId += 1;
         }
 
         function randomizeDumbdogWidgets() {
