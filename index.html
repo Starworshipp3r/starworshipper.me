@@ -906,6 +906,20 @@
     margin: 0 0 4px;
   }
 
+  .dumbdog-bios-line{
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-2px);
+    transition: opacity .08s linear, transform .08s linear, visibility 0s linear .08s;
+  }
+
+  body.dumbdog-bios-phase .dumbdog-bios-line.is-visible{
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition-delay: 0s;
+  }
+
   .dumbdog-bios-panel strong{
     color: #d8ffec;
     font-weight: 700;
@@ -2450,16 +2464,16 @@
 
     <div id="dumbdog-boot" class="dumbdog-boot" aria-hidden="true" role="status" aria-live="polite">
         <div class="dumbdog-bios-panel" aria-hidden="true">
-            <p><strong>DUMBDOG BIOS</strong> v2.006 AeroBoard</p>
-            <p>Copyright (C) 2006-2026 Dumbdog Systems</p>
-            <p>&nbsp;</p>
-            <p>Memory Test: 4096MB OK</p>
-            <p>Detecting Primary Drive... AERO_SSD</p>
-            <p>USB Controller... Online</p>
-            <p>Network Adapter... Optimistic</p>
-            <p>Loading glass surfaces...</p>
-            <p>&nbsp;</p>
-            <p class="dumbdog-bios-cursor">Booting from DUMBDOG_OS</p>
+            <p class="dumbdog-bios-line"><strong>DUMBDOG BIOS</strong> v2.006 AeroBoard</p>
+            <p class="dumbdog-bios-line">Copyright (C) 2006-2026 Dumbdog Systems</p>
+            <p class="dumbdog-bios-line" aria-hidden="true">&nbsp;</p>
+            <p class="dumbdog-bios-line">Memory Test: 4096MB OK</p>
+            <p class="dumbdog-bios-line">Detecting Primary Drive... AERO_SSD</p>
+            <p class="dumbdog-bios-line">USB Controller... Online</p>
+            <p class="dumbdog-bios-line">Network Adapter... Optimistic</p>
+            <p class="dumbdog-bios-line">Loading glass surfaces...</p>
+            <p class="dumbdog-bios-line" aria-hidden="true">&nbsp;</p>
+            <p class="dumbdog-bios-line dumbdog-bios-cursor">Booting from DUMBDOG_OS</p>
         </div>
         <div class="dumbdog-boot-panel">
             <div class="dumbdog-boot-logo" aria-hidden="true">
@@ -3224,8 +3238,9 @@
         let dumbdogPhotoPool = [];
         let dumbdogPhotoIndex = -1;
         let dumbdogCalendarDateKey = '';
-        const dumbdogBiosDelay = 1500;
+        const dumbdogBiosDelay = 1850;
         const dumbdogReducedBiosDelay = 260;
+        const dumbdogBiosLineDelay = 150;
         const dumbdogBootSteps = [
             { at: 0, progress: .02, duration: 0, message: 'Preparing desktop...' },
             { at: 520, progress: .12, duration: 260, message: 'Checking desktop profile...' },
@@ -3274,6 +3289,29 @@
             document.body.classList.toggle('dumbdog-aero-boot-phase', phase === 'aero');
         }
 
+        function resetDumbdogBiosLines() {
+            document.querySelectorAll('.dumbdog-bios-line').forEach((line) => {
+                line.classList.remove('is-visible');
+            });
+        }
+
+        function revealDumbdogBiosLines(reducedMotion) {
+            const lines = [...document.querySelectorAll('.dumbdog-bios-line')];
+            resetDumbdogBiosLines();
+
+            if (reducedMotion) {
+                lines.forEach((line) => line.classList.add('is-visible'));
+                return;
+            }
+
+            lines.forEach((line, index) => {
+                const timer = window.setTimeout(() => {
+                    line.classList.add('is-visible');
+                }, index * dumbdogBiosLineDelay);
+                dumbdogBootStepTimers.push(timer);
+            });
+        }
+
         function setDumbdogBooting(enabled) {
             document.body.classList.toggle('dumbdog-os-booting', enabled);
 
@@ -3287,6 +3325,7 @@
                 setDumbdogBootProgress(0, 0);
             } else {
                 setDumbdogBootPhase(null);
+                resetDumbdogBiosLines();
             }
 
             setDumbdogToggleState(enabled, enabled ? 'Dumbdog OS is starting' : 'Launch Dumbdog OS');
@@ -3381,6 +3420,7 @@
             setDumbdogBootPhase('bios');
             setDumbdogBootStatus('Powering on...');
             setDumbdogBootProgress(0, 0);
+            revealDumbdogBiosLines(reducedMotion);
 
             dumbdogBiosTimer = window.setTimeout(() => {
                 setDumbdogBootPhase('aero');
