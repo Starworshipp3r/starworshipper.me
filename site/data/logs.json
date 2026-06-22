@@ -1,0 +1,48 @@
+[
+  {
+    "date": "2026-06-21",
+    "title": "BIOS noises at midnight",
+    "type": "site note",
+    "location": "Dumbdog OS",
+    "body": "Tuned the fake boot sequence until it felt a little more like an old machine waking up. The tiny hard drive clicks make the whole thing feel weirdly alive.",
+    "tags": ["site", "dumbdog os", "aero", "tinkering"],
+    "coverImage": "/aero/aero.jpg",
+    "photos": ["/aero/aero.jpg", "/aero/logo.png"]
+  },
+  {
+    "date": "2026-05-24",
+    "title": "Clouds through glass",
+    "type": "photo",
+    "location": "Camera roll",
+    "body": "A small reminder to keep the shiny accidental photos instead of cleaning the camera roll too aggressively. Some of the best little things are just light, clouds, and timing.",
+    "tags": ["photos", "clouds", "frutiger aero"],
+    "coverImage": "/aero/slideshow/Dock.jpg",
+    "photos": ["/aero/slideshow/Dock.jpg", "/aero/slideshow/Waterfall_(Windows_Vista).jpg"]
+  },
+  {
+    "date": "2026-04-18",
+    "title": "Burn new CD",
+    "type": "music",
+    "body": "A fake to-do item became a real mood. Make a short mix, give it a name, overthink the order, then let it loop until it feels like a tiny era.",
+    "tags": ["music", "mix", "2000s"],
+    "photos": []
+  },
+  {
+    "date": "2026-03-09",
+    "title": "Sort recyclables, keep receipts",
+    "type": "field note",
+    "location": "Kitchen counter",
+    "body": "The most optimistic future is probably still made of boring little chores. Rinse the can, save the battery, label the cable, try again tomorrow.",
+    "tags": ["eco", "routine", "small things"]
+  },
+  {
+    "date": "2026-02-02",
+    "title": "Desert walk after rain",
+    "type": "outside",
+    "location": "Phoenix, AZ",
+    "body": "The whole trail smelled like dust turning back into earth. Everything was quiet enough to make the city feel far away for a minute.",
+    "tags": ["hikes", "outside", "arizona"],
+    "coverImage": "/aero/slideshow/Desert_Landscape_(Windows_Vista).jpg",
+    "photos": ["/aero/slideshow/Desert_Landscape_(Windows_Vista).jpg", "/aero/slideshow/Forest_Flowers.jpg"]
+  }
+]

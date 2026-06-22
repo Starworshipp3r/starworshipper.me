@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>document.documentElement.classList.add('js');</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DUMBDOG KEEPS LOGS</title>
+
+  <meta name="theme-color" content="#0b0f18" />
+  <meta name="description" content="A small public archive of memories, field notes, photos, and tiny moments." />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg: #0b0f18;
+      --bg2: #0a0d16;
+      --fg: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.68);
+      --accent: #7aa2ff;
+      --accent-glow: rgba(122,162,255,.20);
+      --glass: rgba(18, 22, 32, .56);
+      --border: rgba(255,255,255,.14);
+      --border-2: rgba(255,255,255,.10);
+      --shadow: 0 30px 80px rgba(0,0,0,.55);
+      --shadow-soft: 0 12px 35px rgba(0,0,0,.35);
+      --radius-xl: 22px;
+      --radius-lg: 16px;
+      --radius-md: 14px;
+      --noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
+    }
+
+    html, body { min-height: 100%; }
+
+    body{
+      font-family: "Segoe UI Variable", "Segoe UI", "Inter", system-ui, -apple-system, sans-serif;
+      background: linear-gradient(180deg, var(--bg), var(--bg2));
+      color: var(--fg);
+      overflow-x: hidden;
+    }
+
+    @keyframes rotate-background {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    body::before{
+      content:'';
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: 150vmax;
+      height: 150vmax;
+      margin-top: -75vmax;
+      margin-left: -75vmax;
+      background-image:
+        radial-gradient(circle at 26% 24%, var(--color-1, rgba(100, 100, 255, 0.25)), transparent 44%),
+        radial-gradient(circle at 72% 72%, var(--color-2, rgba(255, 100, 150, 0.25)), transparent 46%),
+        radial-gradient(circle at 50% 52%, rgba(122, 255, 214, .10), transparent 38%);
+      z-index: -2;
+      animation: rotate-background 90s linear infinite;
+      animation-delay: var(--bg-delay, 0s);
+      will-change: transform;
+    }
+
+    body::after{
+      content:'';
+      position: fixed;
+      inset: 0;
+      background-image: var(--noise);
+      background-size: 240px 240px;
+      opacity: .07;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .mica-shell{
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--border);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)),
+        radial-gradient(900px 240px at 20% 0%, rgba(255,255,255,.10), transparent 60%),
+        var(--glass);
+      backdrop-filter: blur(28px) saturate(1.25);
+      -webkit-backdrop-filter: blur(22px) saturate(1.25);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .mica-shell::before{
+      content:'';
+      position:absolute;
+      inset: 0;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.20), transparent 40%),
+        radial-gradient(900px 280px at 10% 0%, rgba(255,255,255,.18), transparent 60%);
+      opacity: .23;
+      pointer-events:none;
+    }
+
+    .mica-shell::after{
+      content:'';
+      position:absolute;
+      inset:0;
+      background-image: var(--noise);
+      background-size: 260px 260px;
+      opacity: .06;
+      mix-blend-mode: overlay;
+      pointer-events:none;
+    }
+
+    .mica-shell > * { position: relative; z-index: 1; }
+
+    .mica-icon-btn,
+    .glass-btn{
+      border: 1px solid var(--border-2);
+      background: rgba(255,255,255,.06);
+      box-shadow: var(--shadow-soft);
+      transition: transform .15s ease, background .15s ease, border-color .15s ease, box-shadow .15s ease;
+    }
+
+    .mica-icon-btn{
+      border-radius: 9999px;
+      width: 44px;
+      height: 44px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      flex: 0 0 auto;
+    }
+
+    .glass-btn{
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: .55rem;
+      border-radius: 14px;
+      min-height: 42px;
+      padding: .68rem .95rem;
+      color: rgba(255,255,255,.88);
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .mica-icon-btn:hover,
+    .glass-btn:hover{
+      transform: translateY(-1px);
+      background: rgba(255,255,255,.10);
+      border-color: rgba(255,255,255,.16);
+    }
+
+    .mica-icon-btn:active,
+    .glass-btn:active{
+      transform: translateY(0px) scale(.98);
+      background: rgba(255,255,255,.08);
+    }
+
+    .glass-field{
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.055);
+      color: rgba(255,255,255,.90);
+      border-radius: 14px;
+      min-height: 42px;
+      transition: border-color .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+
+    .glass-field:focus{
+      outline: none;
+      border-color: rgba(255,255,255,.20);
+      box-shadow: 0 0 0 4px var(--accent-glow);
+      background: rgba(255,255,255,.075);
+    }
+
+    .glass-field::placeholder{ color: rgba(255,255,255,.45); }
+
+    select.glass-field option{
+      background: #101723;
+      color: rgba(255,255,255,.90);
+    }
+
+    .archive-card,
+    .log-card,
+    .empty-state{
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      box-shadow: 0 10px 28px rgba(0,0,0,.22);
+    }
+
+    .archive-card{
+      padding: 1rem;
+    }
+
+    .tag{
+      display:inline-flex;
+      align-items:center;
+      gap: .42rem;
+      padding: .42rem .62rem;
+      border-radius: 9999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      color: rgba(255,255,255,.78);
+      font-size: .8rem;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    .log-grid{
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 305px), 1fr));
+      gap: 1rem;
+      align-items: stretch;
+    }
+
+    .log-card{
+      width: 100%;
+      overflow: hidden;
+      text-align: left;
+      position: relative;
+      transition: transform .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
+    }
+
+    .log-card:hover{
+      transform: translateY(-2px);
+      border-color: rgba(255,255,255,.18);
+      background: rgba(255,255,255,.07);
+      box-shadow: 0 18px 46px rgba(0,0,0,.34), 0 0 0 1px var(--accent-glow);
+    }
+
+    .log-card:focus-visible,
+    .glass-btn:focus-visible,
+    .mica-icon-btn:focus-visible{
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(255,255,255,.18), 0 0 0 6px var(--accent-glow);
+    }
+
+    .card-media{
+      position: relative;
+      aspect-ratio: 16 / 9;
+      background: rgba(0,0,0,.24);
+      overflow: hidden;
+    }
+
+    .card-media img{
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      opacity: .92;
+      transition: transform .35s ease, opacity .2s ease;
+    }
+
+    .log-card:hover .card-media img{
+      transform: scale(1.035);
+      opacity: 1;
+    }
+
+    .card-media::after{
+      content:'';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 45%, rgba(0,0,0,.44));
+      pointer-events: none;
+    }
+
+    .category-pill{
+      position: absolute;
+      left: .75rem;
+      bottom: .75rem;
+      z-index: 1;
+      display:inline-flex;
+      align-items:center;
+      gap:.42rem;
+      padding: .38rem .58rem;
+      border-radius: 9999px;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(8,12,18,.58);
+      backdrop-filter: blur(12px) saturate(1.2);
+      -webkit-backdrop-filter: blur(12px) saturate(1.2);
+      color: rgba(255,255,255,.88);
+      font-size: .76rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+    }
+
+    .category-pill.in-flow{
+      position: static;
+      display: inline-flex;
+      margin-bottom: .75rem;
+    }
+
+    .memory-mark{
+      min-height: 142px;
+      margin: .9rem .9rem 0;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.12);
+      background:
+        radial-gradient(circle at 20% 18%, rgba(255,255,255,.20), transparent 28%),
+        radial-gradient(circle at 80% 72%, var(--accent-glow), transparent 34%),
+        linear-gradient(135deg, rgba(255,255,255,.10), rgba(255,255,255,.025));
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: .5rem;
+      color: rgba(255,255,255,.82);
+    }
+
+    .memory-mark i{
+      font-size: 2.1rem;
+      filter: drop-shadow(0 10px 18px rgba(0,0,0,.35));
+    }
+
+    .memory-mark span{
+      font-size: .76rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: rgba(255,255,255,.70);
+    }
+
+    .log-content{
+      padding: 1rem;
+    }
+
+    .line-clamp{
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    @keyframes resurface-pulse{
+      0%, 100% { box-shadow: 0 10px 28px rgba(0,0,0,.22), 0 0 0 0 rgba(255,255,255,0); }
+      45% { box-shadow: 0 22px 56px rgba(0,0,0,.42), 0 0 0 4px var(--accent-glow); }
+    }
+
+    .log-card.is-resurfaced{
+      animation: resurface-pulse 1.25s ease;
+      border-color: rgba(255,255,255,.26);
+    }
+
+    .empty-state{
+      padding: 2rem;
+      color: rgba(255,255,255,.70);
+      text-align: center;
+    }
+
+    .modal-backdrop{
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      display: grid;
+      place-items: center;
+      padding: 1rem;
+      background: rgba(2,6,12,.72);
+      backdrop-filter: blur(18px) saturate(1.25);
+      -webkit-backdrop-filter: blur(18px) saturate(1.25);
+    }
+
+    .modal-backdrop[hidden]{ display: none; }
+
+    .memory-modal{
+      width: min(920px, 100%);
+      max-height: min(86vh, 820px);
+      overflow: auto;
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,.16);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.035)),
+        rgba(16,20,30,.86);
+      box-shadow: 0 34px 90px rgba(0,0,0,.58);
+    }
+
+    .modal-hero{
+      position: relative;
+      min-height: 210px;
+      background:
+        radial-gradient(circle at 24% 24%, rgba(255,255,255,.18), transparent 30%),
+        linear-gradient(135deg, rgba(122,162,255,.22), rgba(122,255,214,.08));
+      overflow: hidden;
+    }
+
+    .modal-hero img{
+      width: 100%;
+      height: clamp(220px, 38vh, 340px);
+      object-fit: cover;
+      display: block;
+      opacity: .94;
+    }
+
+    .modal-hero.has-image::after{
+      content:'';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,.04), rgba(0,0,0,.58));
+      pointer-events: none;
+    }
+
+    .modal-title-block{
+      position: absolute;
+      left: 1.25rem;
+      right: 4.25rem;
+      bottom: 1.2rem;
+      z-index: 1;
+      text-shadow: 0 12px 30px rgba(0,0,0,.55);
+    }
+
+    .modal-hero:not(.has-image) .modal-title-block{
+      position: relative;
+      inset: auto;
+      padding: 4.6rem 1.25rem 1.25rem;
+    }
+
+    .modal-close{
+      position: absolute;
+      z-index: 2;
+      top: .9rem;
+      right: .9rem;
+      width: 42px;
+      height: 42px;
+      border-radius: 9999px;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(0,0,0,.28);
+      color: rgba(255,255,255,.90);
+      display: grid;
+      place-items: center;
+    }
+
+    .modal-copy p + p{ margin-top: .85rem; }
+
+    .gallery-grid{
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: .7rem;
+    }
+
+    .gallery-grid img{
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.20);
+    }
+
+    html.js .mica-shell{
+      opacity: 0;
+      transform: translateY(10px) scale(.99);
+      filter: blur(10px);
+      transition: opacity 420ms cubic-bezier(.2,.8,.2,1),
+                  transform 420ms cubic-bezier(.2,.8,.2,1),
+                  filter 420ms cubic-bezier(.2,.8,.2,1);
+      will-change: transform, opacity, filter;
+    }
+
+    html.js body.is-ready .mica-shell{
+      opacity: 1;
+      transform: none;
+      filter: blur(0);
+    }
+
+    html.js body.is-leaving .mica-shell{
+      opacity: 0;
+      transform: translateY(-6px) scale(.995);
+      filter: blur(14px);
+    }
+
+    @media (max-width: 760px){
+      .log-header{
+        align-items: flex-start;
+      }
+
+      .control-row{
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .glass-btn{
+        width: 100%;
+      }
+
+      .modal-backdrop{
+        padding: .55rem;
+        align-items: end;
+      }
+
+      .memory-modal{
+        max-height: 90vh;
+        border-radius: 20px 20px 0 0;
+      }
+
+      .modal-title-block{
+        left: 1rem;
+        right: 3.8rem;
+        bottom: 1rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      body::before{ animation: none; }
+      .log-card,
+      .log-card:hover,
+      .glass-btn,
+      .mica-icon-btn,
+      html.js .mica-shell{
+        transition: none !important;
+        transform: none !important;
+      }
+      .log-card.is-resurfaced{ animation: none; }
+    }
+  </style>
+</head>
+
+<body class="min-h-screen p-2 sm:p-4 lg:p-6">
+  <div class="mica-shell w-full max-w-[1600px] mx-auto min-h-[calc(100vh-1rem)] sm:min-h-[calc(100vh-2rem)] lg:min-h-[calc(100vh-3rem)] flex flex-col">
+    <header class="log-header p-5 sm:p-6 border-b border-white/10 bg-white/5 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+      <div class="flex items-center gap-3 min-w-0">
+        <a class="mica-icon-btn" href="/site/" aria-label="Back to site" title="Back">
+          <i class="fa-solid fa-arrow-left"></i>
+        </a>
+        <div class="min-w-0">
+          <div class="flex items-center gap-2 text-2xl font-extrabold leading-tight">
+            <i class="fa-solid fa-book-open text-white/70 text-xl"></i>
+            <span>Logs</span>
+          </div>
+          <p class="text-white/65 text-sm mt-1">Little public memories, field notes, and things worth saving.</p>
+        </div>
+      </div>
+
+      <div class="control-row flex items-center gap-2 w-full lg:w-auto">
+        <div class="relative flex-1 lg:flex-none">
+          <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-white/55 text-sm"></i>
+          <input id="search" type="search" placeholder="Search logs"
+                 class="glass-field pl-9 pr-3 py-2 w-full lg:w-64">
+        </div>
+        <select id="type-filter" class="glass-field px-3 py-2 w-full lg:w-44" aria-label="Filter by type">
+          <option value="all">All memories</option>
+        </select>
+        <button id="random-memory" class="glass-btn" type="button">
+          <i class="fa-solid fa-shuffle"></i>
+          <span>Resurface</span>
+        </button>
+      </div>
+    </header>
+
+    <main class="p-5 sm:p-6 flex-1">
+      <div class="grid grid-cols-1 xl:grid-cols-[280px_1fr] gap-5">
+        <aside class="space-y-4">
+          <section class="archive-card">
+            <div class="text-white/55 text-xs uppercase tracking-[.14em] font-extrabold">Archive pulse</div>
+            <div class="mt-3 grid grid-cols-2 gap-2">
+              <span class="tag"><i class="fa-solid fa-layer-group"></i><span id="stat-count">0</span> logs</span>
+              <span class="tag"><i class="fa-solid fa-tags"></i><span id="stat-types">0</span> types</span>
+            </div>
+            <div class="mt-3 text-white/62 text-sm">
+              Latest: <span id="stat-latest" class="text-white/86 font-semibold">loading</span>
+            </div>
+          </section>
+
+          <section class="archive-card">
+            <div class="text-white/55 text-xs uppercase tracking-[.14em] font-extrabold">Tags</div>
+            <div id="tag-cloud" class="mt-3 flex flex-wrap gap-2"></div>
+          </section>
+        </aside>
+
+        <section>
+          <div id="logs-grid" class="log-grid" aria-live="polite"></div>
+          <div id="empty-state" class="empty-state mt-4" hidden>
+            <i class="fa-solid fa-box-archive text-3xl text-white/55"></i>
+            <div class="mt-3 font-bold text-white/86">Nothing surfaced.</div>
+            <div class="mt-1 text-sm">Try a different search or filter.</div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <div id="memory-modal" class="modal-backdrop" hidden>
+    <article class="memory-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <div id="modal-hero" class="modal-hero">
+        <button id="modal-close" class="modal-close" type="button" aria-label="Close memory">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+        <div id="modal-title-block" class="modal-title-block"></div>
+      </div>
+      <div id="modal-body" class="p-5 sm:p-6"></div>
+    </article>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const root = document.documentElement;
+      const KEY = 'micaTheme_v1';
+
+      function applyTheme(t) {
+        root.style.setProperty('--color-1', `hsla(${t.h1}, ${t.s}%, ${t.l}%, 0.75)`);
+        root.style.setProperty('--color-2', `hsla(${t.h2}, ${t.s}%, ${t.l}%, 0.75)`);
+        root.style.setProperty('--accent', `hsla(${t.h1}, ${Math.min(t.s + 10, 100)}%, ${Math.min(t.l + 15, 72)}%, 1)`);
+        root.style.setProperty('--accent-glow', `hsla(${t.h1}, ${Math.min(t.s + 10, 100)}%, ${Math.min(t.l + 15, 72)}%, 0.22)`);
+      }
+
+      function generateTheme() {
+        const h1 = Math.floor(Math.random() * 360);
+        const h2 = (h1 + 180) % 360;
+        const s = Math.floor(Math.random() * 80) + 20;
+        const l = Math.floor(Math.random() * 50) + 30;
+        return { h1, h2, s, l };
+      }
+
+      let theme = null;
+      try { theme = JSON.parse(sessionStorage.getItem(KEY) || 'null'); } catch {}
+      if (!theme) {
+        theme = generateTheme();
+        sessionStorage.setItem(KEY, JSON.stringify(theme));
+      }
+      applyTheme(theme);
+
+      const DUR = 90;
+      const START_KEY = 'micaAnimStart_v1';
+      let start = Number(sessionStorage.getItem(START_KEY));
+      if (!start) {
+        start = Date.now();
+        sessionStorage.setItem(START_KEY, String(start));
+      }
+      const elapsed = ((Date.now() - start) / 1000) % DUR;
+      root.style.setProperty('--bg-delay', `-${elapsed}s`);
+
+      requestAnimationFrame(() => document.body.classList.add('is-ready'));
+
+      document.addEventListener('click', (e) => {
+        const a = e.target.closest('a');
+        if (!a) return;
+        if (e.button !== 0) return;
+        if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+        if (a.target && a.target !== '_self') return;
+        if (a.hasAttribute('download')) return;
+
+        const href = a.getAttribute('href');
+        if (!href || href.startsWith('#')) return;
+
+        let url;
+        try { url = new URL(a.href, window.location.href); } catch { return; }
+        if (url.origin !== window.location.origin) return;
+        if (url.pathname === location.pathname && url.search === location.search && url.hash) return;
+
+        e.preventDefault();
+        document.body.classList.add('is-leaving');
+        const delay = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 220;
+        setTimeout(() => { window.location.href = url.href; }, delay);
+      });
+
+      window.addEventListener('pageshow', () => {
+        document.body.classList.remove('is-leaving');
+        document.body.classList.add('is-ready');
+      });
+
+      setTimeout(() => document.body.classList.add('is-ready'), 1200);
+    });
+
+    const els = {
+      grid: document.getElementById('logs-grid'),
+      empty: document.getElementById('empty-state'),
+      search: document.getElementById('search'),
+      filter: document.getElementById('type-filter'),
+      random: document.getElementById('random-memory'),
+      statCount: document.getElementById('stat-count'),
+      statTypes: document.getElementById('stat-types'),
+      statLatest: document.getElementById('stat-latest'),
+      tagCloud: document.getElementById('tag-cloud'),
+      modal: document.getElementById('memory-modal'),
+      modalHero: document.getElementById('modal-hero'),
+      modalTitleBlock: document.getElementById('modal-title-block'),
+      modalBody: document.getElementById('modal-body'),
+      modalClose: document.getElementById('modal-close')
+    };
+
+    let entries = [];
+    let visibleEntries = [];
+
+    function escapeHtml(value){
+      return String(value ?? '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
+    }
+
+    function asArray(value){
+      return Array.isArray(value) ? value.filter(Boolean) : [];
+    }
+
+    function slugify(value, fallback){
+      const slug = String(value || '')
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '');
+      return slug || `memory-${fallback}`;
+    }
+
+    function formatDate(iso){
+      if (!iso) return '';
+      const date = new Date(`${iso}T00:00:00`);
+      if (Number.isNaN(date.getTime())) return iso;
+      return date.toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
+    }
+
+    function shortDate(iso){
+      if (!iso) return '';
+      const date = new Date(`${iso}T00:00:00`);
+      if (Number.isNaN(date.getTime())) return iso;
+      return date.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+    }
+
+    function entryType(entry){
+      return entry.type || entry.category || 'memory';
+    }
+
+    function primaryImage(entry){
+      return entry.coverImage || asArray(entry.photos)[0] || '';
+    }
+
+    function galleryImages(entry){
+      return Array.from(new Set([entry.coverImage, ...asArray(entry.photos)].filter(Boolean)));
+    }
+
+    function iconFor(type){
+      const key = String(type || '').toLowerCase();
+      if (key.includes('music')) return 'fa-compact-disc';
+      if (key.includes('photo')) return 'fa-camera-retro';
+      if (key.includes('outside') || key.includes('field')) return 'fa-leaf';
+      if (key.includes('site')) return 'fa-display';
+      return 'fa-note-sticky';
+    }
+
+    function setStats(source){
+      const types = new Set(source.map(entryType));
+      const tags = Array.from(new Set(source.flatMap(entry => asArray(entry.tags)))).sort((a, b) => a.localeCompare(b));
+      if (els.statCount) els.statCount.textContent = String(source.length);
+      if (els.statTypes) els.statTypes.textContent = String(types.size);
+      if (els.statLatest) els.statLatest.textContent = source[0] ? shortDate(source[0].date) : 'none yet';
+      if (els.tagCloud) {
+        els.tagCloud.innerHTML = tags.length
+          ? tags.slice(0, 18).map(tag => `<span class="tag"><i class="fa-solid fa-hashtag"></i>${escapeHtml(tag)}</span>`).join('')
+          : '<span class="text-white/55 text-sm">No tags yet.</span>';
+      }
+    }
+
+    function buildFilterOptions(){
+      const types = Array.from(new Set(entries.map(entryType))).sort((a, b) => a.localeCompare(b));
+      els.filter.innerHTML = '<option value="all">All memories</option>' + types
+        .map(type => `<option value="${escapeHtml(type)}">${escapeHtml(type)}</option>`)
+        .join('');
+    }
+
+    function cardTemplate(entry){
+      const type = entryType(entry);
+      const image = primaryImage(entry);
+      const tags = asArray(entry.tags).slice(0, 4);
+      const location = entry.location ? `<span><i class="fa-solid fa-location-dot text-white/45"></i> ${escapeHtml(entry.location)}</span>` : '';
+      const media = image
+        ? `<div class="card-media">
+             <img src="${escapeHtml(image)}" alt="" loading="lazy">
+             <span class="category-pill"><i class="fa-solid ${iconFor(type)}"></i>${escapeHtml(type)}</span>
+           </div>`
+        : `<div class="memory-mark" aria-hidden="true">
+             <i class="fa-solid ${iconFor(type)}"></i>
+             <span>${escapeHtml(type)}</span>
+           </div>`;
+
+      return `
+        ${media}
+        <div class="log-content">
+          <div class="flex items-start justify-between gap-3">
+            <div class="min-w-0">
+              <div class="text-white/55 text-xs font-extrabold uppercase tracking-[.12em]">${escapeHtml(shortDate(entry.date))}</div>
+              <h2 class="mt-1 text-lg font-extrabold leading-tight">${escapeHtml(entry.title)}</h2>
+            </div>
+            <i class="fa-solid fa-arrow-up-right-from-square text-white/35 mt-1"></i>
+          </div>
+          <div class="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-white/58 text-sm">
+            ${location}
+          </div>
+          <p class="mt-3 text-white/70 text-sm leading-relaxed line-clamp">${escapeHtml(entry.body)}</p>
+          <div class="mt-4 flex flex-wrap gap-2">
+            ${tags.map(tag => `<span class="tag"><i class="fa-solid fa-hashtag"></i>${escapeHtml(tag)}</span>`).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    function renderCards(){
+      if (!els.grid) return;
+      els.grid.innerHTML = '';
+      if (els.empty) els.empty.hidden = visibleEntries.length > 0;
+
+      visibleEntries.forEach(entry => {
+        const card = document.createElement('button');
+        card.type = 'button';
+        card.className = `log-card ${primaryImage(entry) ? '' : 'no-media'}`;
+        card.dataset.id = entry.id;
+        card.innerHTML = cardTemplate(entry);
+        card.addEventListener('click', () => openModal(entry.id));
+        els.grid.appendChild(card);
+      });
+    }
+
+    function applyFilters(){
+      const query = (els.search?.value || '').trim().toLowerCase();
+      const filter = els.filter?.value || 'all';
+      visibleEntries = entries.filter(entry => {
+        const type = entryType(entry);
+        const haystack = [
+          entry.title,
+          entry.body,
+          type,
+          entry.location,
+          ...asArray(entry.tags)
+        ].join(' ').toLowerCase();
+        return (!query || haystack.includes(query)) && (filter === 'all' || type === filter);
+      });
+      renderCards();
+    }
+
+    function paragraphs(body){
+      return String(body || '')
+        .split(/\n{2,}/)
+        .map(part => part.trim())
+        .filter(Boolean)
+        .map(part => `<p>${escapeHtml(part)}</p>`)
+        .join('');
+    }
+
+    function openModal(id){
+      const entry = entries.find(item => item.id === id);
+      if (!entry || !els.modal) return;
+
+      const type = entryType(entry);
+      const image = primaryImage(entry);
+      const gallery = galleryImages(entry);
+      const meta = [
+        formatDate(entry.date),
+        entry.location
+      ].filter(Boolean).join(' · ');
+
+      els.modalHero.className = `modal-hero ${image ? 'has-image' : ''}`;
+      els.modalHero.querySelector('img')?.remove();
+      if (image) {
+        els.modalHero.insertAdjacentHTML('afterbegin', `<img src="${escapeHtml(image)}" alt="">`);
+      }
+
+      els.modalTitleBlock.innerHTML = `
+        <span class="category-pill in-flow"><i class="fa-solid ${iconFor(type)}"></i>${escapeHtml(type)}</span>
+        <h2 id="modal-title" class="text-3xl sm:text-4xl font-extrabold leading-tight">${escapeHtml(entry.title)}</h2>
+        <div class="mt-2 text-white/75 text-sm font-semibold">${escapeHtml(meta)}</div>
+      `;
+
+      els.modalBody.innerHTML = `
+        <div class="modal-copy text-white/76 leading-relaxed">${paragraphs(entry.body)}</div>
+        <div class="mt-5 flex flex-wrap gap-2">
+          ${asArray(entry.tags).map(tag => `<span class="tag"><i class="fa-solid fa-hashtag"></i>${escapeHtml(tag)}</span>`).join('')}
+        </div>
+        ${gallery.length > 1 ? `
+          <div class="mt-6">
+            <div class="text-white/55 text-xs uppercase tracking-[.14em] font-extrabold mb-3">Photos</div>
+            <div class="gallery-grid">
+              ${gallery.map(src => `<img src="${escapeHtml(src)}" alt="" loading="lazy">`).join('')}
+            </div>
+          </div>
+        ` : ''}
+      `;
+
+      els.modal.hidden = false;
+      document.body.style.overflow = 'hidden';
+      els.modalClose?.focus({ preventScroll: true });
+    }
+
+    function closeModal(){
+      if (!els.modal) return;
+      els.modal.hidden = true;
+      document.body.style.overflow = '';
+    }
+
+    function resurfaceMemory(){
+      if (!visibleEntries.length) return;
+      const entry = visibleEntries[Math.floor(Math.random() * visibleEntries.length)];
+      const card = document.querySelector(`[data-id="${CSS.escape(entry.id)}"]`);
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (card) {
+        card.classList.remove('is-resurfaced');
+        card.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'center' });
+        requestAnimationFrame(() => card.classList.add('is-resurfaced'));
+      }
+      setTimeout(() => openModal(entry.id), reducedMotion ? 0 : 520);
+    }
+
+    async function loadLogs(){
+      try {
+        const response = await fetch('/site/data/logs.json', { cache: 'no-cache' });
+        if (!response.ok) throw new Error(`Unable to load logs: ${response.status}`);
+        const data = await response.json();
+        const rawEntries = Array.isArray(data) ? data : asArray(data.entries);
+        entries = rawEntries
+          .map((entry, index) => ({
+            ...entry,
+            id: entry.id || slugify(`${entry.date || ''}-${entry.title || ''}`, index)
+          }))
+          .sort((a, b) => new Date(`${b.date}T00:00:00`) - new Date(`${a.date}T00:00:00`));
+        buildFilterOptions();
+        setStats(entries);
+        applyFilters();
+      } catch (error) {
+        console.error(error);
+        if (els.empty) {
+          els.empty.hidden = false;
+          els.empty.innerHTML = `
+            <i class="fa-solid fa-triangle-exclamation text-3xl text-white/55"></i>
+            <div class="mt-3 font-bold text-white/86">The log archive did not load.</div>
+            <div class="mt-1 text-sm">Check <code class="text-white/80">/site/data/logs.json</code>.</div>
+          `;
+        }
+      }
+    }
+
+    els.search?.addEventListener('input', applyFilters);
+    els.filter?.addEventListener('change', applyFilters);
+    els.random?.addEventListener('click', resurfaceMemory);
+    els.modalClose?.addEventListener('click', closeModal);
+    els.modal?.addEventListener('click', (event) => {
+      if (event.target === els.modal) closeModal();
+    });
+    window.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && !els.modal?.hidden) closeModal();
+    });
+
+    loadLogs();
+  </script>
+</body>
+</html>
