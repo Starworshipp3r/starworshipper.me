@@ -4,10 +4,10 @@
   <script>document.documentElement.classList.add('js');</script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DUMBDOG KEEPS LOGS</title>
+  <title>DUMBDOG JOURNAL</title>
 
   <meta name="theme-color" content="#0b0f18" />
-  <meta name="description" content="A small public archive of memories, field notes, photos, and tiny moments." />
+  <meta name="description" content="A small public journal of memories, field notes, photos, and tiny moments." />
   <link rel="icon" href="/favicon.ico" sizes="any" />
 
   <script src="https://cdn.tailwindcss.com"></script>
@@ -536,7 +536,7 @@
         <div class="min-w-0">
           <div class="flex items-center gap-2 text-2xl font-extrabold leading-tight">
             <i class="fa-solid fa-book-open text-white/70 text-xl"></i>
-            <span>Logs</span>
+            <span>Journal</span>
           </div>
           <p class="text-white/65 text-sm mt-1">Little public memories, field notes, and things worth saving.</p>
         </div>
@@ -545,7 +545,7 @@
       <div class="control-row flex items-center gap-2 w-full lg:w-auto">
         <div class="relative flex-1 lg:flex-none">
           <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-white/55 text-sm"></i>
-          <input id="search" type="search" placeholder="Search logs"
+          <input id="search" type="search" placeholder="Search journal"
                  class="glass-field pl-9 pr-3 py-2 w-full lg:w-64">
         </div>
         <select id="type-filter" class="glass-field px-3 py-2 w-full lg:w-44" aria-label="Filter by type">
@@ -564,7 +564,7 @@
           <section class="archive-card">
             <div class="text-white/55 text-xs uppercase tracking-[.14em] font-extrabold">Archive pulse</div>
             <div class="mt-3 grid grid-cols-2 gap-2">
-              <span class="tag"><i class="fa-solid fa-layer-group"></i><span id="stat-count">0</span> logs</span>
+              <span class="tag"><i class="fa-solid fa-layer-group"></i><span id="stat-count">0</span> entries</span>
               <span class="tag"><i class="fa-solid fa-tags"></i><span id="stat-types">0</span> types</span>
             </div>
             <div class="mt-3 text-white/62 text-sm">
@@ -912,8 +912,8 @@
 
     async function loadLogs(){
       try {
-        const response = await fetch('/site/data/logs.json', { cache: 'no-cache' });
-        if (!response.ok) throw new Error(`Unable to load logs: ${response.status}`);
+        const response = await fetch('/site/data/journal.json', { cache: 'no-cache' });
+        if (!response.ok) throw new Error(`Unable to load journal: ${response.status}`);
         const data = await response.json();
         const rawEntries = Array.isArray(data) ? data : asArray(data.entries);
         entries = rawEntries
@@ -931,8 +931,8 @@
           els.empty.hidden = false;
           els.empty.innerHTML = `
             <i class="fa-solid fa-triangle-exclamation text-3xl text-white/55"></i>
-            <div class="mt-3 font-bold text-white/86">The log archive did not load.</div>
-            <div class="mt-1 text-sm">Check <code class="text-white/80">/site/data/logs.json</code>.</div>
+            <div class="mt-3 font-bold text-white/86">The journal archive did not load.</div>
+            <div class="mt-1 text-sm">Check <code class="text-white/80">/site/data/journal.json</code>.</div>
           `;
         }
       }
