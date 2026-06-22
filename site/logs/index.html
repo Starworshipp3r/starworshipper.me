@@ -161,6 +161,12 @@
       background: rgba(255,255,255,.08);
     }
 
+    .glass-btn:disabled{
+      opacity: .45;
+      cursor: not-allowed;
+      transform: none;
+    }
+
     .glass-field{
       border: 1px solid rgba(255,255,255,.10);
       background: rgba(255,255,255,.055);
@@ -828,6 +834,7 @@
         ].join(' ').toLowerCase();
         return (!query || haystack.includes(query)) && (filter === 'all' || type === filter);
       });
+      if (els.random) els.random.disabled = visibleEntries.length === 0;
       renderCards();
     }
 
