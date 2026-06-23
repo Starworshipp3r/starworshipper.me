@@ -4,7 +4,7 @@
     "title": "Pill To Swallow",
     "type": "music",
     "body": "Lyn-z got me into Softcult, kinda. I've been listening to \"Pill To Swallow\" over and over again, currently at 49 scrobbles and rising over the past couple of days. Also listenmaxxing \"what u want\" by vai5000 because it's insane. This is going to be my most listened to track during Spotify Wrapped, I can promise it. Running on four hours of sleep, a Rockstar Hardcore Green Apple, and a pretty crazy workday with a lot of cool people. Started recording another course with Salim too, who seems like a pretty cool dude. Also decided to start a journal on my website and begin filling it up. Hopefully I can keep it somewhat daily, but I'm also adding a few notable things to the backlog. Not totally sure how far back I'll go yet. Also got three new shirts from Nomad Complex.",
-    "tags": ["music", "softcult", "vai5000", "spotify-wrapped", "work", "journal", "clothes"],
+    "tags": ["music", "work", "journal", "personal"],
     "coverImage": "/site/logs/images/softcult-when-a-flower-doesnt-grow.jpg",
     "photos": [
       "/site/logs/images/softcult-when-a-flower-doesnt-grow.jpg",
@@ -16,14 +16,14 @@
     "title": "Vista Mode",
     "type": "project",
     "body": "Worked on the Frutiger Aero/Windows Vista mode a bit more. Added a fake BIOS screen and redid the fake Vista loading screen. I think I got it where I want it to be now. Had my dad over for a Father's Day dinner too. I cooked some chicken and corn and stuff, and we just kind of sat around and talked about life.",
-    "tags": ["site", "frutiger-aero", "windows-vista", "project", "family"]
+    "tags": ["site", "project", "family"]
   },
   {
     "date": "2026-06-20",
     "title": "ChaseRoleplay",
     "type": "gaming",
     "body": "Lyn-z dragged me into a wacky economy FiveM server. Had a bit of fun, but it's really not my thing. She sounds cute as hell though, and I genuinely enjoyed her and the other players' company during my short stay in ChaseRoleplay.",
-    "tags": ["gaming", "fivem", "chaseroleplay", "lyn-z", "friends"]
+    "tags": ["gaming", "friends"]
   },
   {
     "date": "2026-06-18",
@@ -31,7 +31,7 @@
     "type": "music",
     "location": "Phoenix, AZ",
     "body": "Figured out that one of my favorite dubstep artists, Figure, is playing locally at some shithole parking lot down in Phoenix. Kind of want to go, but I'd be rolling solo. I feel like I need to get out there more.",
-    "tags": ["music", "dubstep", "figure", "phoenix", "concert"],
+    "tags": ["music", "concert"],
     "coverImage": "/site/logs/images/figure-underground-nights-flyer.png",
     "photos": [
       "/site/logs/images/figure-underground-nights-flyer.png"
@@ -42,28 +42,28 @@
     "title": "Modern Games",
     "type": "gaming",
     "body": "Tried to play Forza Horizon 6 with Landon, and I'm just disappointed with modern day games and what they've become, basically.",
-    "tags": ["gaming", "forza", "landon", "modern-games"]
+    "tags": ["gaming"]
   },
   {
     "date": "2026-05-23",
     "title": "Fake Vista Vibe",
     "type": "idea",
     "body": "Changed Frutiger Aero, to be honest. I think I want to go for a fake Windows Vista vibe instead.",
-    "tags": ["frutiger-aero", "windows-vista", "site", "idea"]
+    "tags": ["site", "idea"]
   },
   {
     "date": "2026-04-18",
     "title": "Frutiger Aero Page",
     "type": "idea",
     "body": "Big into Frutiger Aero right now. Kinda want to make a little Frutiger Aero page with little fish and a song by Alyzea.",
-    "tags": ["frutiger-aero", "site", "idea", "music"]
+    "tags": ["site", "idea", "music"]
   },
   {
     "date": "2026-03-21",
     "title": "Still Shaved",
     "type": "reflection",
     "body": "A couple months later, shaving my head might honestly have been one of the best decisions of my life. I feel a lot more confident now, and the burden of needing to worry about hair is just gone. It feels like a weight off my shoulders, basically. It has made life more enjoyable, the gym more enjoyable, swimming more enjoyable, traveling more enjoyable. To sound cringy, it was honestly kind of a pivotal moment in my life.",
-    "tags": ["personal", "haircut", "confidence", "reflection"]
+    "tags": ["personal", "reflection"]
   },
   {
     "date": "2026-02-08",
@@ -71,7 +71,7 @@
     "type": "memory",
     "location": "Tempe, AZ",
     "body": "Met up with a distant friend, Gem, at Desert Breeze Park in Tempe. There was a pretty big furmeet and I met a lot of cool people. I'm glad I've gotten more outgoing over the years. His suit was really nice :3",
-    "tags": ["friends", "furmeet", "desert-breeze-park", "tempe", "memory"],
+    "tags": ["friends", "memory"],
     "coverImage": "/site/logs/images/desert-breeze-furmeet-gem.jpg",
     "photos": [
       "/site/logs/images/desert-breeze-furmeet-gem.jpg"
@@ -82,7 +82,7 @@
     "title": "Zoo With Family",
     "type": "memory",
     "body": "Went to the zoo with family :3 It was a bit underwhelming, honestly. There were a couple of animals, but I didn't get to see the hyenas, which I really wanted to see. I did get to pet a goat though, which was the highlight of my day, because I love goats. Otherwise, yeah, very underwhelming for the price.",
-    "tags": ["family", "zoo", "goats", "memory"],
+    "tags": ["family", "memory"],
     "coverImage": "/site/logs/images/family-zoo-february-2026.jpg",
     "photos": [
       "/site/logs/images/family-zoo-february-2026.jpg"
@@ -94,7 +94,7 @@
     "type": "memory",
     "location": "Scottsdale, AZ",
     "body": "Went to a work event where they booked out the OdySea Aquarium in Scottsdale, and it was a pretty good night. There was a lot of partying and just an overall fun time seeing everything, especially at night when everything was blocked off and felt kind of eerie.",
-    "tags": ["work", "odysea-aquarium", "scottsdale", "night", "memory"],
+    "tags": ["work", "memory"],
     "coverImage": "/site/logs/images/odysea-aquarium-jellyfish-blue.jpg",
     "photos": [
       "/site/logs/images/odysea-aquarium-jellyfish-blue.jpg",
@@ -108,7 +108,7 @@
     "title": "Shaved My Head",
     "type": "memory",
     "body": "Decided to shave my head. Feels weird, but relieving.",
-    "tags": ["personal", "haircut", "memory"],
+    "tags": ["personal", "memory"],
     "coverImage": "/site/logs/images/shaved-head-feels-weird.jpg",
     "photos": [
       "/site/logs/images/shaved-head-feels-weird.jpg"
@@ -120,7 +120,7 @@
     "type": "memory",
     "location": "Globe, AZ",
     "body": "Went on our annual New Year Cruise to Globe. It was a fun time. I feel a lot of us drifting apart and the squad shrinking as life takes us on more and more back roads without a map.",
-    "tags": ["cars", "friends", "new-year", "globe", "memory"],
+    "tags": ["cars", "friends", "memory"],
     "coverImage": "/site/logs/images/new-year-cruise-globe-blue-subaru.jpg",
     "photos": [
       "/site/logs/images/new-year-cruise-globe-blue-subaru.jpg",
@@ -135,7 +135,7 @@
     "type": "memory",
     "location": "Berge's Riverview Toyota",
     "body": "Went down to a massive car meet hosted at Berge's Riverview Toyota. Such a cool turnout and quality time with friends!",
-    "tags": ["cars", "car-meet", "friends", "toyota", "memory"],
+    "tags": ["cars", "friends", "memory"],
     "coverImage": "/site/logs/images/berges-riverview-toyota-meet-overview.jpg",
     "photos": [
       "/site/logs/images/berges-riverview-toyota-meet-overview.jpg",
