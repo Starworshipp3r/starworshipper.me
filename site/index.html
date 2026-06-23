@@ -316,7 +316,7 @@
             </div>
             <a class="mica-card block hover:bg-white/10 transition" href="/site/logs/index.html">
               <div class="text-white/60 text-sm">Saving:</div>
-              <div class="font-semibold flex items-center gap-2"><i class="fa-solid fa-book-open text-white/65"></i>Journal</div>
+              <div class="font-semibold truncate" id="journal-latest">Journal</div>
             </a>
           </div>
         </section>
@@ -590,6 +590,27 @@ document.addEventListener('DOMContentLoaded', () => {
   fetch('/.netlify/functions/lastfm-top-artist')
     .then(r => r.ok ? r.json() : null)
     .then(d => { if (d?.artist) el.textContent = d.artist; })
+    .catch(() => {});
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const el = document.getElementById('journal-latest');
+  if (!el) return;
+
+  fetch('/site/data/journal.json', { cache: 'no-cache' })
+    .then(r => r.ok ? r.json() : null)
+    .then(data => {
+      const entries = Array.isArray(data) ? data : [];
+      const latest = entries
+        .filter(entry => entry?.date && entry?.title)
+        .sort((a, b) => new Date(`${b.date}T00:00:00`) - new Date(`${a.date}T00:00:00`))[0];
+      if (latest?.title) {
+        el.textContent = latest.title;
+        el.closest('a')?.setAttribute('title', `Open journal: ${latest.title}`);
+      }
+    })
     .catch(() => {});
 });
 </script>
