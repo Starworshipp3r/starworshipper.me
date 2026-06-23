@@ -490,13 +490,82 @@
       gap: .7rem;
     }
 
+    .gallery-thumb{
+      width: 100%;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      cursor: zoom-in;
+      border-radius: 14px;
+      transition: transform .15s ease, box-shadow .15s ease;
+    }
+
+    .gallery-thumb:hover{
+      transform: translateY(-1px);
+      box-shadow: 0 14px 32px rgba(0,0,0,.32);
+    }
+
+    .gallery-thumb:focus-visible{
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(255,255,255,.18), 0 0 0 6px var(--accent-glow);
+    }
+
     .gallery-grid img{
       width: 100%;
       aspect-ratio: 4 / 3;
       object-fit: cover;
+      display: block;
       border-radius: 14px;
       border: 1px solid rgba(255,255,255,.12);
       background: rgba(0,0,0,.20);
+    }
+
+    .photo-viewer{
+      position: fixed;
+      inset: 0;
+      z-index: 80;
+      display: grid;
+      place-items: center;
+      padding: 1rem;
+      background: rgba(2,6,12,.82);
+      backdrop-filter: blur(20px) saturate(1.2);
+      -webkit-backdrop-filter: blur(20px) saturate(1.2);
+    }
+
+    .photo-viewer[hidden]{ display: none; }
+
+    .photo-viewer-frame{
+      position: relative;
+      display: grid;
+      place-items: center;
+      width: min(1100px, 100%);
+      max-height: 88vh;
+    }
+
+    .photo-viewer img{
+      max-width: 100%;
+      max-height: 88vh;
+      object-fit: contain;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(0,0,0,.35);
+      box-shadow: 0 34px 90px rgba(0,0,0,.62);
+    }
+
+    .photo-viewer-close{
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      z-index: 1;
+      width: 44px;
+      height: 44px;
+      border-radius: 9999px;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(0,0,0,.34);
+      color: rgba(255,255,255,.90);
+      display: grid;
+      place-items: center;
+      box-shadow: 0 14px 32px rgba(0,0,0,.35);
     }
 
     html.js .mica-shell{
@@ -656,6 +725,15 @@
     </article>
   </div>
 
+  <div id="photo-viewer" class="photo-viewer" hidden>
+    <button id="photo-viewer-close" class="photo-viewer-close" type="button" aria-label="Close photo">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+    <div class="photo-viewer-frame">
+      <img id="photo-viewer-image" alt="">
+    </div>
+  </div>
+
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const root = document.documentElement;
@@ -740,7 +818,10 @@
       modalHero: document.getElementById('modal-hero'),
       modalTitleBlock: document.getElementById('modal-title-block'),
       modalBody: document.getElementById('modal-body'),
-      modalClose: document.getElementById('modal-close')
+      modalClose: document.getElementById('modal-close'),
+      photoViewer: document.getElementById('photo-viewer'),
+      photoViewerImage: document.getElementById('photo-viewer-image'),
+      photoViewerClose: document.getElementById('photo-viewer-close')
     };
 
     let entries = [];
@@ -934,7 +1015,11 @@
           <div class="mt-6">
             <div class="text-white/55 text-xs uppercase tracking-[.14em] font-extrabold mb-3">Photos</div>
             <div class="gallery-grid">
-              ${gallery.map(src => `<img src="${escapeHtml(src)}" alt="" loading="lazy">`).join('')}
+              ${gallery.map((src, index) => `
+                <button class="gallery-thumb" type="button" data-photo-src="${escapeHtml(src)}" aria-label="Open photo ${index + 1}">
+                  <img src="${escapeHtml(src)}" alt="" loading="lazy">
+                </button>
+              `).join('')}
             </div>
           </div>
         ` : ''}
@@ -945,8 +1030,26 @@
       els.modalClose?.focus({ preventScroll: true });
     }
 
+    function openPhotoViewer(src){
+      if (!src || !els.photoViewer || !els.photoViewerImage) return;
+      els.photoViewerImage.src = src;
+      els.photoViewer.hidden = false;
+      document.body.style.overflow = 'hidden';
+      els.photoViewerClose?.focus({ preventScroll: true });
+    }
+
+    function closePhotoViewer({ keepBodyLocked = false } = {}){
+      if (!els.photoViewer || els.photoViewer.hidden) return;
+      els.photoViewer.hidden = true;
+      els.photoViewerImage?.removeAttribute('src');
+      if (!keepBodyLocked && els.modal?.hidden) {
+        document.body.style.overflow = '';
+      }
+    }
+
     function closeModal(){
       if (!els.modal) return;
+      closePhotoViewer({ keepBodyLocked: true });
       els.modal.hidden = true;
       document.body.style.overflow = '';
     }
@@ -995,12 +1098,26 @@
     els.search?.addEventListener('input', applyFilters);
     els.filter?.addEventListener('change', applyFilters);
     els.random?.addEventListener('click', resurfaceMemory);
+    els.modalBody?.addEventListener('click', (event) => {
+      const thumb = event.target.closest('.gallery-thumb');
+      if (!thumb) return;
+      openPhotoViewer(thumb.dataset.photoSrc);
+    });
     els.modalClose?.addEventListener('click', closeModal);
     els.modal?.addEventListener('click', (event) => {
       if (event.target === els.modal) closeModal();
     });
+    els.photoViewerClose?.addEventListener('click', () => closePhotoViewer());
+    els.photoViewer?.addEventListener('click', (event) => {
+      if (event.target === els.photoViewer) closePhotoViewer();
+    });
     window.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape' && !els.modal?.hidden) closeModal();
+      if (event.key !== 'Escape') return;
+      if (!els.photoViewer?.hidden) {
+        closePhotoViewer();
+        return;
+      }
+      if (!els.modal?.hidden) closeModal();
     });
 
     loadLogs();
