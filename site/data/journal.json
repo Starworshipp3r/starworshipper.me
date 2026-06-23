@@ -59,6 +59,13 @@
     "tags": ["frutiger-aero", "site", "idea", "music"]
   },
   {
+    "date": "2026-03-21",
+    "title": "Still Shaved",
+    "type": "reflection",
+    "body": "A couple months later, shaving my head might honestly have been one of the best decisions of my life. I feel a lot more confident now, and the burden of needing to worry about hair is just gone. It feels like a weight off my shoulders, basically. It has made life more enjoyable, the gym more enjoyable, swimming more enjoyable, traveling more enjoyable. To sound cringy, it was honestly kind of a pivotal moment in my life.",
+    "tags": ["personal", "haircut", "confidence", "reflection"]
+  },
+  {
     "date": "2026-02-08",
     "title": "Desert Breeze Furmeet",
     "type": "memory",
@@ -94,6 +101,46 @@
       "/site/logs/images/odysea-aquarium-stingray.jpg",
       "/site/logs/images/odysea-aquarium-jellyfish-orange.jpg",
       "/site/logs/images/odysea-aquarium-night-jellyfish-wall.jpg"
+    ]
+  },
+  {
+    "date": "2026-01-21",
+    "title": "Shaved My Head",
+    "type": "memory",
+    "body": "Decided to shave my head. Feels weird, but relieving.",
+    "tags": ["personal", "haircut", "memory"],
+    "coverImage": "/site/logs/images/shaved-head-feels-weird.jpg",
+    "photos": [
+      "/site/logs/images/shaved-head-feels-weird.jpg"
+    ]
+  },
+  {
+    "date": "2024-01-01",
+    "title": "New Year Cruise To Globe",
+    "type": "memory",
+    "location": "Globe, AZ",
+    "body": "Went on our annual New Year Cruise to Globe. It was a fun time. I feel a lot of us drifting apart and the squad shrinking as life takes us on more and more back roads without a map.",
+    "tags": ["cars", "friends", "new-year", "globe", "memory"],
+    "coverImage": "/site/logs/images/new-year-cruise-globe-blue-subaru.jpg",
+    "photos": [
+      "/site/logs/images/new-year-cruise-globe-blue-subaru.jpg",
+      "/site/logs/images/new-year-cruise-globe-red-subaru.jpg",
+      "/site/logs/images/new-year-cruise-globe-kona.jpg",
+      "/site/logs/images/new-year-cruise-globe-lexus.jpg"
+    ]
+  },
+  {
+    "date": "2021-08-13",
+    "title": "Berge's Riverview Toyota Meet",
+    "type": "memory",
+    "location": "Berge's Riverview Toyota",
+    "body": "Went down to a massive car meet hosted at Berge's Riverview Toyota. Such a cool turnout and quality time with friends!",
+    "tags": ["cars", "car-meet", "friends", "toyota", "memory"],
+    "coverImage": "/site/logs/images/berges-riverview-toyota-meet-overview.jpg",
+    "photos": [
+      "/site/logs/images/berges-riverview-toyota-meet-overview.jpg",
+      "/site/logs/images/berges-riverview-toyota-meet-toyota-sign.jpg",
+      "/site/logs/images/berges-riverview-toyota-meet-vendors.jpg"
     ]
   }
 ]
