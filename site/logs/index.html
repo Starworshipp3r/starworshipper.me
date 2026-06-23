@@ -1109,7 +1109,9 @@
     });
     els.photoViewerClose?.addEventListener('click', () => closePhotoViewer());
     els.photoViewer?.addEventListener('click', (event) => {
-      if (event.target === els.photoViewer) closePhotoViewer();
+      if (!event.target.closest('#photo-viewer-image, #photo-viewer-close')) {
+        closePhotoViewer();
+      }
     });
     window.addEventListener('keydown', (event) => {
       if (event.key !== 'Escape') return;
