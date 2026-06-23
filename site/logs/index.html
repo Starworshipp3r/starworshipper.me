@@ -179,6 +179,21 @@
       font-size: .82rem;
     }
 
+    .journal-search-control{
+      min-width: 0;
+    }
+
+    .journal-filter-row{
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+    }
+
+    .journal-filter{
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
     .glass-field{
       border: 1px solid rgba(255,255,255,.10);
       background: rgba(255,255,255,.055);
@@ -601,14 +616,24 @@
         align-items: stretch;
       }
 
+      .journal-search-control{
+        width: 100%;
+        flex: none;
+      }
+
+      .journal-filter-row{
+        width: 100%;
+      }
+
       .glass-btn{
         width: 100%;
       }
 
       .resurface-btn{
         width: auto;
-        align-self: center;
-        min-height: 36px;
+        flex: 0 0 auto;
+        align-self: stretch;
+        min-height: 42px;
         padding: .48rem .68rem;
         font-size: .88rem;
       }
@@ -662,18 +687,20 @@
       </div>
 
       <div class="control-row flex items-center gap-2 w-full lg:w-auto">
-        <div class="relative flex-1 lg:flex-none">
+        <div class="journal-search-control relative flex-1 lg:flex-none">
           <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-white/55 text-sm"></i>
           <input id="search" type="search" placeholder="Search journal"
                  class="glass-field pl-9 pr-3 py-2 w-full lg:w-64">
         </div>
-        <select id="type-filter" class="glass-field px-3 py-2 w-full lg:w-44" aria-label="Filter by type">
-          <option value="all">All memories</option>
-        </select>
-        <button id="random-memory" class="glass-btn resurface-btn" type="button">
-          <i class="fa-solid fa-shuffle"></i>
-          <span>Resurface</span>
-        </button>
+        <div class="journal-filter-row">
+          <select id="type-filter" class="journal-filter glass-field px-3 py-2 w-full lg:w-44" aria-label="Filter by type">
+            <option value="all">All memories</option>
+          </select>
+          <button id="random-memory" class="glass-btn resurface-btn" type="button">
+            <i class="fa-solid fa-shuffle"></i>
+            <span>Resurface</span>
+          </button>
+        </div>
       </div>
     </header>
 
