@@ -167,6 +167,18 @@
       transform: none;
     }
 
+    .resurface-btn{
+      min-height: 38px;
+      padding: .52rem .72rem;
+      border-radius: 12px;
+      font-size: .9rem;
+      box-shadow: 0 10px 24px rgba(0,0,0,.24);
+    }
+
+    .resurface-btn i{
+      font-size: .82rem;
+    }
+
     .glass-field{
       border: 1px solid rgba(255,255,255,.10);
       background: rgba(255,255,255,.055);
@@ -524,6 +536,14 @@
         width: 100%;
       }
 
+      .resurface-btn{
+        width: auto;
+        align-self: flex-end;
+        min-height: 36px;
+        padding: .48rem .68rem;
+        font-size: .88rem;
+      }
+
       .modal-backdrop{
         padding: .55rem;
         align-items: end;
@@ -581,7 +601,7 @@
         <select id="type-filter" class="glass-field px-3 py-2 w-full lg:w-44" aria-label="Filter by type">
           <option value="all">All memories</option>
         </select>
-        <button id="random-memory" class="glass-btn" type="button">
+        <button id="random-memory" class="glass-btn resurface-btn" type="button">
           <i class="fa-solid fa-shuffle"></i>
           <span>Resurface</span>
         </button>
