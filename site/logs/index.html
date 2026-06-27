@@ -1001,6 +1001,7 @@
     }
 
     function paragraphs(body){
+      const formatInline = value => escapeHtml(value).replace(/~~(.+?)~~/g, '<s>$1</s>');
       return String(body || '')
         .split(/\n{2,}/)
         .map(part => part.trim())
@@ -1008,8 +1009,8 @@
         .map(part => {
           const italic = part.match(/^\*(.+)\*$/s);
           return italic
-            ? `<p><em>${escapeHtml(italic[1])}</em></p>`
-            : `<p>${escapeHtml(part)}</p>`;
+            ? `<p><em>${formatInline(italic[1])}</em></p>`
+            : `<p>${formatInline(part)}</p>`;
         })
         .join('');
     }
