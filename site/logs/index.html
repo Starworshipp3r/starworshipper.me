@@ -1005,7 +1005,12 @@
         .split(/\n{2,}/)
         .map(part => part.trim())
         .filter(Boolean)
-        .map(part => `<p>${escapeHtml(part)}</p>`)
+        .map(part => {
+          const italic = part.match(/^\*(.+)\*$/s);
+          return italic
+            ? `<p><em>${escapeHtml(italic[1])}</em></p>`
+            : `<p>${escapeHtml(part)}</p>`;
+        })
         .join('');
     }
 
