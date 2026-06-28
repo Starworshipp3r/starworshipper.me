@@ -1001,7 +1001,9 @@
     }
 
     function paragraphs(body){
-      const formatInline = value => escapeHtml(value).replace(/~~(.+?)~~/g, '<s>$1</s>');
+      const formatInline = value => escapeHtml(value)
+        .replace(/~~(.+?)~~/g, '<s>$1</s>')
+        .replace(/\*(.+?)\*/g, '<em>$1</em>');
       return String(body || '')
         .split(/\n{2,}/)
         .map(part => part.trim())
