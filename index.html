@@ -207,16 +207,23 @@
   }
 
   .music-thumb-img{
+    --thumb-zoom: 1.08;
+    --thumb-hover-zoom: 1.14;
     display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transform: scale(1.08);
+    transform: scale(var(--thumb-zoom));
     transition: transform .18s ease, filter .18s ease;
   }
 
+  .music-thumb-img.is-letterboxed{
+    --thumb-zoom: 1.55;
+    --thumb-hover-zoom: 1.62;
+  }
+
   .music-thumb-btn:hover .music-thumb-img{
-    transform: scale(1.14);
+    transform: scale(var(--thumb-hover-zoom));
     filter: saturate(1.08) brightness(1.05);
   }
 
@@ -2828,12 +2835,12 @@
         </div>
 
         <a
-        href="https://www.youtube.com/watch?v=76z_Iph37xg"
+        href="https://www.youtube.com/watch?v=gaqywyGfdFc"
         target="_blank" rel="noopener noreferrer"
         aria-label="Open my music" title="Current obsession"
         class="absolute top-3 right-3 sm:top-4 sm:right-4 z-10 mica-icon-btn music-thumb-btn"
         >
-        <img class="music-thumb-img" src="https://img.youtube.com/vi/76z_Iph37xg/hqdefault.jpg" alt="" decoding="async" loading="lazy">
+        <img class="music-thumb-img is-letterboxed" src="https://img.youtube.com/vi/gaqywyGfdFc/hqdefault.jpg" alt="" decoding="async" loading="lazy">
         </a>
 
         <button
