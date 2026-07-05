@@ -24,11 +24,11 @@
       --muted: rgba(255,255,255,.68);
       --accent: #7aa2ff;
       --accent-glow: rgba(122,162,255,.20);
-      --glass: rgba(16, 20, 28, .30);
-      --border: rgba(255,255,255,.16);
-      --border-2: rgba(255,255,255,.12);
-      --shadow: 0 24px 70px rgba(0,0,0,.34), inset 0 1px 0 rgba(255,255,255,.10);
-      --shadow-soft: 0 10px 26px rgba(0,0,0,.20), inset 0 1px 0 rgba(255,255,255,.10);
+      --glass: rgba(18, 22, 32, .56);
+      --border: rgba(255,255,255,.14);
+      --border-2: rgba(255,255,255,.10);
+      --shadow: 0 30px 80px rgba(0,0,0,.55);
+      --shadow-soft: 0 12px 35px rgba(0,0,0,.35);
       --radius-xl: 22px;
       --radius-lg: 16px;
       --radius-md: 14px;
@@ -74,7 +74,7 @@
       inset: 0;
       background-image: var(--noise);
       background-size: 240px 240px;
-      opacity: .028;
+      opacity: .07;
       pointer-events: none;
       z-index: -1;
     }
@@ -83,10 +83,11 @@
       border-radius: var(--radius-xl);
       border: 1px solid var(--border);
       background:
-        linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.028)),
+        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)),
+        radial-gradient(900px 240px at 20% 0%, rgba(255,255,255,.10), transparent 60%),
         var(--glass);
-      backdrop-filter: blur(52px) saturate(1.85) contrast(1.03);
-      -webkit-backdrop-filter: blur(38px) saturate(1.85) contrast(1.03);
+      backdrop-filter: blur(28px) saturate(1.25);
+      -webkit-backdrop-filter: blur(22px) saturate(1.25);
       box-shadow: var(--shadow);
       overflow: hidden;
       position: relative;
@@ -97,9 +98,9 @@
       position:absolute;
       inset: 0;
       background:
-        linear-gradient(180deg, rgba(255,255,255,.16), rgba(255,255,255,0) 36%),
-        radial-gradient(680px 180px at 50% 0%, rgba(255,255,255,.10), transparent 62%);
-      opacity: .24;
+        linear-gradient(135deg, rgba(255,255,255,.20), transparent 40%),
+        radial-gradient(900px 280px at 10% 0%, rgba(255,255,255,.18), transparent 60%);
+      opacity: .23;
       pointer-events:none;
     }
 
@@ -109,7 +110,7 @@
       inset:0;
       background-image: var(--noise);
       background-size: 260px 260px;
-      opacity: .018;
+      opacity: .06;
       mix-blend-mode: overlay;
       pointer-events:none;
     }
@@ -119,10 +120,8 @@
     .mica-icon-btn,
     .glass-btn{
       border: 1px solid var(--border-2);
-      background: linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.045));
+      background: rgba(255,255,255,.06);
       box-shadow: var(--shadow-soft);
-      backdrop-filter: blur(28px) saturate(1.65);
-      -webkit-backdrop-filter: blur(24px) saturate(1.65);
       transition: transform .15s ease, background .15s ease, border-color .15s ease, box-shadow .15s ease;
     }
 
@@ -152,14 +151,14 @@
     .mica-icon-btn:hover,
     .glass-btn:hover{
       transform: translateY(-1px);
-      background: linear-gradient(180deg, rgba(255,255,255,.16), rgba(255,255,255,.06));
-      border-color: rgba(255,255,255,.18);
+      background: rgba(255,255,255,.10);
+      border-color: rgba(255,255,255,.16);
     }
 
     .mica-icon-btn:active,
     .glass-btn:active{
       transform: translateY(0px) scale(.98);
-      background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
+      background: rgba(255,255,255,.08);
     }
 
     .glass-btn:disabled{
@@ -173,7 +172,7 @@
       padding: .52rem .72rem;
       border-radius: 12px;
       font-size: .9rem;
-      box-shadow: 0 10px 24px rgba(0,0,0,.20), inset 0 1px 0 rgba(255,255,255,.12);
+      box-shadow: 0 10px 24px rgba(0,0,0,.24);
     }
 
     .resurface-btn i{
@@ -196,8 +195,8 @@
     }
 
     .glass-field{
-      border: 1px solid var(--border-2);
-      background: linear-gradient(180deg, rgba(255,255,255,.105), rgba(255,255,255,.04));
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.055);
       color: rgba(255,255,255,.90);
       border-radius: 14px;
       min-height: 42px;
@@ -208,7 +207,7 @@
       outline: none;
       border-color: rgba(255,255,255,.20);
       box-shadow: 0 0 0 4px var(--accent-glow);
-      background: linear-gradient(180deg, rgba(255,255,255,.15), rgba(255,255,255,.055));
+      background: rgba(255,255,255,.075);
     }
 
     .glass-field::placeholder{ color: rgba(255,255,255,.45); }
@@ -222,12 +221,9 @@
     .log-card,
     .empty-state{
       border-radius: var(--radius-lg);
-      border: 1px solid var(--border-2);
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.105), rgba(255,255,255,.04));
-      box-shadow: 0 10px 26px rgba(0,0,0,.16), inset 0 1px 0 rgba(255,255,255,.10);
-      backdrop-filter: blur(30px) saturate(1.7);
-      -webkit-backdrop-filter: blur(26px) saturate(1.7);
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      box-shadow: 0 10px 28px rgba(0,0,0,.22);
     }
 
     .archive-card{
@@ -240,8 +236,8 @@
       gap: .42rem;
       padding: .42rem .62rem;
       border-radius: 9999px;
-      border: 1px solid var(--border-2);
-      background: linear-gradient(180deg, rgba(255,255,255,.105), rgba(255,255,255,.04));
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
       color: rgba(255,255,255,.78);
       font-size: .8rem;
       line-height: 1;
@@ -269,9 +265,8 @@
     .log-card:hover{
       transform: translateY(-2px);
       border-color: rgba(255,255,255,.18);
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.15), rgba(255,255,255,.055));
-      box-shadow: 0 14px 32px rgba(0,0,0,.20), 0 0 0 1px var(--accent-glow), inset 0 1px 0 rgba(255,255,255,.13);
+      background: rgba(255,255,255,.07);
+      box-shadow: 0 18px 46px rgba(0,0,0,.34), 0 0 0 1px var(--accent-glow);
     }
 
     .log-card:focus-visible,
@@ -320,10 +315,10 @@
       gap:.42rem;
       padding: .38rem .58rem;
       border-radius: 9999px;
-      border: 1px solid rgba(255,255,255,.22);
-      background: rgba(16,20,28,.34);
-      backdrop-filter: blur(28px) saturate(1.65);
-      -webkit-backdrop-filter: blur(24px) saturate(1.65);
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(8,12,18,.58);
+      backdrop-filter: blur(12px) saturate(1.2);
+      -webkit-backdrop-filter: blur(12px) saturate(1.2);
       color: rgba(255,255,255,.88);
       font-size: .76rem;
       font-weight: 800;
@@ -611,27 +606,6 @@
     }
 
     @media (max-width: 760px){
-      body::before{ animation: none; }
-      body::after{ opacity: .018; }
-      .mica-shell{
-        background:
-          linear-gradient(180deg, rgba(255,255,255,.085), rgba(255,255,255,.032)),
-          rgba(16,20,28,.40);
-        backdrop-filter: blur(22px) saturate(1.35);
-        -webkit-backdrop-filter: blur(18px) saturate(1.35);
-      }
-      .mica-icon-btn,
-      .glass-btn,
-      .glass-field,
-      .archive-card,
-      .log-card,
-      .empty-state,
-      .tag,
-      .category-pill{
-        background: linear-gradient(180deg, rgba(255,255,255,.105), rgba(255,255,255,.045));
-        backdrop-filter: none;
-        -webkit-backdrop-filter: none;
-      }
       .log-header{
         align-items: flex-start;
       }
