@@ -20,6 +20,16 @@
     "coverImage": "/site/journal/images/red-white-and-bass-july-5.jpg",
     "photos": [
       "/site/journal/images/red-white-and-bass-july-5.jpg"
+    ],
+    "videos": [
+      {
+        "src": "https://app.box.com/shared/static/axx0miqashwsnvurgsck5iqkjutktee2.mp4",
+        "poster": "/site/journal/images/red-white-and-bass-video-1.jpg"
+      },
+      {
+        "src": "https://app.box.com/shared/static/t0oa7ph7x4ffp1xwc8lfkug4tsx31nzo.mp4",
+        "poster": "/site/journal/images/red-white-and-bass-video-2.jpg"
+      }
     ]
   },
   {
