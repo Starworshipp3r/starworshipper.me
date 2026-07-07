@@ -1,0 +1,3 @@
+/site/logs /site/journal/ 301
+/site/logs/ /site/journal/ 301
+/site/logs/* /site/journal/:splat 301
