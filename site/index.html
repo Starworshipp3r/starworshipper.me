@@ -199,12 +199,160 @@
       transform: translateY(0px) scale(.99);
     }
 
+    .project-preview{
+      position: relative;
+      min-height: 12rem;
+      overflow: hidden;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.10);
+      background:
+        radial-gradient(circle at 18% 18%, rgba(122,162,255,.28), transparent 34%),
+        radial-gradient(circle at 82% 70%, rgba(95,255,208,.16), transparent 38%),
+        linear-gradient(135deg, rgba(7,12,22,.86), rgba(22,31,48,.68));
+      box-shadow: inset 0 1px rgba(255,255,255,.08);
+    }
+
+    .project-preview::before{
+      content:'';
+      position:absolute;
+      inset: 16px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.20);
+      box-shadow:
+        inset 0 1px rgba(255,255,255,.12),
+        0 18px 40px rgba(0,0,0,.32);
+    }
+
+    .headunit-screen{
+      position:absolute;
+      inset: 26px;
+      display:grid;
+      grid-template-columns: 74px 1fr;
+      gap: 14px;
+      align-items:center;
+      border-radius: 14px;
+      padding: 14px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.04)),
+        rgba(5,10,18,.58);
+      backdrop-filter: blur(14px) saturate(1.25);
+      -webkit-backdrop-filter: blur(14px) saturate(1.25);
+    }
+
+    .headunit-art{
+      aspect-ratio: 1;
+      border-radius: 14px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color: rgba(255,255,255,.86);
+      background:
+        radial-gradient(circle at 36% 28%, rgba(255,255,255,.28), transparent 30%),
+        linear-gradient(135deg, rgba(122,162,255,.44), rgba(95,255,208,.18));
+      box-shadow: inset 0 1px rgba(255,255,255,.18);
+    }
+
+    .headunit-track span{
+      display:block;
+      font-size: .68rem;
+      font-weight: 800;
+      letter-spacing: .08em;
+      color: rgba(255,255,255,.52);
+      text-transform: uppercase;
+    }
+
+    .headunit-track strong{
+      display:block;
+      margin-top: 2px;
+      font-size: 1.1rem;
+      line-height: 1.15;
+    }
+
+    .headunit-track small{
+      display:block;
+      margin-top: 3px;
+      color: rgba(255,255,255,.62);
+    }
+
+    .headunit-controls{
+      grid-column: 1 / -1;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap: 14px;
+      color: rgba(255,255,255,.82);
+    }
+
+    .headunit-controls i{
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.10);
+    }
+
     @media (max-width: 900px){
       .mica-shell{ min-height: calc(100dvh - 24px); }
       .shell-body{ grid-template-columns: 1fr; }
       .shell-sidebar{
         border-right: none;
         border-bottom: 1px solid rgba(255,255,255,.10);
+      }
+    }
+
+    @media (max-width: 520px){
+      .project-preview{
+        min-height: 11rem;
+      }
+
+      .project-preview::before{
+        inset: 12px;
+      }
+
+      .headunit-screen{
+        inset: 18px;
+        grid-template-columns: 58px minmax(0, 1fr);
+        gap: 10px;
+        padding: 10px;
+      }
+
+      .headunit-track{
+        min-width: 0;
+      }
+
+      .headunit-track span,
+      .headunit-track strong,
+      .headunit-track small{
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .headunit-track span{
+        font-size: .56rem;
+        letter-spacing: .06em;
+      }
+
+      .headunit-track strong{
+        font-size: .96rem;
+      }
+
+      .headunit-track small{
+        font-size: .72rem;
+      }
+
+      .headunit-controls{
+        gap: 8px;
+      }
+
+      .headunit-controls i{
+        width: 24px;
+        height: 24px;
+        font-size: .76rem;
       }
     }
 
@@ -416,33 +564,69 @@
         <section id="projects" class="mica-card">
           <h2 class="text-xl font-semibold mb-3">Projects</h2>
           <div class="grid sm:grid-cols-2 gap-3">
-          <div class="mica-card">
-            <div class="font-semibold mb-1">machinecodeisnomore</div>
+            <div class="mica-card">
+              <div class="font-semibold mb-1">machinecodeisnomore</div>
 
-            <button
-              type="button"
-              class="group w-full text-left"
-              data-video="https://app.box.com/shared/static/r7ubgtm0tqp44nb9kszreq56sj4zkg6x.mp4"
-              data-poster="/videos/machinecodeisnomore.swf.jpg"
-              data-title="machinecodeisnomore"
-              aria-label="Play Project A video"
-            >
-              <div class="relative overflow-hidden rounded-xl border border-white/10 bg-black/20">
-                <img
-                  src="/videos/machinecodeisnomore.swf.jpg"
-                  alt="Project A video thumbnail"
-                  class="w-full h-48 object-cover opacity-90 group-hover:opacity-100 transition"
-                  loading="lazy"
-                />
+              <button
+                type="button"
+                class="group w-full text-left"
+                data-video="https://app.box.com/shared/static/r7ubgtm0tqp44nb9kszreq56sj4zkg6x.mp4"
+                data-poster="/videos/machinecodeisnomore.swf.jpg"
+                data-title="machinecodeisnomore"
+                aria-label="Play machinecodeisnomore video"
+              >
+                <div class="relative overflow-hidden rounded-xl border border-white/10 bg-black/20">
+                  <img
+                    src="/videos/machinecodeisnomore.swf.jpg"
+                    alt="machinecodeisnomore video thumbnail"
+                    class="w-full h-48 object-cover opacity-90 group-hover:opacity-100 transition"
+                    loading="lazy"
+                  />
 
-                <div class="absolute inset-0 flex items-center justify-center">
-                  <div class="w-14 h-14 rounded-full border border-white/15 bg-white/10 backdrop-blur-md flex items-center justify-center shadow-lg group-hover:scale-105 transition">
-                    <i class="fa-solid fa-play text-white/90"></i>
+                  <div class="absolute inset-0 flex items-center justify-center">
+                    <div class="w-14 h-14 rounded-full border border-white/15 bg-white/10 backdrop-blur-md flex items-center justify-center shadow-lg group-hover:scale-105 transition">
+                      <i class="fa-solid fa-play text-white/90"></i>
+                    </div>
+                  </div>
+                </div>
+              </button>
+            </div>
+
+            <div class="mica-card flex flex-col gap-3">
+              <div class="flex items-start justify-between gap-3">
+                <div>
+                  <div class="font-semibold">Head Unit Player</div>
+                  <p class="text-sm text-white/60 mt-1">A local-file music player for an Android car head unit.</p>
+                </div>
+                <span class="shrink-0 inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-xs font-semibold text-white/70">
+                  <i class="fa-brands fa-android"></i>
+                  Android
+                </span>
+              </div>
+
+              <div class="project-preview" role="img" aria-label="Mock preview of an Android head unit music player">
+                <div class="headunit-screen">
+                  <div class="headunit-art">
+                    <i class="fa-solid fa-music text-2xl"></i>
+                  </div>
+                  <div class="headunit-track">
+                    <span>Local Files</span>
+                    <strong>Drive Mix</strong>
+                    <small>Built for dashboard listening</small>
+                  </div>
+                  <div class="headunit-controls">
+                    <i class="fa-solid fa-backward-step" aria-hidden="true"></i>
+                    <i class="fa-solid fa-play" aria-hidden="true"></i>
+                    <i class="fa-solid fa-forward-step" aria-hidden="true"></i>
                   </div>
                 </div>
               </div>
-            </button>
-          </div>
+
+              <div class="flex items-center justify-between gap-3 text-sm text-white/60">
+                <span>Screenshot and link coming soon</span>
+                <i class="fa-solid fa-up-right-from-square text-white/45" aria-hidden="true"></i>
+              </div>
+            </div>
           </div>
         </section>
 
