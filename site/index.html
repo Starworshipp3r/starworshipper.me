@@ -200,6 +200,7 @@
     }
 
     .project-preview{
+      position: relative;
       overflow: hidden;
       border-radius: 12px;
       border: 1px solid rgba(255,255,255,.10);
@@ -438,33 +439,44 @@
         <section id="projects" class="mica-card">
           <h2 class="text-xl font-semibold mb-3">Projects</h2>
           <div class="grid sm:grid-cols-2 gap-3">
-            <div class="mica-card">
-              <div class="font-semibold mb-1">machinecodeisnomore</div>
+            <button
+              type="button"
+              class="mica-card flex flex-col gap-3 hover:bg-white/10 transition group w-full text-left"
+              data-video="https://app.box.com/shared/static/r7ubgtm0tqp44nb9kszreq56sj4zkg6x.mp4"
+              data-poster="/videos/machinecodeisnomore.swf.jpg"
+              data-title="machinecodeisnomore"
+              aria-label="Play machinecodeisnomore video"
+            >
+              <div class="flex items-start justify-between gap-3">
+                <div>
+                  <div class="font-semibold">machinecodeisnomore</div>
+                  <p class="text-sm text-white/60 mt-1">A recreated Flash-era video memory with the character swapped in.</p>
+                </div>
+                <span class="shrink-0 inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-xs font-semibold text-white/70">
+                  <i class="fa-solid fa-play"></i>
+                  Video
+                </span>
+              </div>
 
-              <button
-                type="button"
-                class="group w-full text-left"
-                data-video="https://app.box.com/shared/static/r7ubgtm0tqp44nb9kszreq56sj4zkg6x.mp4"
-                data-poster="/videos/machinecodeisnomore.swf.jpg"
-                data-title="machinecodeisnomore"
-                aria-label="Play machinecodeisnomore video"
-              >
-                <div class="relative overflow-hidden rounded-xl border border-white/10 bg-black/20">
-                  <img
-                    src="/videos/machinecodeisnomore.swf.jpg"
-                    alt="machinecodeisnomore video thumbnail"
-                    class="w-full h-48 object-cover opacity-90 group-hover:opacity-100 transition"
-                    loading="lazy"
-                  />
+              <div class="project-preview">
+                <img
+                  src="/videos/machinecodeisnomore.swf.jpg"
+                  alt="machinecodeisnomore video thumbnail"
+                  loading="lazy"
+                />
 
-                  <div class="absolute inset-0 flex items-center justify-center">
-                    <div class="w-14 h-14 rounded-full border border-white/15 bg-white/10 backdrop-blur-md flex items-center justify-center shadow-lg group-hover:scale-105 transition">
-                      <i class="fa-solid fa-play text-white/90"></i>
-                    </div>
+                <div class="absolute inset-0 flex items-center justify-center">
+                  <div class="w-14 h-14 rounded-full border border-white/15 bg-white/10 backdrop-blur-md flex items-center justify-center shadow-lg group-hover:scale-105 transition">
+                    <i class="fa-solid fa-play text-white/90"></i>
                   </div>
                 </div>
-              </button>
-            </div>
+              </div>
+
+              <div class="flex items-center justify-between gap-3 text-sm text-white/60">
+                <span>Play video</span>
+                <i class="fa-solid fa-play text-white/45 group-hover:text-white/75 transition" aria-hidden="true"></i>
+              </div>
+            </button>
 
             <a
               class="mica-card flex flex-col gap-3 hover:bg-white/10 transition group"
