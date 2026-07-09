@@ -38,7 +38,37 @@ export async function handler() {
       };
     }
 
-    // 2) Otherwise: prefer Steam's recent activity feed
+    // 2) Otherwise: use owned-game timestamps for actual last-played order
+    const gRes = await fetch(
+      `https://api.steampowered.com/IPlayerService/GetOwnedGames/v1/?key=${key}&steamid=${steamid}&include_appinfo=1&include_played_free_games=1`
+    );
+    if (gRes.ok) {
+      const gJson = await gRes.json();
+      const games = gJson?.response?.games || [];
+
+      let latest = null;
+      for (const g of games) {
+        if (!g.rtime_last_played) continue;
+        if (!latest || g.rtime_last_played > latest.rtime_last_played) latest = g;
+      }
+
+      if (latest?.name) {
+        return {
+          statusCode: 200,
+          headers: {
+            "content-type": "application/json",
+            "cache-control": "public, max-age=60",
+          },
+          body: JSON.stringify({
+            playing: getDisplayName(latest.name),
+            mode: "last",
+            lastPlayed: latest.rtime_last_played || null,
+          }),
+        };
+      }
+    }
+
+    // 3) Last resort: Steam's recent feed can be stale or unordered
     const recentRes = await fetch(
       `https://api.steampowered.com/IPlayerService/GetRecentlyPlayedGames/v1/?key=${key}&steamid=${steamid}`
     );
@@ -53,7 +83,7 @@ export async function handler() {
           statusCode: 200,
           headers: {
             "content-type": "application/json",
-            "cache-control": "public, max-age=300",
+            "cache-control": "public, max-age=60",
           },
           body: JSON.stringify({
             playing: getDisplayName(latestRecent.name),
@@ -64,29 +94,16 @@ export async function handler() {
       }
     }
 
-    // 3) Last resort: find most recently played from owned games
-    const gRes = await fetch(
-      `https://api.steampowered.com/IPlayerService/GetOwnedGames/v1/?key=${key}&steamid=${steamid}&include_appinfo=1&include_played_free_games=1`
-    );
-    const gJson = await gRes.json();
-    const games = gJson?.response?.games || [];
-
-    let latest = null;
-    for (const g of games) {
-      if (!g.rtime_last_played) continue;
-      if (!latest || g.rtime_last_played > latest.rtime_last_played) latest = g;
-    }
-
     return {
       statusCode: 200,
       headers: {
         "content-type": "application/json",
-        "cache-control": "public, max-age=300",
+        "cache-control": "public, max-age=60",
       },
       body: JSON.stringify({
-        playing: getDisplayName(latest?.name),
-        mode: "last",
-        lastPlayed: latest?.rtime_last_played || null,
+        playing: null,
+        mode: "unknown",
+        lastPlayed: null,
       }),
     };
   } catch (e) {
