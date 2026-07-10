@@ -1,5 +1,22 @@
 [
   {
+    "date": "2026-07-10",
+    "title": "Keeping My Oath",
+    "type": "project",
+    "body": "Wrapped up the lil' Oath project late yesterday, think it turned out pretty nice actually. Was fun piecing this together in After Effects, making sure it looped properly, and then exporting a few different sizes to use as Discord banners and Steam artwork.\n\nNeed to try to wrap up the game itself later today or over the weekend when I have more time... feeling busy all the time feels productive, but so tiring at the same time. Better than sittin' around doing nothing all day I suppose.",
+    "tags": ["project", "gaming", "personal"],
+    "coverImage": "/site/journal/images/dont-break-our-oath-july-10.jpg",
+    "photos": [
+      "/site/journal/images/dont-break-our-oath-july-10.jpg"
+    ],
+    "videos": [
+      {
+        "src": "https://app.box.com/shared/static/kogas6zvbvjqho5gvgwdftmqmfb47udv.mp4",
+        "poster": "/site/journal/images/dont-break-our-oath-july-10.jpg"
+      }
+    ]
+  },
+  {
     "date": "2026-07-09",
     "title": "Fricken' Birfday",
     "type": "reflection",
