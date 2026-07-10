@@ -10,8 +10,18 @@ const CACHE_KEY = "last-good";
 const CACHE_TTL_MS = Number(process.env.STEAM_STATUS_CACHE_TTL_MS || 2 * 60 * 60 * 1000);
 const STALE_TTL_MS = Number(process.env.STEAM_STATUS_STALE_TTL_MS || 7 * 24 * 60 * 60 * 1000);
 
-function isTruthyParam(event, name) {
-  const value = event?.queryStringParameters?.[name];
+function getQueryParam(input, name) {
+  if (input?.queryStringParameters) return input.queryStringParameters[name];
+
+  try {
+    return input?.url ? new URL(input.url).searchParams.get(name) : null;
+  } catch {
+    return null;
+  }
+}
+
+function isTruthyParam(input, name) {
+  const value = getQueryParam(input, name);
   return ["1", "true", "yes"].includes(String(value || "").toLowerCase());
 }
 
@@ -27,11 +37,10 @@ function toIso(seconds) {
 }
 
 function send(statusCode, payload, debug, debugInfo) {
-  return {
-    statusCode,
+  return new Response(JSON.stringify(debug ? { ...payload, debug: debugInfo } : payload), {
+    status: statusCode,
     headers: getHeaders(debug),
-    body: JSON.stringify(debug ? { ...payload, debug: debugInfo } : payload),
-  };
+  });
 }
 
 function getDisplayName(name) {
@@ -287,9 +296,9 @@ function canReturnStaleCache(record, debugInfo) {
   return state.withinStaleWindow;
 }
 
-export async function handler(event = {}) {
-  const debug = isTruthyParam(event, "debug");
-  const forceRefresh = isTruthyParam(event, "refresh");
+export default async function handler(request = {}) {
+  const debug = isTruthyParam(request, "debug");
+  const forceRefresh = isTruthyParam(request, "refresh");
   const key = process.env.STEAM_API_KEY;
   const steamid = process.env.STEAM_ID64;
   const debugInfo = {
