@@ -62,8 +62,12 @@ function getAgeMs(value, now = Date.now()) {
   return Number.isFinite(time) ? now - time : null;
 }
 
+function isTrustedCachedPayload(payload) {
+  return ["now", "profile"].includes(payload?.mode);
+}
+
 function getCacheState(record, now = Date.now()) {
-  const hasPayload = Boolean(record?.payload?.playing);
+  const hasPayload = Boolean(record?.payload?.playing) && isTrustedCachedPayload(record.payload);
   const cachedAgeMs = getAgeMs(record?.cachedAt, now);
   const checkedAgeMs = getAgeMs(record?.checkedAt || record?.cachedAt, now);
   const withinStaleWindow = hasPayload && cachedAgeMs !== null && cachedAgeMs <= STALE_TTL_MS;
@@ -109,6 +113,7 @@ async function readCachedStatus(debugInfo) {
           cachedAt: record.cachedAt || null,
           checkedAt: record.checkedAt || null,
           lastError: record.lastError || null,
+          trusted: isTrustedCachedPayload(record.payload),
         }
       : null;
 
@@ -378,35 +383,8 @@ export default async function handler(request = {}) {
       return send(200, payload, debug, debugInfo);
     }
 
-    debugInfo.sources.recentFeed = { attempted: true };
-    const recentRes = await fetch(
-      `https://api.steampowered.com/IPlayerService/GetRecentlyPlayedGames/v1/?key=${key}&steamid=${steamid}`
-    );
-    debugInfo.sources.recentFeed.ok = recentRes.ok;
-    debugInfo.sources.recentFeed.status = recentRes.status || null;
-
-    if (recentRes.ok) {
-      const recentJson = await recentRes.json();
-      const recentGames = recentJson?.response?.games || [];
-      debugInfo.sources.recentFeed.count = recentGames.length;
-      const latestRecent = getRecentFeedGame(recentGames, debugInfo);
-
-      if (latestRecent?.name) {
-        const payload = {
-          playing: getDisplayName(latestRecent.name),
-          mode: "recent",
-          appid: latestRecent.appid || null,
-          lastPlayed: latestRecent.rtime_last_played || null,
-        };
-
-        debugInfo.selectedSource = "recentFeed";
-        await writeGoodCache(payload, debugInfo, "recentFeed");
-        return send(200, payload, debug, debugInfo);
-      }
-    }
-
     if (canReturnStaleCache(cachedRecord, debugInfo)) {
-      await markCacheChecked(cachedRecord, debugInfo, "recentFeed", debugInfo.sources.recentFeed);
+      await markCacheChecked(cachedRecord, debugInfo, "profile", debugInfo.sources.profile);
       debugInfo.selectedSource = "cacheStale";
       debugInfo.cache.returned = "stale-refresh-failed";
       return send(200, sanitizeCachedPayload(cachedRecord.payload), debug, debugInfo);
@@ -438,6 +416,35 @@ export default async function handler(request = {}) {
             mode: "last",
             appid: latest.appid || null,
             lastPlayed: latest.rtime_last_played || null,
+          },
+          debug,
+          debugInfo
+        );
+      }
+    }
+
+    debugInfo.sources.recentFeed = { attempted: true };
+    const recentRes = await fetch(
+      `https://api.steampowered.com/IPlayerService/GetRecentlyPlayedGames/v1/?key=${key}&steamid=${steamid}`
+    );
+    debugInfo.sources.recentFeed.ok = recentRes.ok;
+    debugInfo.sources.recentFeed.status = recentRes.status || null;
+
+    if (recentRes.ok) {
+      const recentJson = await recentRes.json();
+      const recentGames = recentJson?.response?.games || [];
+      debugInfo.sources.recentFeed.count = recentGames.length;
+      const latestRecent = getRecentFeedGame(recentGames, debugInfo);
+
+      if (latestRecent?.name) {
+        debugInfo.selectedSource = "recentFeed";
+        return send(
+          200,
+          {
+            playing: getDisplayName(latestRecent.name),
+            mode: "recent",
+            appid: latestRecent.appid || null,
+            lastPlayed: latestRecent.rtime_last_played || null,
           },
           debug,
           debugInfo
