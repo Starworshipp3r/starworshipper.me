@@ -499,7 +499,7 @@
 
         <section id="projects" class="mica-card">
           <h2 class="text-xl font-semibold mb-3">Projects</h2>
-          <div class="grid sm:grid-cols-2 xl:grid-cols-3 gap-3">
+          <div class="grid sm:grid-cols-2 gap-3">
             <button
               type="button"
               class="mica-card flex flex-col gap-3 hover:bg-white/10 transition group w-full text-left"
@@ -603,6 +603,77 @@
                 <i class="fa-solid fa-play text-white/45 group-hover:text-white/75 transition" aria-hidden="true"></i>
               </div>
             </button>
+
+            <button
+              type="button"
+              class="mica-card flex flex-col gap-3 hover:bg-white/10 transition group w-full text-left"
+              data-image="/site/images/teethglitch.gif"
+              data-title="I don't bite"
+              aria-label="Open I don't bite animated artwork"
+            >
+              <div class="flex items-start justify-between gap-3">
+                <div class="min-w-0">
+                  <div class="font-semibold truncate">I don't bite</div>
+                  <p class="project-card-summary text-sm text-white/60 mt-1">LoRA generated artwork. Vectorized. Data moshed. Pixel shifted.</p>
+                </div>
+                <span class="shrink-0 inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-xs font-semibold text-white/70">
+                  <i class="fa-solid fa-wand-magic-sparkles"></i>
+                  GIF
+                </span>
+              </div>
+
+              <div class="project-preview">
+                <img
+                  src="/site/images/teethglitch.gif"
+                  alt="Animated glitch artwork of Star showing sharp teeth"
+                  loading="lazy"
+                />
+              </div>
+
+              <div class="flex items-center justify-between gap-3 text-sm text-white/60">
+                <span>View full GIF</span>
+                <i class="fa-solid fa-expand text-white/45 group-hover:text-white/75 transition" aria-hidden="true"></i>
+              </div>
+            </button>
+
+            <button
+              type="button"
+              class="mica-card flex flex-col gap-3 hover:bg-white/10 transition group w-full text-left"
+              data-video="https://app.box.com/shared/static/kogas6zvbvjqho5gvgwdftmqmfb47udv.mp4"
+              data-poster="/site/images/dont-break-our-oath-preview.png"
+              data-title="Don't break our oath"
+              aria-label="Play Don't break our oath video"
+            >
+              <div class="flex items-start justify-between gap-3">
+                <div class="min-w-0">
+                  <div class="font-semibold truncate">Don't break our oath</div>
+                  <p class="project-card-summary text-sm text-white/60 mt-1">Inspired by the look, grit, and feel of "Oath" by vai5000.</p>
+                </div>
+                <span class="shrink-0 inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-xs font-semibold text-white/70">
+                  <i class="fa-solid fa-play"></i>
+                  Video
+                </span>
+              </div>
+
+              <div class="project-preview">
+                <img
+                  src="/site/images/dont-break-our-oath-preview.png"
+                  alt="Black and white Don't break our oath video preview"
+                  loading="lazy"
+                />
+
+                <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                  <div class="w-14 h-14 rounded-full border border-white/15 bg-white/10 backdrop-blur-md flex items-center justify-center shadow-lg group-hover:scale-105 transition">
+                    <i class="fa-solid fa-play text-white/90"></i>
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex items-center justify-between gap-3 text-sm text-white/60">
+                <span>Play video</span>
+                <i class="fa-solid fa-play text-white/45 group-hover:text-white/75 transition" aria-hidden="true"></i>
+              </div>
+            </button>
           </div>
         </section>
 
@@ -635,6 +706,11 @@
             playsinline
             preload="metadata"
           ></video>
+          <img
+            id="modalImage"
+            class="hidden w-full max-h-[70vh] bg-black object-contain"
+            alt=""
+          />
         </div>
       </div>
     </div>
@@ -786,15 +862,20 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 
 <script>
-// Video lightbox wiring
+// Media lightbox wiring
 const modal = document.getElementById('videoModal');
 const backdrop = document.getElementById('videoBackdrop');
 const closeBtn = document.getElementById('videoCloseBtn');
 const video = document.getElementById('modalVideo');
+const modalImage = document.getElementById('modalImage');
 const titleEl = document.getElementById('videoModalTitle');
 
 function openVideo({ src, poster, title }) {
   titleEl.textContent = title || 'Video';
+  modalImage.classList.add('hidden');
+  modalImage.removeAttribute('src');
+  modalImage.removeAttribute('alt');
+  video.classList.remove('hidden');
 
   // Only set src when opening so the 55MB file doesn't download on page load
   if (video.getAttribute('src') !== src) {
@@ -812,12 +893,27 @@ function openVideo({ src, poster, title }) {
   video.play().catch(() => {});
 }
 
-function closeVideo() {
+function openImage({ src, title }) {
+  titleEl.textContent = title || 'Artwork';
+  video.pause();
+  video.removeAttribute('src');
+  video.load();
+  video.classList.add('hidden');
+
+  modalImage.setAttribute('src', src);
+  modalImage.setAttribute('alt', title || 'Artwork');
+  modalImage.classList.remove('hidden');
+  modal.classList.remove('hidden');
+}
+
+function closeMedia() {
   modal.classList.add('hidden');
   video.pause();
   // Optional: free memory / stop buffering
   video.removeAttribute('src');
   video.load();
+  modalImage.removeAttribute('src');
+  modalImage.classList.add('hidden');
 }
 
 document.addEventListener('click', (e) => {
@@ -831,11 +927,21 @@ document.addEventListener('click', (e) => {
   });
 });
 
-backdrop?.addEventListener('click', closeVideo);
-closeBtn?.addEventListener('click', closeVideo);
+document.addEventListener('click', (e) => {
+  const btn = e.target.closest('[data-image]');
+  if (!btn) return;
+
+  openImage({
+    src: btn.getAttribute('data-image'),
+    title: btn.getAttribute('data-title'),
+  });
+});
+
+backdrop?.addEventListener('click', closeMedia);
+closeBtn?.addEventListener('click', closeMedia);
 
 document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && !modal.classList.contains('hidden')) closeVideo();
+  if (e.key === 'Escape' && !modal.classList.contains('hidden')) closeMedia();
 });
 </script>
 
