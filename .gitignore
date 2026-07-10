@@ -5,3 +5,4 @@ desktop.ini
 .vscode/
 .env
 .netlify
+node_modules/
