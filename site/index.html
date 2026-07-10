@@ -112,6 +112,32 @@
       padding: 16px;
       box-shadow: 0 10px 28px rgba(0,0,0,.20);
     }
+    .dynamic-value{
+      min-height: 1.5rem;
+      transition: color .18s ease, opacity .18s ease;
+    }
+    .dynamic-value.is-loading{
+      display: inline-flex;
+      align-items: center;
+      gap: .45rem;
+      color: rgba(255,255,255,.62);
+    }
+    .dynamic-value.is-loading::before{
+      content: '';
+      width: .58rem;
+      height: .58rem;
+      border: 2px solid rgba(255,255,255,.22);
+      border-top-color: rgba(255,255,255,.72);
+      border-radius: 9999px;
+      animation: status-spin .75s linear infinite;
+      flex: 0 0 auto;
+    }
+    .dynamic-value.is-muted{
+      color: rgba(255,255,255,.58);
+    }
+    @keyframes status-spin {
+      to { transform: rotate(360deg); }
+    }
 
     /* Fullscreen shell */
     .mica-shell{
@@ -341,11 +367,11 @@
             </div>
             <div class="mica-card">
               <div class="text-white/60 text-sm">Playing:</div>
-              <div class="font-semibold" id="steam-playing"> </div>
+              <div class="font-semibold dynamic-value is-loading" id="steam-playing" aria-live="polite">checking...</div>
             </div>
             <div class="mica-card">
               <div class="text-white/60 text-sm">Listening:</div>
-              <div class="font-semibold" id="listening-artist"></div>
+              <div class="font-semibold dynamic-value is-loading" id="listening-artist" aria-live="polite">checking...</div>
             </div>
             <a class="mica-card block hover:bg-white/10 transition" href="/site/journal/">
               <div class="text-white/60 text-sm">Journaling:</div>
@@ -703,6 +729,16 @@
 </script>
 
 <script>
+function setDynamicValue(el, value, fallback = 'Nothing recent') {
+  if (!el) return;
+  const text = value || fallback;
+  el.textContent = text;
+  el.classList.remove('is-loading');
+  el.classList.toggle('is-muted', !value);
+}
+</script>
+
+<script>
 document.addEventListener('DOMContentLoaded', () => {
   const el = document.getElementById('steam-playing');
   if (!el) return;
@@ -710,9 +746,9 @@ document.addEventListener('DOMContentLoaded', () => {
   fetch('/.netlify/functions/steam-status')
     .then(r => r.ok ? r.json() : null)
     .then(data => {
-      if (data?.playing) el.textContent = data.playing;
+      setDynamicValue(el, data?.playing);
     })
-    .catch(() => {});
+    .catch(() => setDynamicValue(el, null));
 });
 </script>
 
@@ -723,8 +759,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   fetch('/.netlify/functions/lastfm-top-artist')
     .then(r => r.ok ? r.json() : null)
-    .then(d => { if (d?.artist) el.textContent = d.artist; })
-    .catch(() => {});
+    .then(d => setDynamicValue(el, d?.artist))
+    .catch(() => setDynamicValue(el, null));
 });
 </script>
 
