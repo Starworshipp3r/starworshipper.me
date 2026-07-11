@@ -1268,6 +1268,7 @@
       els.videoViewerVideo.load();
       els.videoViewer.hidden = false;
       document.body.style.overflow = 'hidden';
+      els.videoViewerVideo.play().catch(() => {});
       els.videoViewerClose?.focus({ preventScroll: true });
     }
 
