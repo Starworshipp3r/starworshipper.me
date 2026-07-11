@@ -13,25 +13,10 @@ const CACHE_TTL_MS = Number(process.env.STEAM_STATUS_CACHE_TTL_MS || 60 * 60 * 1
 const NOW_CACHE_TTL_MS = Number(process.env.STEAM_STATUS_NOW_CACHE_TTL_MS || 15 * 60 * 1000);
 const STALE_TTL_MS = Number(process.env.STEAM_STATUS_STALE_TTL_MS || 7 * 24 * 60 * 60 * 1000);
 
-function getQueryParam(input, name) {
-  if (input?.queryStringParameters) return input.queryStringParameters[name];
-
-  try {
-    return input?.url ? new URL(input.url).searchParams.get(name) : null;
-  } catch {
-    return null;
-  }
-}
-
-function isTruthyParam(input, name) {
-  const value = getQueryParam(input, name);
-  return ["1", "true", "yes"].includes(String(value || "").toLowerCase());
-}
-
-function getHeaders(debug) {
+function getHeaders() {
   return {
     "content-type": "application/json",
-    "cache-control": debug ? "no-store" : "public, max-age=60",
+    "cache-control": "public, max-age=60",
   };
 }
 
@@ -39,10 +24,10 @@ function toIso(seconds) {
   return seconds ? new Date(seconds * 1000).toISOString() : null;
 }
 
-function send(statusCode, payload, debug, debugInfo) {
-  return new Response(JSON.stringify(debug ? { ...payload, debug: debugInfo } : payload), {
+function send(statusCode, payload) {
+  return new Response(JSON.stringify(payload), {
     status: statusCode,
-    headers: getHeaders(debug),
+    headers: getHeaders(),
   });
 }
 
@@ -303,11 +288,11 @@ function getRecentFeedGame(games, debugInfo) {
   return latestRecent;
 }
 
-function shouldReturnCache(record, forceRefresh, debugInfo) {
+function shouldReturnCache(record, debugInfo) {
   const state = getCacheState(record);
   debugInfo.cache.state = state;
 
-  return !forceRefresh && state.fresh;
+  return state.fresh;
 }
 
 function canReturnStaleCache(record, debugInfo) {
@@ -317,17 +302,11 @@ function canReturnStaleCache(record, debugInfo) {
   return state.withinStaleWindow;
 }
 
-export default async function handler(request = {}) {
-  const debug = isTruthyParam(request, "debug");
-  const forceRefresh = isTruthyParam(request, "refresh");
+export default async function handler() {
   const key = process.env.STEAM_API_KEY;
   const steamid = process.env.STEAM_ID64;
   const debugInfo = {
     generatedAt: new Date().toISOString(),
-    request: {
-      debug,
-      forceRefresh,
-    },
     env: {
       hasSteamApiKey: Boolean(key),
       hasSteamId64: Boolean(steamid),
@@ -339,25 +318,20 @@ export default async function handler(request = {}) {
   };
 
   const cachedRecord = await readCachedStatus(debugInfo);
-  if (shouldReturnCache(cachedRecord, forceRefresh, debugInfo)) {
+  if (shouldReturnCache(cachedRecord, debugInfo)) {
     debugInfo.selectedSource = "cacheFresh";
     debugInfo.cache.returned = "fresh";
-    return send(200, sanitizeCachedPayload(cachedRecord.payload), debug, debugInfo);
+    return send(200, sanitizeCachedPayload(cachedRecord.payload));
   }
 
   if (!key || !steamid) {
     if (canReturnStaleCache(cachedRecord, debugInfo)) {
       debugInfo.selectedSource = "cacheStale";
       debugInfo.cache.returned = "stale-missing-env";
-      return send(200, sanitizeCachedPayload(cachedRecord.payload), debug, debugInfo);
+      return send(200, sanitizeCachedPayload(cachedRecord.payload));
     }
 
-    return send(
-      500,
-      { error: "Missing STEAM_API_KEY or STEAM_ID64" },
-      debug,
-      debugInfo
-    );
+    return send(500, { error: "Missing STEAM_API_KEY or STEAM_ID64" });
   }
 
   try {
@@ -387,7 +361,7 @@ export default async function handler(request = {}) {
 
       debugInfo.selectedSource = "current";
       await writeGoodCache(payload, debugInfo, "current");
-      return send(200, payload, debug, debugInfo);
+      return send(200, payload);
     }
 
     const profileRecent = await getProfileRecentGame(debugInfo);
@@ -401,7 +375,7 @@ export default async function handler(request = {}) {
 
       debugInfo.selectedSource = "profile";
       await writeGoodCache(payload, debugInfo, "profile");
-      return send(200, payload, debug, debugInfo);
+      return send(200, payload);
     }
 
     debugInfo.sources.ownedGames = { attempted: true };
@@ -431,7 +405,7 @@ export default async function handler(request = {}) {
 
         debugInfo.selectedSource = "ownedGames";
         await writeGoodCache(payload, debugInfo, "owned-games");
-        return send(200, payload, debug, debugInfo);
+        return send(200, payload);
       }
     }
 
@@ -458,7 +432,7 @@ export default async function handler(request = {}) {
 
         debugInfo.selectedSource = "recentFeed";
         await writeGoodCache(payload, debugInfo, "recent-feed");
-        return send(200, payload, debug, debugInfo);
+        return send(200, payload);
       }
     }
 
@@ -475,30 +449,25 @@ export default async function handler(request = {}) {
       await markCacheChecked(cachedRecord, debugInfo, "fallbacks", refreshFailure);
       debugInfo.selectedSource = "cacheStale";
       debugInfo.cache.returned = "stale-refresh-failed";
-      return send(200, sanitizeCachedPayload(cachedRecord.payload), debug, debugInfo);
+      return send(200, sanitizeCachedPayload(cachedRecord.payload));
     }
 
     debugInfo.selectedSource = "unknown";
-    return send(
-      200,
-      {
-        playing: null,
-        mode: "unknown",
-        appid: null,
-        lastPlayed: null,
-      },
-      debug,
-      debugInfo
-    );
+    return send(200, {
+      playing: null,
+      mode: "unknown",
+      appid: null,
+      lastPlayed: null,
+    });
   } catch (e) {
     if (canReturnStaleCache(cachedRecord, debugInfo)) {
       await markCacheChecked(cachedRecord, debugInfo, "exception", { error: e?.name || "Error" });
       debugInfo.selectedSource = "cacheStale";
       debugInfo.cache.returned = "stale-exception";
-      return send(200, sanitizeCachedPayload(cachedRecord.payload), debug, debugInfo);
+      return send(200, sanitizeCachedPayload(cachedRecord.payload));
     }
 
     debugInfo.error = e?.name || "Error";
-    return send(500, { error: "Steam fetch failed" }, debug, debugInfo);
+    return send(500, { error: "Steam fetch failed" });
   }
 }
