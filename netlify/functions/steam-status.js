@@ -3,11 +3,14 @@ import { getStore } from "@netlify/blobs";
 const NAME_ALIASES = {
   "Source SDK Base 2007": "FiveM",
 };
+const IGNORED_APP_IDS = new Set(["250820"]);
+const IGNORED_GAME_NAMES = new Set(["steamvr"]);
 
 const STEAM_PROFILE_URL = process.env.STEAM_PROFILE_URL || "https://steamcommunity.com/id/Starworshipp3r";
 const CACHE_STORE = "steam-status";
 const CACHE_KEY = "last-good";
-const CACHE_TTL_MS = Number(process.env.STEAM_STATUS_CACHE_TTL_MS || 2 * 60 * 60 * 1000);
+const CACHE_TTL_MS = Number(process.env.STEAM_STATUS_CACHE_TTL_MS || 60 * 60 * 1000);
+const NOW_CACHE_TTL_MS = Number(process.env.STEAM_STATUS_NOW_CACHE_TTL_MS || 15 * 60 * 1000);
 const STALE_TTL_MS = Number(process.env.STEAM_STATUS_STALE_TTL_MS || 7 * 24 * 60 * 60 * 1000);
 
 function getQueryParam(input, name) {
@@ -48,6 +51,13 @@ function getDisplayName(name) {
   return NAME_ALIASES[name] || name;
 }
 
+function isIgnoredGame(game) {
+  return (
+    IGNORED_APP_IDS.has(String(game?.appid || "")) ||
+    IGNORED_GAME_NAMES.has(String(game?.name || "").trim().toLowerCase())
+  );
+}
+
 function decodeHtml(value) {
   return value
     .replace(/&amp;/g, "&")
@@ -63,20 +73,22 @@ function getAgeMs(value, now = Date.now()) {
 }
 
 function isTrustedCachedPayload(payload) {
-  return ["now", "profile"].includes(payload?.mode);
+  return ["now", "profile", "last", "recent"].includes(payload?.mode);
 }
 
 function getCacheState(record, now = Date.now()) {
   const hasPayload = Boolean(record?.payload?.playing) && isTrustedCachedPayload(record.payload);
   const cachedAgeMs = getAgeMs(record?.cachedAt, now);
   const checkedAgeMs = getAgeMs(record?.checkedAt || record?.cachedAt, now);
+  const cacheTtlMs = record?.payload?.mode === "now" ? NOW_CACHE_TTL_MS : CACHE_TTL_MS;
   const withinStaleWindow = hasPayload && cachedAgeMs !== null && cachedAgeMs <= STALE_TTL_MS;
-  const fresh = withinStaleWindow && checkedAgeMs !== null && checkedAgeMs <= CACHE_TTL_MS;
+  const fresh = withinStaleWindow && checkedAgeMs !== null && checkedAgeMs <= cacheTtlMs;
 
   return {
     hasPayload,
     cachedAgeMs,
     checkedAgeMs,
+    cacheTtlMs,
     withinStaleWindow,
     fresh,
   };
@@ -96,6 +108,7 @@ async function readCachedStatus(debugInfo) {
     store: CACHE_STORE,
     key: CACHE_KEY,
     cacheTtlMs: CACHE_TTL_MS,
+    nowCacheTtlMs: NOW_CACHE_TTL_MS,
     staleTtlMs: STALE_TTL_MS,
     readAttempted: true,
   };
@@ -205,26 +218,25 @@ async function getProfileRecentGame(debugInfo) {
 
     profileDebug.htmlLength = html.length;
     profileDebug.hasRecentGameMarkup = html.includes("recent_game");
-    profileDebug.recentGames = recentGames;
+    profileDebug.recentGames = recentGames.map((game) => ({
+      ...game,
+      ignored: isIgnoredGame(game),
+    }));
 
-    const match = matches[0];
+    const selected = recentGames.find((game) => !isIgnoredGame(game));
 
-    if (!match?.groups?.name) {
-      profileDebug.reason = "no recent game match in profile html";
+    if (!selected?.name) {
+      profileDebug.reason = "no eligible recent game match in profile html";
       return null;
     }
 
-    const name = decodeHtml(match.groups.name.replace(/<[^>]*>/g, "").trim());
     profileDebug.selected = {
-      appid: match.groups.appid,
-      name,
-      displayName: getDisplayName(name),
+      appid: selected.appid,
+      name: selected.name,
+      displayName: getDisplayName(selected.name),
     };
 
-    return {
-      appid: match.groups.appid,
-      name,
-    };
+    return selected;
   } catch (error) {
     profileDebug.reason = "profile fetch threw";
     profileDebug.error = error?.name || "Error";
@@ -235,6 +247,7 @@ async function getProfileRecentGame(debugInfo) {
 function getLatestOwnedGame(games, debugInfo) {
   let latest = null;
   for (const g of games) {
+    if (isIgnoredGame(g)) continue;
     if (!g.rtime_last_played) continue;
     if (!latest || g.rtime_last_played > latest.rtime_last_played) latest = g;
   }
@@ -250,7 +263,7 @@ function getLatestOwnedGame(games, debugInfo) {
     : null;
 
   debugInfo.sources.ownedGames.topGames = games
-    .filter((game) => game.rtime_last_played)
+    .filter((game) => game.rtime_last_played && !isIgnoredGame(game))
     .sort((a, b) => b.rtime_last_played - a.rtime_last_played)
     .slice(0, 5)
     .map((game) => ({
@@ -265,7 +278,7 @@ function getLatestOwnedGame(games, debugInfo) {
 }
 
 function getRecentFeedGame(games, debugInfo) {
-  const latestRecent = games[0];
+  const latestRecent = games.find((game) => !isIgnoredGame(game));
   debugInfo.sources.recentFeed.firstGame = latestRecent
     ? {
         appid: latestRecent.appid || null,
@@ -276,13 +289,16 @@ function getRecentFeedGame(games, debugInfo) {
       }
     : null;
 
-  debugInfo.sources.recentFeed.topGames = games.slice(0, 5).map((game) => ({
-    appid: game.appid || null,
-    name: game.name,
-    displayName: getDisplayName(game.name),
-    lastPlayed: game.rtime_last_played || null,
-    lastPlayedIso: toIso(game.rtime_last_played),
-  }));
+  debugInfo.sources.recentFeed.topGames = games
+    .filter((game) => !isIgnoredGame(game))
+    .slice(0, 5)
+    .map((game) => ({
+      appid: game.appid || null,
+      name: game.name,
+      displayName: getDisplayName(game.name),
+      lastPlayed: game.rtime_last_played || null,
+      lastPlayedIso: toIso(game.rtime_last_played),
+    }));
 
   return latestRecent;
 }
@@ -355,8 +371,13 @@ export default async function handler(request = {}) {
     const sJson = sRes.ok ? await sRes.json() : null;
     const player = sJson?.response?.players?.[0];
     debugInfo.sources.current.gameextrainfo = player?.gameextrainfo || null;
+    debugInfo.sources.current.appid = player?.gameid || null;
+    debugInfo.sources.current.ignored = isIgnoredGame({
+      appid: player?.gameid,
+      name: player?.gameextrainfo,
+    });
 
-    if (player?.gameextrainfo) {
+    if (player?.gameextrainfo && !debugInfo.sources.current.ignored) {
       const payload = {
         playing: getDisplayName(player.gameextrainfo),
         mode: "now",
@@ -383,16 +404,9 @@ export default async function handler(request = {}) {
       return send(200, payload, debug, debugInfo);
     }
 
-    if (canReturnStaleCache(cachedRecord, debugInfo)) {
-      await markCacheChecked(cachedRecord, debugInfo, "profile", debugInfo.sources.profile);
-      debugInfo.selectedSource = "cacheStale";
-      debugInfo.cache.returned = "stale-refresh-failed";
-      return send(200, sanitizeCachedPayload(cachedRecord.payload), debug, debugInfo);
-    }
-
     debugInfo.sources.ownedGames = { attempted: true };
     const gRes = await fetch(
-      `https://api.steampowered.com/IPlayerService/GetOwnedGames/v1/?key=${key}&steamid=${steamid}&include_appinfo=1&include_played_free_games=1`
+      `https://api.steampowered.com/IPlayerService/GetOwnedGames/v1/?key=${key}&steamid=${steamid}&include_appinfo=1&include_played_free_games=1&skip_unvetted_apps=false`
     );
     debugInfo.sources.ownedGames.ok = gRes.ok;
     debugInfo.sources.ownedGames.status = gRes.status || null;
@@ -408,18 +422,16 @@ export default async function handler(request = {}) {
       const latest = getLatestOwnedGame(games, debugInfo);
 
       if (latest?.name) {
+        const payload = {
+          playing: getDisplayName(latest.name),
+          mode: "last",
+          appid: latest.appid || null,
+          lastPlayed: latest.rtime_last_played || null,
+        };
+
         debugInfo.selectedSource = "ownedGames";
-        return send(
-          200,
-          {
-            playing: getDisplayName(latest.name),
-            mode: "last",
-            appid: latest.appid || null,
-            lastPlayed: latest.rtime_last_played || null,
-          },
-          debug,
-          debugInfo
-        );
+        await writeGoodCache(payload, debugInfo, "owned-games");
+        return send(200, payload, debug, debugInfo);
       }
     }
 
@@ -437,19 +449,33 @@ export default async function handler(request = {}) {
       const latestRecent = getRecentFeedGame(recentGames, debugInfo);
 
       if (latestRecent?.name) {
+        const payload = {
+          playing: getDisplayName(latestRecent.name),
+          mode: "recent",
+          appid: latestRecent.appid || null,
+          lastPlayed: latestRecent.rtime_last_played || null,
+        };
+
         debugInfo.selectedSource = "recentFeed";
-        return send(
-          200,
-          {
-            playing: getDisplayName(latestRecent.name),
-            mode: "recent",
-            appid: latestRecent.appid || null,
-            lastPlayed: latestRecent.rtime_last_played || null,
-          },
-          debug,
-          debugInfo
-        );
+        await writeGoodCache(payload, debugInfo, "recent-feed");
+        return send(200, payload, debug, debugInfo);
       }
+    }
+
+    if (canReturnStaleCache(cachedRecord, debugInfo)) {
+      const refreshFailure = [
+        debugInfo.sources.current,
+        debugInfo.sources.profile,
+        debugInfo.sources.ownedGames,
+        debugInfo.sources.recentFeed,
+      ].find((source) => source?.attempted && source.ok === false) || {
+        reason: "no newer Steam status found",
+      };
+
+      await markCacheChecked(cachedRecord, debugInfo, "fallbacks", refreshFailure);
+      debugInfo.selectedSource = "cacheStale";
+      debugInfo.cache.returned = "stale-refresh-failed";
+      return send(200, sanitizeCachedPayload(cachedRecord.payload), debug, debugInfo);
     }
 
     debugInfo.selectedSource = "unknown";
