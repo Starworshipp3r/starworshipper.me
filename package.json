@@ -1,6 +1,13 @@
 {
   "type": "module",
+  "scripts": {
+    "build": "npm run build:css",
+    "build:css": "tailwindcss -c tailwind.config.cjs -i styles/tailwind.css -o assets/tailwind.css --minify"
+  },
   "dependencies": {
     "@netlify/blobs": "^10.7.9"
+  },
+  "devDependencies": {
+    "tailwindcss": "3.4.17"
   }
 }
