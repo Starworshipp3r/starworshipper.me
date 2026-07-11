@@ -958,6 +958,7 @@
 
     let entries = [];
     let visibleEntries = [];
+    let activeEntryId = '';
 
     function escapeHtml(value){
       return String(value ?? '')
@@ -978,6 +979,20 @@
         .replace(/[^a-z0-9]+/g, '-')
         .replace(/^-+|-+$/g, '');
       return slug || `memory-${fallback}`;
+    }
+
+    function entryIdFromUrl(){
+      return new URL(window.location.href).searchParams.get('entry') || '';
+    }
+
+    function journalUrl(entryId = ''){
+      const url = new URL(window.location.href);
+      if (entryId) {
+        url.searchParams.set('entry', entryId);
+      } else {
+        url.searchParams.delete('entry');
+      }
+      return url;
     }
 
     function formatDate(iso){
@@ -1145,9 +1160,13 @@
         .join('');
     }
 
-    function openModal(id){
+    function openModal(id, { syncHistory = true } = {}){
       const entry = entries.find(item => item.id === id);
       if (!entry || !els.modal) return;
+
+      if (syncHistory && entryIdFromUrl() !== id) {
+        history.pushState({ journalEntry: id }, '', journalUrl(id));
+      }
 
       const type = entryType(entry);
       const image = primaryImage(entry);
@@ -1213,6 +1232,7 @@
       `;
 
       els.modal.hidden = false;
+      activeEntryId = id;
       document.body.style.overflow = 'hidden';
       els.modalClose?.focus({ preventScroll: true });
     }
@@ -1264,12 +1284,41 @@
       }
     }
 
-    function closeModal(){
+    function closeModal({ syncHistory = true } = {}){
       if (!els.modal) return;
+
+      const entryId = entryIdFromUrl();
+      if (syncHistory && entryId) {
+        if (history.state?.journalEntry === entryId) {
+          history.back();
+          return;
+        }
+        history.replaceState(history.state, '', journalUrl());
+      }
+
       closePhotoViewer({ keepBodyLocked: true });
       closeVideoViewer({ keepBodyLocked: true });
       els.modal.hidden = true;
+      activeEntryId = '';
       document.body.style.overflow = '';
+    }
+
+    function syncModalToUrl(){
+      const entryId = entryIdFromUrl();
+      if (!entryId) {
+        if (activeEntryId || !els.modal?.hidden) closeModal({ syncHistory: false });
+        return;
+      }
+
+      if (!entries.some(entry => entry.id === entryId)) {
+        history.replaceState(history.state, '', journalUrl());
+        closeModal({ syncHistory: false });
+        return;
+      }
+
+      if (activeEntryId !== entryId || els.modal?.hidden) {
+        openModal(entryId, { syncHistory: false });
+      }
     }
 
     function resurfaceMemory(){
@@ -1300,6 +1349,7 @@
         buildFilterOptions();
         setStats(entries);
         applyFilters();
+        syncModalToUrl();
       } catch (error) {
         console.error(error);
         if (els.empty) {
@@ -1348,6 +1398,7 @@
         closeVideoViewer();
       }
     });
+    window.addEventListener('popstate', syncModalToUrl);
     window.addEventListener('keydown', (event) => {
       if (event.key !== 'Escape') return;
       if (!els.videoViewer?.hidden) {
