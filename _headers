@@ -3,9 +3,3 @@
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: camera=(), microphone=(), geolocation=()
   X-Frame-Options: DENY
-
-/assets/tailwind.css
-  Cache-Control: public, max-age=300, stale-while-revalidate=86400
-
-/assets/theme-bootstrap.js
-  Cache-Control: public, max-age=300, stale-while-revalidate=86400
