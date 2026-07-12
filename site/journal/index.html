@@ -427,9 +427,15 @@
       background: rgba(2,6,12,.72);
       backdrop-filter: blur(18px) saturate(1.25);
       -webkit-backdrop-filter: blur(18px) saturate(1.25);
+      opacity: 0;
+      transition: opacity 180ms ease-out;
     }
 
     .modal-backdrop[hidden]{ display: none; }
+
+    .modal-backdrop.is-visible{
+      opacity: 1;
+    }
 
     .memory-modal{
       width: min(920px, 100%);
@@ -441,6 +447,16 @@
         linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.035)),
         rgba(16,20,30,.86);
       box-shadow: 0 34px 90px rgba(0,0,0,.58);
+      opacity: 0;
+      transform: translateY(10px) scale(.985);
+      transition:
+        opacity 180ms ease-out,
+        transform 220ms cubic-bezier(.2,.75,.25,1);
+    }
+
+    .modal-backdrop.is-visible .memory-modal{
+      opacity: 1;
+      transform: translateY(0) scale(1);
     }
 
     .modal-hero{
@@ -740,6 +756,10 @@
       .memory-modal{
         max-height: 90vh;
         border-radius: 20px 20px 0 0;
+        transform: translateY(24px);
+        transition:
+          opacity 180ms ease-out,
+          transform 240ms cubic-bezier(.2,.8,.25,1);
       }
 
       .modal-title-block{
@@ -760,6 +780,10 @@
         transform: none !important;
       }
       .log-card.is-resurfaced{ animation: none; }
+      .modal-backdrop,
+      .memory-modal{
+        transition: none !important;
+      }
     }
   </style>
 </head>
@@ -962,6 +986,7 @@
     let entries = [];
     let visibleEntries = [];
     let activeEntryId = '';
+    let modalCloseTimer;
 
     function escapeHtml(value){
       return String(value ?? '')
@@ -1234,9 +1259,13 @@
         ` : ''}
       `;
 
+      clearTimeout(modalCloseTimer);
+      els.modal.classList.remove('is-visible');
       els.modal.hidden = false;
       activeEntryId = id;
       document.body.style.overflow = 'hidden';
+      void els.modal.offsetWidth;
+      els.modal.classList.add('is-visible');
       els.modalClose?.focus({ preventScroll: true });
     }
 
@@ -1302,9 +1331,21 @@
 
       closePhotoViewer({ keepBodyLocked: true });
       closeVideoViewer({ keepBodyLocked: true });
-      els.modal.hidden = true;
+      clearTimeout(modalCloseTimer);
+      els.modal.classList.remove('is-visible');
       activeEntryId = '';
       document.body.style.overflow = '';
+
+      const finishClose = () => {
+        if (!activeEntryId && !els.modal.classList.contains('is-visible')) {
+          els.modal.hidden = true;
+        }
+      };
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        finishClose();
+      } else {
+        modalCloseTimer = setTimeout(finishClose, 260);
+      }
     }
 
     function syncModalToUrl(){
