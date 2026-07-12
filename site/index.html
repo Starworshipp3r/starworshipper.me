@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script>document.documentElement.classList.add('js');</script>
+  <script src="/assets/theme-bootstrap.js"></script>
 <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DUMBDOG</title>
@@ -801,7 +801,9 @@
   
 
     // Fade in once theme vars are applied
-    requestAnimationFrame(() => document.body.classList.add('is-ready'));
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => document.body.classList.add('is-ready'));
+    });
 
 
         // Smoothly fade between internal pages (keeps external links untouched)

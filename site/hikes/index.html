@@ -6,7 +6,7 @@
   <title>DUMBDOG GOES OUTSIDE</title>
 
   
-  <script>document.documentElement.classList.add('js');</script>
+  <script src="/assets/theme-bootstrap.js"></script>
 <meta name="theme-color" content="#0b0f18" />
   <meta name="description" content="A small log of hikes." />
   <link rel="icon" href="/favicon.ico?v=star-boykisser" sizes="any" />
@@ -330,7 +330,9 @@
       root.style.setProperty('--bg-delay', `-${elapsed}s`);
 
       // Fade in once theme vars are applied
-      requestAnimationFrame(() => document.body.classList.add('is-ready'));
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => document.body.classList.add('is-ready'));
+      });
 
       // Smoothly fade between internal pages (keeps external links untouched)
       document.addEventListener('click', (e) => {

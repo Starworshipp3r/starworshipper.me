@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script>document.documentElement.classList.add('js');</script>
+  <script src="/assets/theme-bootstrap.js"></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DUMBDOG HAS A CAMERA</title>
@@ -1029,7 +1029,9 @@
       });
       mobileFocusMedia.addEventListener('change', clearZoom);
 
-      requestAnimationFrame(() => document.body.classList.add('is-ready'));
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => document.body.classList.add('is-ready'));
+      });
       fetchPhotos();
     });
   </script>

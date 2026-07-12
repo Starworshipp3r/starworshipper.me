@@ -23,7 +23,7 @@
 <meta name="twitter:image" content="https://starworshipper.me/av.jpg">
 <meta name="twitter:image:alt" content="Starworshipper link hub">
 
-<script>document.documentElement.classList.add('js');</script>
+<script src="/assets/theme-bootstrap.js"></script>
 
 
 <script type="application/ld+json">
@@ -3229,7 +3229,9 @@
             }
 
             // Fade in once theme vars are applied
-            requestAnimationFrame(() => document.body.classList.add('is-ready'));
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => document.body.classList.add('is-ready'));
+            });
 
         });
 
