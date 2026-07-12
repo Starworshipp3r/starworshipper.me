@@ -293,6 +293,28 @@
     filter: blur(6px);
   }
 
+  @media (max-width: 768px), (hover: none) and (pointer: coarse){
+    html.js .mica-window,
+    html.js .mica-shell{
+      transform: translateY(6px) scale(.995);
+      filter: none;
+      transition: opacity 260ms cubic-bezier(.2,.8,.2,1),
+                  transform 260ms cubic-bezier(.2,.8,.2,1);
+      will-change: transform, opacity;
+    }
+
+    html.js body.is-ready .mica-window,
+    html.js body.is-ready .mica-shell{
+      filter: none;
+    }
+
+    html.js body.is-leaving .mica-window,
+    html.js body.is-leaving .mica-shell{
+      transform: translateY(-4px) scale(.997);
+      filter: none;
+    }
+  }
+
   @media (prefers-reduced-motion: reduce){
     html.js .mica-window,
     html.js .mica-shell{
