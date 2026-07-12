@@ -293,6 +293,11 @@
       transition: transform .35s ease, opacity .2s ease;
     }
 
+    .card-media.media-contain img,
+    .modal-hero.media-contain img{
+      object-fit: contain;
+    }
+
     .log-card:hover .card-media img{
       transform: scale(1.035);
       opacity: 1;
@@ -1143,9 +1148,10 @@
       const type = entryType(entry);
       const image = primaryImage(entry);
       const tags = asArray(entry.tags).slice(0, 4);
+      const mediaFit = entry.coverFit === 'contain' ? ' media-contain' : '';
       const location = entry.location ? `<span><i class="fa-solid fa-location-dot text-white/45"></i> ${escapeHtml(entry.location)}</span>` : '';
       const media = image
-        ? `<div class="card-media">
+        ? `<div class="card-media${mediaFit}">
              <img src="${escapeHtml(image)}" alt="" loading="lazy">
              <span class="category-pill"><i class="fa-solid ${iconFor(type)}"></i>${escapeHtml(type)}</span>
            </div>`
@@ -1238,13 +1244,14 @@
       const type = entryType(entry);
       const image = primaryImage(entry);
       const gallery = galleryImages(entry);
+      const hasPhotos = asArray(entry.photos).length > 0;
       const videos = videoItems(entry);
       const meta = [
         formatDate(entry.date),
         entry.location
       ].filter(Boolean).join(' · ');
 
-      els.modalHero.className = `modal-hero ${image ? 'has-image' : ''}`;
+      els.modalHero.className = `modal-hero ${image ? 'has-image' : ''} ${entry.coverFit === 'contain' ? 'media-contain' : ''}`;
       els.modalHero.querySelector('img')?.remove();
       if (image) {
         els.modalHero.insertAdjacentHTML('afterbegin', `<img src="${escapeHtml(image)}" alt="">`);
@@ -1261,7 +1268,7 @@
         <div class="mt-5 flex flex-wrap gap-2">
           ${asArray(entry.tags).map(tag => `<span class="tag"><i class="fa-solid fa-hashtag"></i>${escapeHtml(tag)}</span>`).join('')}
         </div>
-        ${gallery.length > 1 ? `
+        ${hasPhotos && gallery.length ? `
           <div class="mt-6">
             <div class="text-white/55 text-xs uppercase tracking-[.14em] font-extrabold mb-3">Photos</div>
             <div class="gallery-grid">
