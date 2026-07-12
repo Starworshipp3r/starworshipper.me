@@ -440,7 +440,7 @@
     .memory-modal{
       width: min(920px, 100%);
       max-height: min(86vh, 820px);
-      overflow: auto;
+      overflow: hidden;
       border-radius: 22px;
       border: 1px solid rgba(255,255,255,.16);
       background:
@@ -457,6 +457,36 @@
     .modal-backdrop.is-visible .memory-modal{
       opacity: 1;
       transform: translateY(0) scale(1);
+    }
+
+    .memory-modal-scroll{
+      max-height: inherit;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      border-radius: inherit;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255,255,255,.30) transparent;
+    }
+
+    .memory-modal-scroll::-webkit-scrollbar{
+      width: 8px;
+    }
+
+    .memory-modal-scroll::-webkit-scrollbar-track{
+      background: transparent;
+      margin-block: 12px;
+    }
+
+    .memory-modal-scroll::-webkit-scrollbar-thumb{
+      border: 2px solid transparent;
+      border-radius: 999px;
+      background: rgba(255,255,255,.30);
+      background-clip: padding-box;
+    }
+
+    .memory-modal-scroll::-webkit-scrollbar-thumb:hover{
+      background: rgba(255,255,255,.44);
+      background-clip: padding-box;
     }
 
     .modal-hero{
@@ -751,15 +781,22 @@
       .modal-backdrop{
         padding: .55rem;
         align-items: end;
+        opacity: 1;
+        transition: none;
       }
 
       .memory-modal{
         max-height: 90vh;
         border-radius: 20px 20px 0 0;
-        transform: translateY(24px);
+        transform: translate3d(0,24px,0);
         transition:
           opacity 180ms ease-out,
           transform 240ms cubic-bezier(.2,.8,.25,1);
+        will-change: transform, opacity;
+      }
+
+      .modal-backdrop.is-visible .memory-modal{
+        transform: translate3d(0,0,0);
       }
 
       .modal-title-block{
@@ -860,13 +897,15 @@
 
   <div id="memory-modal" class="modal-backdrop" hidden>
     <article class="memory-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-      <div id="modal-hero" class="modal-hero">
-        <button id="modal-close" class="modal-close" type="button" aria-label="Close memory">
-          <i class="fa-solid fa-xmark"></i>
-        </button>
-        <div id="modal-title-block" class="modal-title-block"></div>
+      <div class="memory-modal-scroll">
+        <div id="modal-hero" class="modal-hero">
+          <button id="modal-close" class="modal-close" type="button" aria-label="Close memory">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+          <div id="modal-title-block" class="modal-title-block"></div>
+        </div>
+        <div id="modal-body" class="p-5 sm:p-6"></div>
       </div>
-      <div id="modal-body" class="p-5 sm:p-6"></div>
     </article>
   </div>
 
