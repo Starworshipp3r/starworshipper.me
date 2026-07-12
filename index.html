@@ -5,21 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DUMBDOG</title>
     <meta name="theme-color" content="#0b0f18">
-<meta name="description" content="DUMBDOG (Dumbdog) — Starworshipper's link hub with quick links to profiles and pages.">
+<meta name="description" content="Starworshipper's personal website and link hub for projects, photos, hikes, music, and other things worth saving.">
 <link rel="canonical" href="https://starworshipper.me/">
 <meta name="robots" content="index, follow">
 
 <meta property="og:type" content="website">
-<meta property="og:title" content="DUMBDOG — Starworshipper Links">
-<meta property="og:description" content="DUMBDOG (Dumbdog) — Starworshipper's link hub with quick links to profiles and pages.">
+<meta property="og:title" content="Starworshipper | DUMBDOG">
+<meta property="og:description" content="Starworshipper's personal website and link hub for projects, photos, hikes, music, and other things worth saving.">
 <meta property="og:url" content="https://starworshipper.me/">
 <meta property="og:image" content="https://starworshipper.me/av.jpg">
+<meta property="og:image:alt" content="Starworshipper">
 <meta property="og:site_name" content="Starworshipper">
 <meta property="og:locale" content="en_US">
 
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="DUMBDOG — Starworshipper Links">
-<meta name="twitter:description" content="DUMBDOG (Dumbdog) — Starworshipper's link hub with quick links to profiles and pages.">
+<meta name="twitter:title" content="Starworshipper | DUMBDOG">
+<meta name="twitter:description" content="Starworshipper's personal website and link hub for projects, photos, hikes, music, and other things worth saving.">
 <meta name="twitter:image" content="https://starworshipper.me/av.jpg">
 <meta name="twitter:image:alt" content="Starworshipper link hub">
 
@@ -28,12 +29,32 @@
 
 <script type="application/ld+json">
 {
-"@context": "https://schema.org",
-"@type": "WebSite",
-"name": "Starworshipper",
-"alternateName": "Dumbdog",
-"url": "https://starworshipper.me/",
-"description": "Starworshipper's DUMBDOG link hub."
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://starworshipper.me/#website",
+      "name": "Starworshipper",
+      "alternateName": ["DUMBDOG", "Dumb Dog"],
+      "url": "https://starworshipper.me/",
+      "description": "Starworshipper's personal website and link hub for projects, photos, hikes, music, and other things worth saving.",
+      "publisher": { "@id": "https://starworshipper.me/#person" }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://starworshipper.me/#person",
+      "name": "Starworshipper",
+      "url": "https://starworshipper.me/",
+      "image": "https://starworshipper.me/av.jpg",
+      "sameAs": [
+        "https://steamcommunity.com/id/Starworshipp3r",
+        "https://unsplash.com/@starworshipp3r",
+        "https://www.discogs.com/user/Starworshipper",
+        "https://bandcamp.com/Starworshipper",
+        "https://www.last.fm/user/Starworshipp3r"
+      ]
+    }
+  ]
 }
 </script>
 
