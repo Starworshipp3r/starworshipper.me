@@ -70,13 +70,32 @@ export async function handler(event) {
 
     const items = await res.json();
     const pool = Array.isArray(items) ? items.slice() : [];
+    let backfillPage = null;
 
-    for (let i = pool.length - 1; i > 0; i -= 1) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [pool[i], pool[j]] = [pool[j], pool[i]];
+    if (pool.length < count && totalPages > 1) {
+      const fallbackPages = Array.from({ length: totalPages }, (_, index) => index + 1)
+        .filter((page) => page !== randomPage);
+      backfillPage = fallbackPages[Math.floor(Math.random() * fallbackPages.length)];
+
+      const backfillUrl = new URL(photosUrl);
+      backfillUrl.searchParams.set('page', String(backfillPage));
+      backfillUrl.searchParams.set('t', String(Date.now()));
+
+      const backfillRes = await fetch(backfillUrl, { headers });
+      if (backfillRes.ok) {
+        const backfillItems = await backfillRes.json();
+        if (Array.isArray(backfillItems)) pool.push(...backfillItems);
+      }
     }
 
-    const photos = pool.slice(0, count).map((photo, index) => ({
+    const uniquePool = [...new Map(pool.map((photo) => [photo.id, photo])).values()];
+
+    for (let i = uniquePool.length - 1; i > 0; i -= 1) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [uniquePool[i], uniquePool[j]] = [uniquePool[j], uniquePool[i]];
+    }
+
+    const photos = uniquePool.map((photo, index) => ({
       id: photo.id,
       src: photo.urls?.regular || photo.urls?.small || photo.urls?.full || null,
       thumb: photo.urls?.small || photo.urls?.thumb || photo.urls?.regular || null,
@@ -86,7 +105,7 @@ export async function handler(event) {
       photoPage: photo.links?.html || null,
       userName: photo.user?.name || username,
       userProfile: photo.user?.links?.html || `https://unsplash.com/@${username}`,
-    })).filter((photo) => photo.src);
+    })).filter((photo) => photo.src).slice(0, count);
 
     return {
       statusCode: 200,
@@ -94,7 +113,7 @@ export async function handler(event) {
         'content-type': 'application/json',
         'cache-control': 'no-store, max-age=0',
       },
-      body: JSON.stringify({ photos, username, count: photos.length, randomPage, totalPages, totalPhotos }),
+      body: JSON.stringify({ photos, username, count: photos.length, randomPage, backfillPage, totalPages, totalPhotos }),
     };
   } catch {
     return {
