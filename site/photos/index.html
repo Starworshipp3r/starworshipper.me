@@ -542,11 +542,8 @@
         <button id="refreshBtn" type="button" class="tool-btn">
           <i class="fa-solid fa-arrows-rotate mr-2"></i>Pull new shots
         </button>
-        <button id="shuffleBtn" type="button" class="tool-btn">
-          <i class="fa-solid fa-shuffle mr-2"></i>Rescatter
-        </button>
-        <button id="resetBtn" type="button" class="tool-btn">
-          <i class="fa-solid fa-layer-group mr-2"></i>Reset stack
+        <button id="layoutBtn" type="button" class="tool-btn" aria-label="Stack photos">
+          <i id="layoutIcon" class="fa-solid fa-layer-group mr-2" aria-hidden="true"></i><span id="layoutLabel">Stack 'em up</span>
         </button>
       </div>
     </div>
@@ -582,8 +579,9 @@
     const root = document.documentElement;
     const board = document.getElementById('board');
     const refreshBtn = document.getElementById('refreshBtn');
-    const shuffleBtn = document.getElementById('shuffleBtn');
-    const resetBtn = document.getElementById('resetBtn');
+    const layoutBtn = document.getElementById('layoutBtn');
+    const layoutIcon = document.getElementById('layoutIcon');
+    const layoutLabel = document.getElementById('layoutLabel');
     const emptyState = document.getElementById('emptyState');
     const focusBackdrop = document.getElementById('focusBackdrop');
     const attributionChip = document.getElementById('attributionChip');
@@ -597,6 +595,7 @@
     let autoScatterTimer = null;
     let zoomedCard = null;
     let mobileFocusPhoto = null;
+    let isStacked = false;
 
     function applyTheme(t) {
       root.style.setProperty('--color-1', `hsla(${t.h1}, ${t.s}%, ${t.l}%, 0.75)`);
@@ -816,14 +815,24 @@
       }, delay);
     }
 
+    function updateLayoutButton() {
+      const label = isStacked ? "Spread 'em out" : "Stack 'em up";
+      layoutLabel.textContent = label;
+      layoutIcon.className = `fa-solid ${isStacked ? 'fa-shuffle' : 'fa-layer-group'} mr-2`;
+      layoutBtn.setAttribute('aria-label', isStacked ? 'Spread photos out' : 'Stack photos');
+      layoutBtn.title = label;
+    }
+
     function scatterCards() {
       cards.forEach((entry, index) => {
         const layout = computeLayout(index, cards.length, entry.el.offsetWidth, entry.el.offsetHeight);
         setCardPosition(entry.el, layout);
       });
+      isStacked = false;
+      updateLayoutButton();
     }
 
-    function resetStack() {
+    function stackCards() {
       const stackLeft = Math.max(board.clientWidth * 0.5 - 120, 18);
       const stackTop = Math.max(board.clientHeight * 0.22, 110);
 
@@ -835,6 +844,8 @@
         entry.el.style.transform = `rotate(${rotation})`;
         entry.el.style.zIndex = String(++zCounter);
       });
+      isStacked = true;
+      updateLayoutButton();
     }
 
     function wireDrag(card, photo) {
@@ -867,6 +878,10 @@
 
       card.addEventListener('pointermove', (event) => {
         if (!dragState || event.pointerId !== dragState.pointerId) return;
+        if (!moved && isStacked) {
+          isStacked = false;
+          updateLayoutButton();
+        }
         moved = true;
 
         const left = clamp(
@@ -932,7 +947,7 @@
 
       setEmptyState(false);
       currentPhotos.forEach(createCard);
-      resetStack();
+      stackCards();
       scheduleAutoScatter();
     }
 
@@ -999,13 +1014,13 @@
         cancelAutoScatter();
         fetchPhotos();
       });
-      shuffleBtn.addEventListener('click', () => {
+      layoutBtn.addEventListener('click', () => {
         cancelAutoScatter();
-        scatterCards();
-      });
-      resetBtn.addEventListener('click', () => {
-        cancelAutoScatter();
-        resetStack();
+        if (isStacked) {
+          scatterCards();
+        } else {
+          stackCards();
+        }
       });
 
       let resizeTimer = null;
