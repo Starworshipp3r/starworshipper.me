@@ -707,6 +707,7 @@
       max-width: 100%;
       max-height: 88vh;
       object-fit: contain;
+      touch-action: pan-y pinch-zoom;
       border-radius: 16px;
       border: 1px solid rgba(255,255,255,.16);
       background: rgba(0,0,0,.35);
@@ -728,6 +729,63 @@
       place-items: center;
       box-shadow: 0 14px 32px rgba(0,0,0,.35);
     }
+
+    .photo-viewer-nav{
+      position: fixed;
+      top: 50%;
+      z-index: 1;
+      width: 44px;
+      height: 44px;
+      border-radius: 9999px;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(0,0,0,.34);
+      color: rgba(255,255,255,.90);
+      display: grid;
+      place-items: center;
+      box-shadow: 0 14px 32px rgba(0,0,0,.35);
+      transform: translateY(-50%);
+      transition: background .15s ease, border-color .15s ease, opacity .15s ease;
+    }
+
+    .photo-viewer-nav:hover:not(:disabled),
+    .photo-viewer-nav:focus-visible{
+      background: rgba(255,255,255,.13);
+      border-color: rgba(255,255,255,.28);
+    }
+
+    .photo-viewer-nav:focus-visible{
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(255,255,255,.18), 0 0 0 6px var(--accent-glow);
+    }
+
+    .photo-viewer-nav:disabled{
+      opacity: .24;
+      cursor: default;
+    }
+
+    .photo-viewer-prev{ left: 1rem; }
+    .photo-viewer-next{ right: 1rem; }
+
+    .photo-viewer-counter{
+      position: fixed;
+      left: 50%;
+      bottom: max(1rem, env(safe-area-inset-bottom));
+      z-index: 1;
+      min-width: 3.5rem;
+      padding: .38rem .7rem;
+      border-radius: 9999px;
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(0,0,0,.34);
+      color: rgba(255,255,255,.76);
+      font-size: .78rem;
+      font-weight: 700;
+      text-align: center;
+      box-shadow: 0 10px 24px rgba(0,0,0,.30);
+      transform: translateX(-50%);
+    }
+
+    .photo-viewer-nav[hidden],
+    .photo-viewer-counter[hidden]{ display: none; }
 
     html.js .mica-shell{
       opacity: 0;
@@ -810,6 +868,14 @@
         right: 3.8rem;
         bottom: 1rem;
       }
+
+      .photo-viewer-nav{
+        width: 40px;
+        height: 40px;
+      }
+
+      .photo-viewer-prev{ left: .65rem; }
+      .photo-viewer-next{ right: .65rem; }
     }
 
     @media (prefers-reduced-motion: reduce){
@@ -915,13 +981,20 @@
     </article>
   </div>
 
-  <div id="photo-viewer" class="photo-viewer" hidden>
+  <div id="photo-viewer" class="photo-viewer" role="dialog" aria-modal="true" aria-label="Photo viewer" hidden>
     <button id="photo-viewer-close" class="photo-viewer-close" type="button" aria-label="Close photo">
       <i class="fa-solid fa-xmark"></i>
+    </button>
+    <button id="photo-viewer-prev" class="photo-viewer-nav photo-viewer-prev" type="button" aria-label="Previous photo" hidden>
+      <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
     </button>
     <div class="photo-viewer-frame">
       <img id="photo-viewer-image" alt="">
     </div>
+    <button id="photo-viewer-next" class="photo-viewer-nav photo-viewer-next" type="button" aria-label="Next photo" hidden>
+      <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+    </button>
+    <div id="photo-viewer-counter" class="photo-viewer-counter" aria-live="polite" hidden></div>
   </div>
 
   <div id="video-viewer" class="video-viewer" hidden>
@@ -1023,6 +1096,9 @@
       photoViewer: document.getElementById('photo-viewer'),
       photoViewerImage: document.getElementById('photo-viewer-image'),
       photoViewerClose: document.getElementById('photo-viewer-close'),
+      photoViewerPrev: document.getElementById('photo-viewer-prev'),
+      photoViewerNext: document.getElementById('photo-viewer-next'),
+      photoViewerCounter: document.getElementById('photo-viewer-counter'),
       videoViewer: document.getElementById('video-viewer'),
       videoViewerVideo: document.getElementById('video-viewer-video'),
       videoViewerClose: document.getElementById('video-viewer-close')
@@ -1032,6 +1108,9 @@
     let visibleEntries = [];
     let activeEntryId = '';
     let modalCloseTimer;
+    let activePhotoGallery = [];
+    let activePhotoIndex = -1;
+    let photoSwipeStart = null;
 
     function escapeHtml(value){
       return String(value ?? '')
@@ -1316,9 +1395,43 @@
       els.modalClose?.focus({ preventScroll: true });
     }
 
-    function openPhotoViewer(src){
+    function renderPhotoViewer(){
+      if (!els.photoViewerImage || !activePhotoGallery.length || activePhotoIndex < 0) return;
+
+      const gallerySize = activePhotoGallery.length;
+      els.photoViewerImage.src = activePhotoGallery[activePhotoIndex];
+      els.photoViewerImage.alt = `Photo ${activePhotoIndex + 1} of ${gallerySize}`;
+
+      const hasMultiplePhotos = gallerySize > 1;
+      if (els.photoViewerPrev) {
+        els.photoViewerPrev.hidden = !hasMultiplePhotos;
+        els.photoViewerPrev.disabled = activePhotoIndex === 0;
+      }
+      if (els.photoViewerNext) {
+        els.photoViewerNext.hidden = !hasMultiplePhotos;
+        els.photoViewerNext.disabled = activePhotoIndex === gallerySize - 1;
+      }
+      if (els.photoViewerCounter) {
+        els.photoViewerCounter.hidden = !hasMultiplePhotos;
+        els.photoViewerCounter.textContent = `${activePhotoIndex + 1} / ${gallerySize}`;
+      }
+    }
+
+    function showAdjacentPhoto(direction){
+      const nextIndex = activePhotoIndex + direction;
+      if (nextIndex < 0 || nextIndex >= activePhotoGallery.length) return;
+      activePhotoIndex = nextIndex;
+      renderPhotoViewer();
+    }
+
+    function openPhotoViewer(src, gallery = [src], requestedIndex = -1){
       if (!src || !els.photoViewer || !els.photoViewerImage) return;
-      els.photoViewerImage.src = src;
+      activePhotoGallery = Array.from(new Set(asArray(gallery)));
+      if (!activePhotoGallery.includes(src)) activePhotoGallery.unshift(src);
+      activePhotoIndex = requestedIndex >= 0
+        ? Math.min(requestedIndex, activePhotoGallery.length - 1)
+        : activePhotoGallery.indexOf(src);
+      renderPhotoViewer();
       els.photoViewer.hidden = false;
       document.body.style.overflow = 'hidden';
       els.photoViewerClose?.focus({ preventScroll: true });
@@ -1328,6 +1441,9 @@
       if (!els.photoViewer || els.photoViewer.hidden) return;
       els.photoViewer.hidden = true;
       els.photoViewerImage?.removeAttribute('src');
+      activePhotoGallery = [];
+      activePhotoIndex = -1;
+      photoSwipeStart = null;
       if (!keepBodyLocked && els.modal?.hidden) {
         document.body.style.overflow = '';
       }
@@ -1461,7 +1577,9 @@
     els.modalBody?.addEventListener('click', (event) => {
       const thumb = event.target.closest('.gallery-thumb');
       if (thumb) {
-        openPhotoViewer(thumb.dataset.photoSrc);
+        const thumbs = Array.from(els.modalBody.querySelectorAll('.gallery-thumb'));
+        const gallery = thumbs.map(item => item.dataset.photoSrc).filter(Boolean);
+        openPhotoViewer(thumb.dataset.photoSrc, gallery, thumbs.indexOf(thumb));
         return;
       }
 
@@ -1479,11 +1597,29 @@
       if (event.target === els.modal) closeModal();
     });
     els.photoViewerClose?.addEventListener('click', () => closePhotoViewer());
+    els.photoViewerPrev?.addEventListener('click', () => showAdjacentPhoto(-1));
+    els.photoViewerNext?.addEventListener('click', () => showAdjacentPhoto(1));
     els.photoViewer?.addEventListener('click', (event) => {
-      if (!event.target.closest('#photo-viewer-image, #photo-viewer-close')) {
+      if (!event.target.closest('#photo-viewer-image, #photo-viewer-close, .photo-viewer-nav, .photo-viewer-counter')) {
         closePhotoViewer();
       }
     });
+    els.photoViewerImage?.addEventListener('touchstart', (event) => {
+      const touch = event.touches[0];
+      if (!touch) return;
+      photoSwipeStart = { x: touch.clientX, y: touch.clientY };
+    }, { passive: true });
+    els.photoViewerImage?.addEventListener('touchend', (event) => {
+      if (!photoSwipeStart) return;
+      const touch = event.changedTouches[0];
+      if (!touch) return;
+
+      const deltaX = touch.clientX - photoSwipeStart.x;
+      const deltaY = touch.clientY - photoSwipeStart.y;
+      photoSwipeStart = null;
+      if (Math.abs(deltaX) < 48 || Math.abs(deltaX) <= Math.abs(deltaY)) return;
+      showAdjacentPhoto(deltaX < 0 ? 1 : -1);
+    }, { passive: true });
     els.videoViewerClose?.addEventListener('click', () => closeVideoViewer());
     els.videoViewer?.addEventListener('click', (event) => {
       if (!event.target.closest('.video-viewer-frame, #video-viewer-close')) {
@@ -1492,15 +1628,23 @@
     });
     window.addEventListener('popstate', syncModalToUrl);
     window.addEventListener('keydown', (event) => {
-      if (event.key !== 'Escape') return;
       if (!els.videoViewer?.hidden) {
-        closeVideoViewer();
+        if (event.key === 'Escape') closeVideoViewer();
         return;
       }
       if (!els.photoViewer?.hidden) {
-        closePhotoViewer();
+        if (event.key === 'Escape') closePhotoViewer();
+        if (event.key === 'ArrowLeft') {
+          event.preventDefault();
+          showAdjacentPhoto(-1);
+        }
+        if (event.key === 'ArrowRight') {
+          event.preventDefault();
+          showAdjacentPhoto(1);
+        }
         return;
       }
+      if (event.key !== 'Escape') return;
       if (!els.modal?.hidden) closeModal();
     });
 
