@@ -1323,7 +1323,7 @@
 
       const type = entryType(entry);
       const image = primaryImage(entry);
-      const gallery = galleryImages(entry);
+      const gallery = asArray(entry.photos);
       const hasPhotos = asArray(entry.photos).length > 0;
       const videos = videoItems(entry);
       const meta = [
