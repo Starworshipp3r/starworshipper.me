@@ -776,6 +776,32 @@
       const usableWidth = Math.max(boardWidth - cardWidth - 24, 24);
       const usableHeight = Math.max(boardHeight - cardHeight - 24, 24);
 
+      if (boardWidth >= 900 && total >= 5) {
+        const firstRowCount = Math.ceil(total / 2);
+        const row = index < firstRowCount ? 0 : 1;
+        const rowIndex = row === 0 ? index : index - firstRowCount;
+        const itemsInRow = row === 0 ? firstRowCount : total - firstRowCount;
+        const horizontalPosition = itemsInRow === 1
+          ? 0.5
+          : row === 0
+            ? rowIndex / (itemsInRow - 1)
+            : (rowIndex + 0.5) / itemsInRow;
+        const leftBase = 12 + usableWidth * horizontalPosition;
+        const topBase = row === 0
+          ? 100
+          : 100 + Math.max(usableHeight - 100, 80) * 0.72;
+
+        const jitterX = Math.round((Math.random() - 0.5) * 54);
+        const jitterY = Math.round((Math.random() - 0.5) * 44);
+        const rotation = `${Math.round((Math.random() - 0.5) * 24)}deg`;
+
+        return {
+          left: clamp(leftBase + jitterX, 12, usableWidth),
+          top: clamp(topBase + jitterY, 84, usableHeight),
+          rotation
+        };
+      }
+
       const cols = Math.max(2, Math.ceil(Math.sqrt(total)));
       const rows = Math.max(2, Math.ceil(total / cols));
       const col = index % cols;
