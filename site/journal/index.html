@@ -588,6 +588,39 @@
       background: rgba(0,0,0,.20);
     }
 
+    .gallery-grid.is-single{
+      display: flex;
+      justify-content: center;
+    }
+
+    .gallery-grid.is-single .gallery-thumb{
+      display: flex;
+      justify-content: center;
+      width: min(100%, 640px);
+    }
+
+    .gallery-grid.is-single img{
+      width: auto;
+      max-width: 100%;
+      max-height: min(60vh, 640px);
+      aspect-ratio: auto;
+      object-fit: contain;
+      transition: box-shadow .15s ease;
+    }
+
+    .gallery-grid.is-single .gallery-thumb:hover,
+    .gallery-grid.is-single .gallery-thumb:focus-visible{
+      box-shadow: none;
+    }
+
+    .gallery-grid.is-single .gallery-thumb:hover img{
+      box-shadow: 0 14px 32px rgba(0,0,0,.32);
+    }
+
+    .gallery-grid.is-single .gallery-thumb:focus-visible img{
+      box-shadow: 0 0 0 3px rgba(255,255,255,.18), 0 0 0 6px var(--accent-glow);
+    }
+
     .video-grid{
       display: grid;
       gap: .85rem;
@@ -1351,7 +1384,7 @@
         ${hasPhotos && gallery.length ? `
           <div class="mt-6">
             <div class="text-white/55 text-xs uppercase tracking-[.14em] font-extrabold mb-3">Photos</div>
-            <div class="gallery-grid">
+            <div class="gallery-grid${gallery.length === 1 ? ' is-single' : ''}">
               ${gallery.map((src, index) => `
                 <button class="gallery-thumb" type="button" data-photo-src="${escapeHtml(src)}" aria-label="Open photo ${index + 1}">
                   <img src="${escapeHtml(src)}" alt="" loading="lazy">
