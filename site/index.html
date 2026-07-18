@@ -39,7 +39,7 @@
       --radius-lg: 16px;
       --radius-md: 14px;
 
-      --noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
+      --noise: url("/assets/noise.png");
     }
 
     html, body { height: 100%; }
@@ -208,7 +208,6 @@
       background-image: var(--noise);
       background-size: 260px 260px;
       opacity: .06;
-      mix-blend-mode: overlay;
       pointer-events:none;
     }
     .mica-shell > *{ position: relative; z-index: 1; }
@@ -319,7 +318,8 @@
   html.js body.is-ready .mica-shell{
     opacity: 1;
     transform: none;
-    filter: blur(0);
+    filter: none;
+    will-change: auto;
   }
 
   html.js body.is-leaving .mica-window,
