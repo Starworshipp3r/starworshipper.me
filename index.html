@@ -2125,6 +2125,188 @@
       rgba(117, 19, 18, .68);
   }
 
+  .dumbdog-start-empty{
+    display: none;
+    margin: 22px 8px;
+    color: #68747a;
+    font-size: 11px;
+    text-align: center;
+  }
+
+  .dumbdog-start-empty.is-visible{
+    display: block;
+  }
+
+  .dumbdog-start-program[hidden],
+  .dumbdog-start-divider[hidden]{
+    display: none;
+  }
+
+  .dumbdog-dialog-layer{
+    position: fixed;
+    inset: 0;
+    z-index: 5;
+    display: grid;
+    place-items: center;
+    padding: 18px 18px 52px;
+    background: rgba(0, 8, 18, .22);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity .16s ease, visibility 0s linear .16s;
+  }
+
+  .dumbdog-dialog-layer.is-open{
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition-delay: 0s;
+  }
+
+  .dumbdog-system-dialog{
+    display: none;
+    width: min(410px, calc(100vw - 28px));
+    overflow: hidden;
+    border: 1px solid rgba(225, 248, 255, .70);
+    border-radius: 8px;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.24), rgba(255,255,255,.06) 24%, rgba(5,28,48,.86)),
+      rgba(19, 76, 109, .82);
+    box-shadow:
+      0 22px 54px rgba(0,0,0,.48),
+      inset 0 1px 0 rgba(255,255,255,.46);
+    color: rgba(246, 252, 255, .98);
+    text-shadow: 0 1px 2px rgba(0,0,0,.46);
+    backdrop-filter: blur(16px) saturate(1.25);
+    -webkit-backdrop-filter: blur(14px) saturate(1.25);
+  }
+
+  .dumbdog-system-dialog.is-active{
+    display: block;
+  }
+
+  .dumbdog-dialog-titlebar{
+    min-height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding-left: 12px;
+    border-bottom: 1px solid rgba(0, 12, 24, .30);
+    background: linear-gradient(180deg, rgba(255,255,255,.30), rgba(45,121,161,.18) 50%, rgba(3,36,60,.38));
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .dumbdog-dialog-titlebar span{
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .dumbdog-dialog-close{
+    width: 40px;
+    min-height: 25px;
+    align-self: flex-start;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(255,255,255,.28);
+    border-top: 0;
+    border-radius: 0 0 5px 5px;
+    background: linear-gradient(180deg, rgba(255,255,255,.30), rgba(215,75,61,.62) 48%, rgba(113,17,19,.82));
+    color: #fff;
+  }
+
+  .dumbdog-dialog-body{
+    padding: 20px;
+  }
+
+  .dumbdog-dialog-intro{
+    display: grid;
+    grid-template-columns: 38px minmax(0, 1fr);
+    gap: 12px;
+    align-items: start;
+    margin-bottom: 18px;
+  }
+
+  .dumbdog-dialog-intro > i{
+    font-size: 30px;
+    color: rgba(205, 243, 255, .92);
+    filter: drop-shadow(0 2px 5px rgba(0,0,0,.28));
+  }
+
+  .dumbdog-dialog-intro strong,
+  .dumbdog-dialog-intro p{
+    display: block;
+    margin: 0;
+  }
+
+  .dumbdog-dialog-intro p{
+    margin-top: 4px;
+    color: rgba(228, 242, 249, .84);
+    font-size: 12px;
+    line-height: 1.45;
+  }
+
+  .dumbdog-setting{
+    display: grid;
+    gap: 7px;
+    padding: 12px 0;
+    border-top: 1px solid rgba(255,255,255,.16);
+    font-size: 12px;
+  }
+
+  .dumbdog-setting:first-of-type{
+    border-top: 0;
+  }
+
+  .dumbdog-setting-row{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .dumbdog-setting label{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .dumbdog-setting input[type="range"]{
+    width: 100%;
+    accent-color: #65d8ff;
+  }
+
+  .dumbdog-setting input[type="checkbox"]{
+    accent-color: #299ed5;
+  }
+
+  .dumbdog-dialog-actions{
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 18px;
+  }
+
+  .dumbdog-dialog-button{
+    min-width: 82px;
+    min-height: 28px;
+    border: 1px solid rgba(218,246,255,.56);
+    border-radius: 4px;
+    background: linear-gradient(180deg, rgba(255,255,255,.28), rgba(18,83,119,.48));
+    color: #fff;
+    font: inherit;
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  body.dumbdog-widgets-hidden .dumbdog-widget-stack,
+  body.dumbdog-widgets-hidden .dumbdog-sidebar-rail{
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
   .dumbdog-quick-launch{
     display: flex;
     align-items: center;
@@ -2744,10 +2926,10 @@
             <div class="dumbdog-start-menu-shell">
                 <div class="dumbdog-start-left">
                     <div class="dumbdog-start-programs">
-                        <button class="dumbdog-start-program" type="button">
+                        <a class="dumbdog-start-program" href="/">
                             <i class="fa-solid fa-compass" aria-hidden="true"></i>
                             <span><strong>Internet</strong><small>Dumbdog Browser</small></span>
-                        </button>
+                        </a>
                         <button class="dumbdog-start-program" type="button">
                             <i class="fa-solid fa-envelope" aria-hidden="true"></i>
                             <span><strong>E-mail</strong><small>Dumbdog Mail</small></span>
@@ -2769,25 +2951,26 @@
                             <i class="fa-solid fa-book-open" aria-hidden="true"></i>
                             <span><strong>Journal</strong><small>Memory archive</small></span>
                         </a>
-                        <button class="dumbdog-start-program" type="button">
+                        <a class="dumbdog-start-program" href="https://www.youtube.com/watch?v=55xVnc3bgZ4" target="_blank" rel="noopener noreferrer">
                             <i class="fa-solid fa-circle-play" aria-hidden="true"></i>
                             <span><strong>Media Center</strong><small>Now playing</small></span>
-                        </button>
-                        <button class="dumbdog-start-program" type="button">
+                        </a>
+                        <a class="dumbdog-start-program" href="https://www.last.fm/user/Starworshipp3r" target="_blank" rel="noopener noreferrer">
                             <i class="fa-solid fa-music" aria-hidden="true"></i>
                             <span><strong>Music Library</strong><small>home menu - alyzea</small></span>
-                        </button>
-                        <button class="dumbdog-start-program" type="button">
+                        </a>
+                        <a class="dumbdog-start-program" href="/site/#projects">
                             <i class="fa-brands fa-windows" aria-hidden="true"></i>
                             <span><strong>Dumbdog Gallery</strong><small>Desktop extras</small></span>
-                        </button>
+                        </a>
+                        <p class="dumbdog-start-empty" data-dumbdog-search-empty>No programs found.</p>
                     </div>
                     <button class="dumbdog-all-programs" type="button">
                         <i class="fa-solid fa-caret-right" aria-hidden="true"></i>
                         <span>All Programs</span>
                     </button>
                     <label class="dumbdog-start-search">
-                        <input type="text" placeholder="Start Search" aria-label="Start Search">
+                        <input id="dumbdog-start-search-input" type="search" placeholder="Start Search" aria-label="Start Search" autocomplete="off">
                     </label>
                 </div>
 
@@ -2796,17 +2979,17 @@
                         <img src="/aero/vistafish.png" alt="">
                         <span>Starworshipper</span>
                     </div>
-                    <button class="dumbdog-start-right-link" type="button"><i class="fa-solid fa-user" aria-hidden="true"></i><span>Profile</span></button>
-                    <button class="dumbdog-start-right-link" type="button"><i class="fa-solid fa-folder" aria-hidden="true"></i><span>Documents</span></button>
+                    <a class="dumbdog-start-right-link" href="/site/"><i class="fa-solid fa-user" aria-hidden="true"></i><span>Profile</span></a>
+                    <a class="dumbdog-start-right-link" href="/site/journal/"><i class="fa-solid fa-folder" aria-hidden="true"></i><span>Documents</span></a>
                     <a class="dumbdog-start-right-link" href="/site/photos/"><i class="fa-solid fa-image" aria-hidden="true"></i><span>Pictures</span></a>
-                    <button class="dumbdog-start-right-link" type="button"><i class="fa-solid fa-music" aria-hidden="true"></i><span>Music</span></button>
-                    <button class="dumbdog-start-right-link" type="button"><i class="fa-solid fa-gamepad" aria-hidden="true"></i><span>Games</span></button>
-                    <button class="dumbdog-start-right-link" type="button"><i class="fa-solid fa-clock-rotate-left" aria-hidden="true"></i><span>Recent Items</span></button>
+                    <a class="dumbdog-start-right-link" href="https://www.last.fm/user/Starworshipp3r" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-music" aria-hidden="true"></i><span>Music</span></a>
+                    <a class="dumbdog-start-right-link" href="https://steamcommunity.com/id/Starworshipp3r" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-gamepad" aria-hidden="true"></i><span>Games</span></a>
+                    <a class="dumbdog-start-right-link" href="/site/journal/"><i class="fa-solid fa-clock-rotate-left" aria-hidden="true"></i><span>Recent Items</span></a>
                     <div class="dumbdog-start-right-divider"></div>
-                    <button class="dumbdog-start-right-link" type="button"><i class="fa-solid fa-computer" aria-hidden="true"></i><span>Computer</span></button>
-                    <button class="dumbdog-start-right-link" type="button"><i class="fa-solid fa-network-wired" aria-hidden="true"></i><span>Network</span></button>
-                    <button class="dumbdog-start-right-link" type="button"><i class="fa-solid fa-sliders" aria-hidden="true"></i><span>Control Panel</span></button>
-                    <button class="dumbdog-start-right-link" type="button"><i class="fa-solid fa-circle-question" aria-hidden="true"></i><span>Help and Support</span></button>
+                    <a class="dumbdog-start-right-link" href="/site/#projects"><i class="fa-solid fa-computer" aria-hidden="true"></i><span>Computer</span></a>
+                    <a class="dumbdog-start-right-link" href="/"><i class="fa-solid fa-network-wired" aria-hidden="true"></i><span>Network</span></a>
+                    <button class="dumbdog-start-right-link" type="button" data-dumbdog-dialog-open="dumbdog-control-panel"><i class="fa-solid fa-sliders" aria-hidden="true"></i><span>Control Panel</span></button>
+                    <button class="dumbdog-start-right-link" type="button" data-dumbdog-dialog-open="dumbdog-help-support"><i class="fa-solid fa-circle-question" aria-hidden="true"></i><span>Help and Support</span></button>
                     <div class="dumbdog-start-power-row">
                         <button class="dumbdog-start-power" type="button" data-dumbdog-exit>
                             <i class="fa-solid fa-power-off" aria-hidden="true"></i>
@@ -2815,6 +2998,63 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div id="dumbdog-dialog-layer" class="dumbdog-dialog-layer" aria-hidden="true">
+            <section id="dumbdog-control-panel" class="dumbdog-system-dialog" role="dialog" aria-modal="true" aria-labelledby="dumbdog-control-panel-title" aria-hidden="true">
+                <div class="dumbdog-dialog-titlebar">
+                    <span id="dumbdog-control-panel-title"><i class="fa-solid fa-sliders" aria-hidden="true"></i>Control Panel</span>
+                    <button class="dumbdog-dialog-close" type="button" data-dumbdog-dialog-close aria-label="Close Control Panel">
+                        <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <div class="dumbdog-dialog-body">
+                    <div class="dumbdog-dialog-intro">
+                        <i class="fa-solid fa-palette" aria-hidden="true"></i>
+                        <div>
+                            <strong>Appearance and Personalization</strong>
+                            <p>Adjust a few parts of the Dumbdog desktop.</p>
+                        </div>
+                    </div>
+                    <div class="dumbdog-setting">
+                        <div class="dumbdog-setting-row">
+                            <label for="dumbdog-volume"><i class="fa-solid fa-volume-high" aria-hidden="true"></i>Desktop music</label>
+                            <output id="dumbdog-volume-output" for="dumbdog-volume">50%</output>
+                        </div>
+                        <input id="dumbdog-volume" type="range" min="0" max="100" value="50" aria-label="Desktop music volume">
+                    </div>
+                    <div class="dumbdog-setting">
+                        <div class="dumbdog-setting-row">
+                            <label for="dumbdog-widget-toggle"><i class="fa-solid fa-table-cells-large" aria-hidden="true"></i>Show desktop widgets</label>
+                            <input id="dumbdog-widget-toggle" type="checkbox" checked>
+                        </div>
+                    </div>
+                    <div class="dumbdog-dialog-actions">
+                        <button class="dumbdog-dialog-button" type="button" data-dumbdog-dialog-close>OK</button>
+                    </div>
+                </div>
+            </section>
+
+            <section id="dumbdog-help-support" class="dumbdog-system-dialog" role="dialog" aria-modal="true" aria-labelledby="dumbdog-help-title" aria-hidden="true">
+                <div class="dumbdog-dialog-titlebar">
+                    <span id="dumbdog-help-title"><i class="fa-solid fa-circle-question" aria-hidden="true"></i>Help and Support</span>
+                    <button class="dumbdog-dialog-close" type="button" data-dumbdog-dialog-close aria-label="Close Help and Support">
+                        <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <div class="dumbdog-dialog-body">
+                    <div class="dumbdog-dialog-intro">
+                        <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+                        <div>
+                            <strong>Have you tried turning it off and on again?</strong>
+                            <p>If the optimism stops responding, shut down Dumbdog OS and give it another go.</p>
+                        </div>
+                    </div>
+                    <div class="dumbdog-dialog-actions">
+                        <button class="dumbdog-dialog-button" type="button" data-dumbdog-dialog-close>Got it</button>
+                    </div>
+                </div>
+            </section>
         </div>
 
         <div class="dumbdog-taskbar" role="toolbar" aria-label="Dumbdog OS taskbar">
@@ -3130,6 +3370,7 @@
             { type: 'text', value: 'lava lamp' },
             { type: 'text', value: 'mood lighting' },
             { type: 'text', value: 'service' },
+            { type: 'text', value: 'vocaloid' },
             
 
             // Images
@@ -3422,6 +3663,9 @@
             });
         }
 
+        let dumbdogDesktopVolume = 0.5;
+        let dumbdogDialogReturnFocus = null;
+
         function getDumbdogAudio(id) {
             return document.getElementById(id);
         }
@@ -3505,7 +3749,7 @@
             delete audio.dataset.dumbdogPrimed;
             audio.currentTime = 0;
             audio.muted = false;
-            audio.volume = 0.5;
+            audio.volume = dumbdogDesktopVolume;
             if (audio.paused) {
                 audio.play().catch(() => {});
             }
@@ -3631,6 +3875,7 @@
 
             if (!enabled) {
                 setDumbdogStartMenu(false);
+                closeDumbdogDialog();
             }
 
             setDumbdogToggleState(enabled, enabled ? 'Dumbdog OS is running' : 'Launch Dumbdog OS');
@@ -3639,6 +3884,10 @@
         function setDumbdogStartMenu(enabled) {
             const isOpen = Boolean(enabled && document.body.classList.contains('dumbdog-os-active'));
             document.body.classList.toggle('dumbdog-start-open', isOpen);
+
+            if (!isOpen) {
+                resetDumbdogStartSearch();
+            }
 
             const menu = document.getElementById('dumbdog-start-menu');
             if (menu) {
@@ -3655,6 +3904,63 @@
 
         function toggleDumbdogStartMenu() {
             setDumbdogStartMenu(!document.body.classList.contains('dumbdog-start-open'));
+        }
+
+        function resetDumbdogStartSearch() {
+            const input = document.getElementById('dumbdog-start-search-input');
+            if (input) input.value = '';
+
+            document.querySelectorAll('.dumbdog-start-program').forEach((program) => {
+                program.hidden = false;
+            });
+
+            const divider = document.querySelector('.dumbdog-start-divider');
+            if (divider) divider.hidden = false;
+
+            const empty = document.querySelector('[data-dumbdog-search-empty]');
+            if (empty) empty.classList.remove('is-visible');
+        }
+
+        function openDumbdogDialog(id, trigger) {
+            if (!document.body.classList.contains('dumbdog-os-active')) return;
+
+            const layer = document.getElementById('dumbdog-dialog-layer');
+            const dialog = document.getElementById(id);
+            if (!layer || !dialog) return;
+
+            dumbdogDialogReturnFocus = trigger?.closest('#dumbdog-start-menu')
+                ? document.getElementById('dumbdog-start-button')
+                : trigger || document.activeElement;
+            layer.querySelectorAll('.dumbdog-system-dialog').forEach((item) => {
+                const active = item === dialog;
+                item.classList.toggle('is-active', active);
+                item.setAttribute('aria-hidden', String(!active));
+            });
+            layer.classList.add('is-open');
+            layer.setAttribute('aria-hidden', 'false');
+            setDumbdogStartMenu(false);
+
+            const closeButton = dialog.querySelector('[data-dumbdog-dialog-close]');
+            if (closeButton) closeButton.focus();
+        }
+
+        function closeDumbdogDialog() {
+            const layer = document.getElementById('dumbdog-dialog-layer');
+            if (!layer || !layer.classList.contains('is-open')) return;
+
+            layer.classList.remove('is-open');
+            layer.setAttribute('aria-hidden', 'true');
+            layer.querySelectorAll('.dumbdog-system-dialog').forEach((dialog) => {
+                dialog.classList.remove('is-active');
+                dialog.setAttribute('aria-hidden', 'true');
+            });
+
+            if (document.body.classList.contains('dumbdog-os-active')
+                && dumbdogDialogReturnFocus
+                && typeof dumbdogDialogReturnFocus.focus === 'function') {
+                dumbdogDialogReturnFocus.focus();
+            }
+            dumbdogDialogReturnFocus = null;
         }
 
         function clearDumbdogBootTimers() {
@@ -4051,6 +4357,74 @@
                 });
             }
 
+            if (dumbdogStartMenu) {
+                dumbdogStartMenu.querySelectorAll('a').forEach((link) => {
+                    link.addEventListener('click', () => setDumbdogStartMenu(false));
+                });
+            }
+
+            const dumbdogStartSearch = document.getElementById('dumbdog-start-search-input');
+            if (dumbdogStartSearch) {
+                const programs = Array.from(document.querySelectorAll('.dumbdog-start-program'));
+                const divider = document.querySelector('.dumbdog-start-divider');
+                const empty = document.querySelector('[data-dumbdog-search-empty]');
+
+                dumbdogStartSearch.addEventListener('input', () => {
+                    const query = dumbdogStartSearch.value.trim().toLowerCase();
+                    let visibleCount = 0;
+
+                    programs.forEach((program) => {
+                        const visible = !query || program.textContent.toLowerCase().includes(query);
+                        program.hidden = !visible;
+                        if (visible) visibleCount += 1;
+                    });
+
+                    if (divider) divider.hidden = Boolean(query);
+                    if (empty) empty.classList.toggle('is-visible', Boolean(query) && visibleCount === 0);
+                });
+            }
+
+            document.querySelectorAll('[data-dumbdog-dialog-open]').forEach((button) => {
+                button.addEventListener('click', () => {
+                    openDumbdogDialog(button.dataset.dumbdogDialogOpen, button);
+                });
+            });
+
+            document.querySelectorAll('[data-dumbdog-dialog-close]').forEach((button) => {
+                button.addEventListener('click', closeDumbdogDialog);
+            });
+
+            const dumbdogDialogLayer = document.getElementById('dumbdog-dialog-layer');
+            if (dumbdogDialogLayer) {
+                dumbdogDialogLayer.addEventListener('click', (event) => {
+                    if (event.target === dumbdogDialogLayer) closeDumbdogDialog();
+                });
+            }
+
+            const dumbdogVolume = document.getElementById('dumbdog-volume');
+            const dumbdogVolumeOutput = document.getElementById('dumbdog-volume-output');
+            if (dumbdogVolume) {
+                dumbdogVolume.addEventListener('input', () => {
+                    const value = Number(dumbdogVolume.value);
+                    dumbdogDesktopVolume = Math.max(0, Math.min(1, value / 100));
+                    if (dumbdogVolumeOutput) dumbdogVolumeOutput.value = `${value}%`;
+
+                    const audio = getDumbdogAudio('aero-audio');
+                    if (audio) audio.volume = dumbdogDesktopVolume;
+                });
+            }
+
+            const dumbdogWidgetToggle = document.getElementById('dumbdog-widget-toggle');
+            if (dumbdogWidgetToggle) {
+                dumbdogWidgetToggle.addEventListener('change', () => {
+                    const visible = dumbdogWidgetToggle.checked;
+                    document.body.classList.toggle('dumbdog-widgets-hidden', !visible);
+
+                    const widgets = document.querySelector('.dumbdog-widget-stack');
+                    if (widgets) widgets.setAttribute('aria-hidden', String(!visible));
+                });
+            }
+
             const dumbdogCalendarToggle = document.getElementById('dumbdog-calendar-toggle');
             if (dumbdogCalendarToggle) {
                 dumbdogCalendarToggle.addEventListener('click', () => {
@@ -4068,6 +4442,10 @@
             document.addEventListener('keydown', (event) => {
                 if (event.key !== 'Escape') return;
                 if (!document.body.classList.contains('dumbdog-os-active') && !document.body.classList.contains('dumbdog-os-booting')) return;
+                if (document.getElementById('dumbdog-dialog-layer')?.classList.contains('is-open')) {
+                    closeDumbdogDialog();
+                    return;
+                }
                 if (document.body.classList.contains('dumbdog-start-open')) {
                     setDumbdogStartMenu(false);
                     return;
