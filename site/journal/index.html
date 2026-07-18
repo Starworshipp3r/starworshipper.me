@@ -241,6 +241,19 @@
       align-items: stretch;
     }
 
+    .load-more-sentinel{
+      min-height: 4.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .65rem;
+      color: rgba(255,255,255,.58);
+      font-size: .875rem;
+      contain: layout paint;
+    }
+
+    .load-more-sentinel[hidden]{ display: none; }
+
     .log-card{
       width: 100%;
       overflow: hidden;
@@ -979,6 +992,10 @@
 
         <section>
           <div id="logs-grid" class="log-grid" aria-live="polite"></div>
+          <div id="load-more-sentinel" class="load-more-sentinel" role="status" hidden>
+            <i class="fa-solid fa-circle-notch fa-spin" aria-hidden="true"></i>
+            <span>Loading more memories...</span>
+          </div>
           <div id="empty-state" class="empty-state mt-4" hidden>
             <i class="fa-solid fa-box-archive text-3xl text-white/55"></i>
             <div class="mt-3 font-bold text-white/86">Nothing surfaced.</div>
@@ -1102,6 +1119,7 @@
 
     const els = {
       grid: document.getElementById('logs-grid'),
+      loadMoreSentinel: document.getElementById('load-more-sentinel'),
       empty: document.getElementById('empty-state'),
       search: document.getElementById('search'),
       filter: document.getElementById('type-filter'),
@@ -1133,6 +1151,8 @@
     let activePhotoGallery = [];
     let activePhotoIndex = -1;
     let photoSwipeStart = null;
+    let renderedEntryCount = 0;
+    let loadMoreObserver;
 
     function escapeHtml(value){
       return String(value ?? '')
@@ -1283,20 +1303,64 @@
       `;
     }
 
+    function batchSize(initial = false){
+      const isMobile = window.matchMedia('(max-width: 767px)').matches;
+      if (initial) return isMobile ? 8 : 12;
+      return isMobile ? 6 : 9;
+    }
+
+    function createCard(entry){
+      const card = document.createElement('button');
+      card.type = 'button';
+      card.className = `log-card ${primaryImage(entry) ? '' : 'no-media'}`;
+      card.dataset.id = entry.id;
+      card.innerHTML = cardTemplate(entry);
+      card.addEventListener('click', () => openModal(entry.id));
+      return card;
+    }
+
+    function updateLoadMoreSentinel(){
+      if (!els.loadMoreSentinel) return;
+      els.loadMoreSentinel.hidden = !visibleEntries.length || renderedEntryCount >= visibleEntries.length;
+    }
+
+    function appendNextBatch({ minimumIndex = -1, initial = false } = {}){
+      if (!els.grid || renderedEntryCount >= visibleEntries.length) {
+        updateLoadMoreSentinel();
+        return;
+      }
+
+      const requestedEnd = renderedEntryCount + batchSize(initial);
+      const requiredEnd = minimumIndex >= 0 ? minimumIndex + 1 : 0;
+      const end = Math.min(visibleEntries.length, Math.max(requestedEnd, requiredEnd));
+      const fragment = document.createDocumentFragment();
+
+      visibleEntries.slice(renderedEntryCount, end).forEach(entry => {
+        fragment.appendChild(createCard(entry));
+      });
+
+      els.grid.appendChild(fragment);
+      renderedEntryCount = end;
+      updateLoadMoreSentinel();
+    }
+
     function renderCards(){
       if (!els.grid) return;
       els.grid.innerHTML = '';
+      renderedEntryCount = 0;
       if (els.empty) els.empty.hidden = visibleEntries.length > 0;
 
-      visibleEntries.forEach(entry => {
-        const card = document.createElement('button');
-        card.type = 'button';
-        card.className = `log-card ${primaryImage(entry) ? '' : 'no-media'}`;
-        card.dataset.id = entry.id;
-        card.innerHTML = cardTemplate(entry);
-        card.addEventListener('click', () => openModal(entry.id));
-        els.grid.appendChild(card);
-      });
+      if (!visibleEntries.length) {
+        updateLoadMoreSentinel();
+        return;
+      }
+
+      if (!('IntersectionObserver' in window)) {
+        appendNextBatch({ minimumIndex: visibleEntries.length - 1 });
+        return;
+      }
+
+      appendNextBatch({ initial: true });
     }
 
     function applyFilters(){
@@ -1554,6 +1618,8 @@
     function resurfaceMemory(){
       if (!visibleEntries.length) return;
       const entry = visibleEntries[Math.floor(Math.random() * visibleEntries.length)];
+      const entryIndex = visibleEntries.findIndex(item => item.id === entry.id);
+      if (entryIndex >= renderedEntryCount) appendNextBatch({ minimumIndex: entryIndex });
       const card = document.querySelector(`[data-id="${CSS.escape(entry.id)}"]`);
       const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       if (card) {
@@ -1562,6 +1628,14 @@
         requestAnimationFrame(() => card.classList.add('is-resurfaced'));
       }
       setTimeout(() => openModal(entry.id), reducedMotion ? 0 : 520);
+    }
+
+    function observeLoadMoreSentinel(){
+      if (!els.loadMoreSentinel || !('IntersectionObserver' in window)) return;
+      loadMoreObserver = new IntersectionObserver(entries => {
+        if (entries.some(entry => entry.isIntersecting)) appendNextBatch();
+      }, { rootMargin: '420px 0px', threshold: 0 });
+      loadMoreObserver.observe(els.loadMoreSentinel);
     }
 
     async function loadLogs(){
@@ -1596,6 +1670,7 @@
     els.search?.addEventListener('input', applyFilters);
     els.filter?.addEventListener('change', applyFilters);
     els.random?.addEventListener('click', resurfaceMemory);
+    observeLoadMoreSentinel();
     els.modalBody?.addEventListener('click', (event) => {
       const thumb = event.target.closest('.gallery-thumb');
       if (thumb) {
