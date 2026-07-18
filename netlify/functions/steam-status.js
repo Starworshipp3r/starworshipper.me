@@ -355,7 +355,7 @@ export default async function handler() {
       const payload = {
         playing: getDisplayName(player.gameextrainfo),
         mode: "now",
-        appid: null,
+        appid: player.gameid || null,
         lastPlayed: null,
       };
 
