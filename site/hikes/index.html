@@ -76,17 +76,6 @@
       will-change: transform;
     }
 
-    body::after{
-      content:'';
-      position: fixed;
-      inset: 0;
-      background-image: var(--noise);
-      background-size: 240px 240px;
-      opacity: .07;
-      pointer-events: none;
-      z-index: -1;
-    }
-
     .mica-shell{
       border-radius: var(--radius-xl);
       border: 1px solid var(--border);
@@ -117,7 +106,7 @@
       position:absolute;
       inset:0;
       background-image: var(--noise);
-      background-size: 260px 260px;
+      background-size: 128px 128px;
       opacity: .06;
       pointer-events:none;
     }
