@@ -321,8 +321,11 @@
   html.js body.is-leaving .mica-window,
   html.js body.is-leaving .mica-shell{
     opacity: 0;
-    transform: translateY(-8px) scale(.98);
-    filter: blur(6px);
+    transform: translateY(-6px) scale(.985);
+    filter: none;
+    transition: opacity 280ms ease-out,
+                transform 300ms cubic-bezier(.2,.8,.2,1),
+                filter 0ms linear;
   }
 
   @media (prefers-reduced-motion: reduce){
@@ -873,12 +876,13 @@
             e.preventDefault();
             document.body.classList.add('is-leaving');
 
-            const delay = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 500;
+            const delay = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 300;
             setTimeout(() => { window.location.href = url.href; }, delay);
         });
 
         // If restored from bfcache, ensure visible
-        window.addEventListener('pageshow', () => {
+        window.addEventListener('pageshow', (event) => {
+            if (!event.persisted) return;
             document.body.classList.remove('is-leaving');
             document.body.classList.add('is-ready');
         });
