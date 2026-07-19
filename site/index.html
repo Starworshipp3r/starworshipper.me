@@ -121,6 +121,7 @@
       background: var(--highlight-artwork) center / cover no-repeat;
       filter: blur(3px) saturate(.82) brightness(.76);
       transform: scale(1.08);
+      transition: opacity .28s ease, transform .2s ease;
     }
     .highlight-art-card::after{
       z-index: 1;
@@ -131,6 +132,12 @@
     }
     .highlight-art-card.has-artwork::after{
       opacity: 1;
+    }
+    @media (hover: hover) and (prefers-reduced-motion: no-preference){
+      .highlight-art-card.has-artwork:hover::before,
+      .highlight-art-card.has-artwork:focus-visible::before{
+        transform: scale(1.10);
+      }
     }
     .highlight-art-card > *{
       position: relative;
