@@ -309,6 +309,30 @@
     line-height: 28px;
   }
 
+  #random-word {
+    display: inline-block;
+    transition: opacity 180ms ease,
+                transform 180ms cubic-bezier(.2,.8,.2,1),
+                filter 180ms ease;
+  }
+
+  #random-word.is-word-transitioning {
+    will-change: opacity, transform, filter;
+  }
+
+  #random-word.is-word-exiting {
+    opacity: 0;
+    transform: translateY(-3px) scale(.985);
+    filter: blur(2px);
+  }
+
+  #random-word.is-word-entering {
+    opacity: 0;
+    transform: translateY(3px) scale(.985);
+    filter: blur(2px);
+    transition: none;
+  }
+
   /* --- SEASONAL THEME STYLES --- */
   #seasonal-container {
     position: fixed;
@@ -378,6 +402,16 @@
     .aero-bubble,
     .aero-fish{
       animation: none !important;
+    }
+
+    .dice-rolling{
+      animation: none !important;
+    }
+
+    #random-word{
+      transition: none !important;
+      transform: none !important;
+      filter: none !important;
     }
   }
 
@@ -3490,12 +3524,38 @@
         if (shuffleButton) {
             shuffleButton.addEventListener('click', () => {
                 const dice = document.getElementById('dice-icon');
-                dice.classList.add('dice-rolling');
-                setTimeout(() => {
+                const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+                if (reducedMotion || !dice || !wordElement) {
                     setRandomWord();
-                }, 200);
+                    return;
+                }
+
+                if (shuffleButton.disabled) return;
+                shuffleButton.disabled = true;
+                wordElement.classList.add('is-word-transitioning');
+                dice.classList.add('dice-rolling');
+
+                setTimeout(() => {
+                    wordElement.classList.add('is-word-exiting');
+                }, 120);
+
+                setTimeout(() => {
+                    wordElement.classList.remove('is-word-exiting');
+                    wordElement.classList.add('is-word-entering');
+                    setRandomWord();
+
+                    requestAnimationFrame(() => {
+                        requestAnimationFrame(() => {
+                            wordElement.classList.remove('is-word-entering');
+                        });
+                    });
+                }, 300);
+
                 dice.addEventListener('animationend', () => {
                     dice.classList.remove('dice-rolling');
+                    wordElement.classList.remove('is-word-exiting', 'is-word-entering', 'is-word-transitioning');
+                    shuffleButton.disabled = false;
                 }, { once: true });
             });
         }
