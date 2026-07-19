@@ -397,10 +397,10 @@
         <section class="mica-card">
           <h2 class="text-xl font-semibold mb-2">Highlights</h2>
           <div class="grid sm:grid-cols-4 gap-3">
-            <div class="mica-card highlight-art-card" id="doing-highlight">
+            <a class="mica-card highlight-art-card block hover:bg-white/10 transition" id="doing-highlight" href="https://unsplash.com/photos/salmon-and-avocado-salad-with-a-soft-boiled-egg-xY3Xda3myRo?utm_source=starworshipper.me&amp;utm_medium=referral" target="_blank" rel="noopener noreferrer" aria-label="Doing: Bulking. View photo by Declan Sun on Unsplash">
               <div class="text-white/60 text-sm">Doing:</div>
               <div class="font-semibold" id="doing-current">Bulking</div>
-            </div>
+            </a>
             <a class="mica-card highlight-art-card block hover:bg-white/10 transition" id="steam-highlight" href="https://steamcommunity.com/id/Starworshipp3r" target="_blank" rel="noopener noreferrer">
               <div class="text-white/60 text-sm">Playing:</div>
               <div class="font-semibold dynamic-value is-loading" id="steam-playing" aria-live="polite">checking...</div>
@@ -917,7 +917,14 @@ document.addEventListener('DOMContentLoaded', () => {
     .then(r => r.ok ? r.json() : null)
     .then(data => {
       if (data?.doing) el.textContent = data.doing;
-      setHighlightArtwork(document.getElementById('doing-highlight'), data?.artwork);
+      const card = document.getElementById('doing-highlight');
+      setHighlightArtwork(card, data?.artwork);
+      if (card && data?.link) {
+        card.href = data.link;
+        const credit = data.credit || 'View source photo';
+        card.title = credit;
+        card.setAttribute('aria-label', `Doing: ${data.doing || el.textContent}. ${credit}`);
+      }
     })
     .catch(() => {});
 });
