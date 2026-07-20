@@ -985,7 +985,7 @@ document.addEventListener('DOMContentLoaded', () => {
         el.closest('a')?.setAttribute('title', `Open journal: ${latest.title}`);
         setHighlightArtwork(
           document.getElementById('journal-highlight'),
-          latest.coverImage || latest.photos?.[0]
+          latest.coverImage || latest.photos?.[0] || '/site/images/journal-fallback.jpg'
         );
       }
     })
