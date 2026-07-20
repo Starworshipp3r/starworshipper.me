@@ -624,12 +624,25 @@
 
     .video-grid{
       display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
       gap: .85rem;
+    }
+
+    .video-grid.is-single{
+      grid-template-columns: minmax(0, 640px);
+      justify-content: center;
+    }
+
+    .video-grid figure{
+      min-width: 0;
+      margin: 0;
     }
 
     .journal-video-thumb{
       position: relative;
+      display: block;
       width: 100%;
+      aspect-ratio: 16 / 9;
       overflow: hidden;
       padding: 0;
       cursor: pointer;
@@ -642,7 +655,7 @@
     .journal-video-thumb img{
       display: block;
       width: 100%;
-      height: 12rem;
+      height: 100%;
       object-fit: cover;
       opacity: .92;
       transition: transform .2s ease, opacity .2s ease;
@@ -1451,8 +1464,9 @@
           </div>
         ` : ''}
         ${videos.length ? `
-          <div class="mt-6" aria-label="Attached videos">
-            <div class="video-grid">
+          <div class="mt-6">
+            <div class="text-white/55 text-xs uppercase tracking-[.14em] font-extrabold mb-3">Videos</div>
+            <div class="video-grid${videos.length === 1 ? ' is-single' : ''}" aria-label="Attached videos">
               ${videos.map(video => `
                 <figure>
                   <button
