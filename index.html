@@ -211,6 +211,28 @@
     box-shadow: 0 0 0 3px rgba(255,255,255,.18), 0 0 0 6px var(--accent-glow);
   }
 
+  @keyframes enter-site-bloom{
+    0%, 100%{
+      opacity: 0;
+      box-shadow: 0 0 0 0 rgba(255,255,255,0), 0 0 0 0 var(--accent-glow);
+    }
+    42%{
+      opacity: 1;
+      box-shadow: 0 0 0 3px rgba(255,255,255,.14), 0 0 24px 8px var(--accent-glow);
+    }
+  }
+
+  .enter-site-btn::after{
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: inherit;
+    background: rgba(255,255,255,.07);
+    opacity: 0;
+    pointer-events: none;
+    animation: enter-site-bloom 1.05s ease-out 1.5s 1;
+  }
+
   .music-thumb-btn{
     padding: 0;
     overflow: hidden;
@@ -401,6 +423,10 @@
 
     .aero-bubble,
     .aero-fish{
+      animation: none !important;
+    }
+
+    .enter-site-btn::after{
       animation: none !important;
     }
 
@@ -3151,7 +3177,7 @@
         <a
         href="/site/"
         aria-label="Enter site" title="Enter"
-        class="absolute bottom-3 right-3 sm:bottom-4 sm:right-4 z-10 mica-icon-btn"
+        class="absolute bottom-3 right-3 sm:bottom-4 sm:right-4 z-10 mica-icon-btn enter-site-btn"
       >
         <i class="fa-solid fa-arrow-right text-lg leading-none"></i>
       </a>
