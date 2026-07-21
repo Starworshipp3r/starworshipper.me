@@ -1,6 +1,6 @@
 (() => {
   const root = document.documentElement;
-  const themeKey = 'micaTheme_v1';
+  const themeKey = 'micaTheme_v2';
   const animationKey = 'micaAnimStart_v1';
   const animationDuration = 90;
 
@@ -18,17 +18,45 @@
     !Number.isFinite(theme.s) ||
     !Number.isFinite(theme.l)
   ) {
-    const h1 = Math.floor(Math.random() * 360);
-    theme = {
-      h1,
-      h2: (h1 + 180) % 360,
-      s: Math.floor(Math.random() * 80) + 20,
-      l: Math.floor(Math.random() * 50) + 30,
-    };
+    theme = generateTheme();
 
     try {
       sessionStorage.setItem(themeKey, JSON.stringify(theme));
     } catch {}
+  }
+
+  function randomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  function generateTheme() {
+    const h1 = randomInt(0, 359);
+    const roll = Math.random();
+    let mode;
+    let saturation;
+    let lightness;
+
+    if (roll < 0.6) {
+      mode = 'rich';
+      saturation = randomInt(55, 85);
+      lightness = randomInt(45, 65);
+    } else if (roll < 0.85) {
+      mode = 'pastel';
+      saturation = randomInt(50, 75);
+      lightness = randomInt(72, 84);
+    } else {
+      mode = 'moody';
+      saturation = randomInt(38, 60);
+      lightness = randomInt(35, 52);
+    }
+
+    return {
+      h1,
+      h2: (h1 + 180) % 360,
+      s: saturation,
+      l: lightness,
+      mode,
+    };
   }
 
   root.style.setProperty('--color-1', `hsla(${theme.h1}, ${theme.s}%, ${theme.l}%, 0.75)`);
