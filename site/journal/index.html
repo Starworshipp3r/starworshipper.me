@@ -337,7 +337,34 @@
     .category-pill.in-flow{
       position: static;
       display: inline-flex;
+    }
+
+    .entry-labels{
+      display: flex;
+      flex-wrap: wrap;
+      gap: .45rem;
       margin-bottom: .75rem;
+    }
+
+    .cover-type-pill{
+      position: absolute;
+      top: .75rem;
+      right: .75rem;
+      z-index: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.8rem;
+      height: 1.8rem;
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: 9999px;
+      background: rgba(8,12,18,.68);
+      color: rgba(255,255,255,.84);
+      font-size: .7rem;
+    }
+
+    .cover-type-pill.in-flow{
+      position: static;
     }
 
     .memory-mark{
@@ -1298,11 +1325,15 @@
       const image = primaryImage(entry);
       const tags = asArray(entry.tags).slice(0, 4);
       const mediaFit = entry.coverFit === 'contain' ? ' media-contain' : '';
+      const albumArtLabel = entry.coverType === 'album-art'
+        ? '<span class="cover-type-pill" role="img" aria-label="Album art" title="Album art"><i class="fa-solid fa-compact-disc" aria-hidden="true"></i></span>'
+        : '';
       const location = entry.location ? `<span><i class="fa-solid fa-location-dot text-white/45"></i> ${escapeHtml(entry.location)}</span>` : '';
       const media = image
         ? `<div class="card-media${mediaFit}">
              <img src="${escapeHtml(image)}" alt="" loading="lazy">
              <span class="category-pill"><i class="fa-solid ${iconFor(type)}"></i>${escapeHtml(type)}</span>
+             ${albumArtLabel}
            </div>`
         : `<div class="memory-mark" aria-hidden="true">
              <i class="fa-solid ${iconFor(type)}"></i>
@@ -1439,6 +1470,9 @@
       const gallery = asArray(entry.photos);
       const hasPhotos = asArray(entry.photos).length > 0;
       const videos = videoItems(entry);
+      const albumArtLabel = entry.coverType === 'album-art'
+        ? '<span class="cover-type-pill in-flow" role="img" aria-label="Album art" title="Album art"><i class="fa-solid fa-compact-disc" aria-hidden="true"></i></span>'
+        : '';
       const meta = [
         formatDate(entry.date),
         entry.location
@@ -1451,7 +1485,10 @@
       }
 
       els.modalTitleBlock.innerHTML = `
-        <span class="category-pill in-flow"><i class="fa-solid ${iconFor(type)}"></i>${escapeHtml(type)}</span>
+        <div class="entry-labels">
+          <span class="category-pill in-flow"><i class="fa-solid ${iconFor(type)}"></i>${escapeHtml(type)}</span>
+          ${albumArtLabel}
+        </div>
         <h2 id="modal-title" class="text-3xl sm:text-4xl font-extrabold leading-tight">${escapeHtml(entry.title)}</h2>
         <div class="mt-2 text-white/75 text-sm font-semibold">${escapeHtml(meta)}</div>
       `;
