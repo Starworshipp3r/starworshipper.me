@@ -216,7 +216,43 @@
       border-bottom: 1px solid rgba(255,255,255,.10);
       background: rgba(255,255,255,.03);
     }
-    .shell-identity{ text-align: right; }
+    .shell-identity-control{
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 12px;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: inherit;
+      font: inherit;
+      cursor: pointer;
+    }
+    .shell-identity{
+      max-width: 180px;
+      overflow: hidden;
+      text-align: right;
+      white-space: nowrap;
+      opacity: 1;
+      transform: translateX(0);
+      transition: max-width .32s ease, opacity .22s ease, transform .32s ease;
+    }
+    .shell-identity-control.is-collapsed .shell-identity{
+      max-width: 0;
+      opacity: 0;
+      transform: translateX(14px);
+    }
+    .shell-identity-control.is-collapsed:hover .shell-identity,
+    .shell-identity-control.is-collapsed:focus .shell-identity,
+    .shell-identity-control.is-collapsed:focus-within .shell-identity{
+      max-width: 180px;
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .shell-identity-control:focus-visible img{
+      outline: 2px solid rgba(255,255,255,.55);
+      outline-offset: 3px;
+    }
 
     .shell-body{
       flex: 1;
@@ -330,6 +366,7 @@
   }
 
   @media (prefers-reduced-motion: reduce){
+    .shell-identity{ transition: none !important; }
     html.js .mica-window,
     html.js .mica-shell{
       transition: none !important;
@@ -353,14 +390,14 @@
         </a>
       </div>
 
-      <div class="flex items-center justify-end gap-3 min-w-0">
+      <button type="button" class="shell-identity-control min-w-0" aria-label="Show profile identity">
         <div class="shell-identity leading-tight min-w-0">
           <div class="font-semibold truncate">@Starworshipper</div>
           <div class="text-white/60 text-sm truncate">Certified dumb dog.</div>
         </div>
 
         <img src="/av.jpg" alt="" class="w-12 h-12 rounded-full border border-white/15 bg-white/5">
-      </div>
+      </button>
     </div>
 
     <!-- Layout -->
@@ -1104,6 +1141,16 @@ closeBtn?.addEventListener('click', closeMedia);
 
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape' && !modal.classList.contains('hidden')) closeMedia();
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const identity = document.querySelector('.shell-identity-control');
+  if (!identity) return;
+
+  const delay = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 1600;
+  window.setTimeout(() => identity.classList.add('is-collapsed'), delay);
 });
 </script>
 
