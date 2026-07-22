@@ -216,6 +216,7 @@
       border-bottom: 1px solid rgba(255,255,255,.10);
       background: rgba(255,255,255,.03);
     }
+    .shell-identity{ text-align: right; }
 
     .shell-body{
       flex: 1;
@@ -346,32 +347,26 @@
   <div class="mica-shell">
     <!-- Top bar -->
     <div class="shell-topbar">
-      <div class="flex items-center gap-3">
+      <div class="flex items-center">
         <a href="/" class="mica-icon-btn" aria-label="Back to links" title="Back to links">
           <i class="fa-solid fa-arrow-left text-lg leading-none"></i>
         </a>
-
-        <div class="leading-tight">
-          <div class="font-semibold"></div>
-          <div class="text-white/60 text-sm"></div>
-        </div>
       </div>
 
-      <div class="flex items-center gap-2"></div>
+      <div class="flex items-center justify-end gap-3 min-w-0">
+        <div class="shell-identity leading-tight min-w-0">
+          <div class="font-semibold truncate">@Starworshipper</div>
+          <div class="text-white/60 text-sm truncate">Certified dumb dog.</div>
+        </div>
+
+        <img src="/av.jpg" alt="" class="w-12 h-12 rounded-full border border-white/15 bg-white/5">
+      </div>
     </div>
 
     <!-- Layout -->
     <div class="shell-body">
       <!-- Sidebar -->
       <aside class="shell-sidebar">
-        <div class="flex items-center gap-3 mb-4">
-          <img src="/av.jpg" alt="" class="w-12 h-12 rounded-full border border-white/15 bg-white/5">
-          <div>
-            <div class="font-semibold">@Starworshipper</div>
-            <div class="text-white/60 text-sm">Certified dumb dog.</div>
-          </div>
-        </div>
-
         <nav class="space-y-2">
           <a class="navlink" href="/site/photos/index.html"><i class="fa-solid fa-camera-retro w-5 text-white/70"></i><span class="font-semibold">Photos</span></a>
           <a class="navlink" href="/site/hikes/index.html"><i class="fa-solid fa-person-hiking w-5 text-white/70"></i><span class="font-semibold">Hikes</span></a>
