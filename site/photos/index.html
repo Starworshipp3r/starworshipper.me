@@ -591,6 +591,60 @@
     let zoomedCard = null;
     let mobileFocusPhoto = null;
     let isStacked = false;
+    const photoFoleyUrls = [
+      '/site/photos/audio/paper-foley-1.wav',
+      '/site/photos/audio/paper-foley-2.wav',
+      '/site/photos/audio/paper-foley-3.wav'
+    ];
+    const photoFoleyGain = 0.8;
+    let photoAudioContext = null;
+    let photoFoleyBuffersPromise = null;
+    let lastPhotoFoleyIndex = -1;
+
+    function preparePhotoFoley() {
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContext) return Promise.resolve([]);
+
+      if (!photoAudioContext) photoAudioContext = new AudioContext();
+      if (!photoFoleyBuffersPromise) {
+        photoFoleyBuffersPromise = Promise.all(photoFoleyUrls.map(async (url) => {
+          const response = await fetch(url);
+          if (!response.ok) throw new Error(`Unable to load ${url}`);
+          return photoAudioContext.decodeAudioData(await response.arrayBuffer());
+        })).catch(() => []);
+      }
+
+      return photoFoleyBuffersPromise;
+    }
+
+    function unlockPhotoFoley() {
+      const buffersPromise = preparePhotoFoley();
+      if (photoAudioContext?.state === 'suspended') {
+        photoAudioContext.resume().catch(() => {});
+      }
+      return buffersPromise;
+    }
+
+    async function playPhotoFoley() {
+      const buffers = await unlockPhotoFoley();
+      if (!photoAudioContext || !buffers.length) return;
+
+      let index = Math.floor(Math.random() * buffers.length);
+      if (buffers.length > 1) {
+        while (index === lastPhotoFoleyIndex) {
+          index = Math.floor(Math.random() * buffers.length);
+        }
+      }
+      lastPhotoFoleyIndex = index;
+
+      const source = photoAudioContext.createBufferSource();
+      const gain = photoAudioContext.createGain();
+      source.buffer = buffers[index];
+      gain.gain.value = photoFoleyGain;
+      source.connect(gain);
+      gain.connect(photoAudioContext.destination);
+      source.start();
+    }
 
     function applyTheme(t) {
       root.style.setProperty('--color-1', `hsla(${t.h1}, ${t.s}%, ${t.l}%, 0.75)`);
@@ -838,10 +892,11 @@
       }
     }
 
-    function scheduleAutoScatter(delay = 1800) {
+    function scheduleAutoScatter(delay = 1800, withSound = false) {
       cancelAutoScatter();
       autoScatterTimer = setTimeout(() => {
         autoScatterTimer = null;
+        if (withSound) playPhotoFoley();
         scatterCards();
       }, delay);
     }
@@ -967,7 +1022,7 @@
       wireDrag(card, photo);
     }
 
-    function renderBoard(photos) {
+    function renderBoard(photos, withScatterSound = false) {
       clearBoard();
       currentPhotos = photos.slice();
 
@@ -979,10 +1034,10 @@
       setEmptyState(false);
       currentPhotos.forEach(createCard);
       stackCards();
-      scheduleAutoScatter();
+      scheduleAutoScatter(1800, withScatterSound);
     }
 
-    async function fetchPhotos() {
+    async function fetchPhotos({ withScatterSound = false } = {}) {
       refreshBtn.disabled = true;
       setStatus('loading');
 
@@ -994,7 +1049,7 @@
           throw new Error(data?.error || 'No photos returned');
         }
 
-        renderBoard(data.photos);
+        renderBoard(data.photos, withScatterSound);
       } catch (error) {
         clearBoard();
         setEmptyState(true, 'Unable to load photos from Unsplash right now.');
@@ -1072,10 +1127,12 @@
 
       refreshBtn.addEventListener('click', () => {
         cancelAutoScatter();
-        fetchPhotos();
+        unlockPhotoFoley();
+        fetchPhotos({ withScatterSound: true });
       });
       layoutBtn.addEventListener('click', () => {
         cancelAutoScatter();
+        playPhotoFoley();
         if (isStacked) {
           scatterCards();
         } else {
@@ -1107,7 +1164,8 @@
       mobileFocusMedia.addEventListener('change', clearZoom);
 
       revealPageWhenTextureIsReady();
-      fetchPhotos();
+      preparePhotoFoley();
+      fetchPhotos({ withScatterSound: true });
     });
   </script>
 </body>

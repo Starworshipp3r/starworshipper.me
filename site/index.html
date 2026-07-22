@@ -1150,7 +1150,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const identity = document.querySelector('.shell-identity-control');
   if (!identity) return;
 
-  const delay = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 1600;
+  const delay = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 4000;
   window.setTimeout(() => identity.classList.add('is-collapsed'), delay);
 });
 </script>
