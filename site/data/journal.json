@@ -1,5 +1,17 @@
 [
   {
+    "date": "2026-07-23",
+    "title": "Little Sounds",
+    "type": "project",
+    "body": "Spent a few minutes recording some Foley for the website. I wanted the Photos section to feel a bit more tactile, almost ASMR-like, where shuffling the cards and pulling new photos has a little physical presence behind it. Whipped out the decent microphone, shuffled some actual cards around, and spent some time isolating and cleaning up the sounds. It turned out pretty good for a small experiment. I might revisit it later and add a few more effects, but for now... go shuffle some photos around if you want. :3\n\nStill feeling a little rough and looking like a mutt, but I’m heading back to the gym anyway. No point in letting a temporary setback knock the rest of my routine loose. Sometimes keeping yourself moving is enough, even when everything else is mostly a waiting game.\n\nFor now, I’m just taking things a day at a time and waiting for next week. Things should be better then. Until that arrives, there is still work to do, weight to move, and little ideas worth bringing to life.",
+    "tags": ["site", "project", "personal"],
+    "coverImage": "/site/journal/images/foley-recording-july-23.jpg",
+    "photos": [
+      "/site/journal/images/foley-recording-july-23.jpg",
+      "/site/journal/images/foley-editing-july-23.jpg"
+    ]
+  },
+  {
     "date": "2026-07-22",
     "title": "about a girl i met",
     "type": "music",
