@@ -286,55 +286,7 @@
   </div>
 
   <script>
-    // Theme sync
     document.addEventListener('DOMContentLoaded', () => {
-      const root = document.documentElement;
-      const KEY = 'micaTheme_v2';
-
-      function applyTheme(t) {
-        root.style.setProperty('--color-1', `hsla(${t.h1}, ${t.s}%, ${t.l}%, 0.75)`);
-        root.style.setProperty('--color-2', `hsla(${t.h2}, ${t.s}%, ${t.l}%, 0.75)`);
-        root.style.setProperty('--accent', `hsla(${t.h1}, ${Math.min(t.s+10, 100)}%, ${Math.min(t.l+15, 72)}%, 1)`);
-        root.style.setProperty('--accent-glow', `hsla(${t.h1}, ${Math.min(t.s+10, 100)}%, ${Math.min(t.l+15, 72)}%, 0.22)`);
-      }
-
-      function generateTheme() {
-        const h1 = Math.floor(Math.random() * 360);
-        const roll = Math.random();
-        const range = roll < 0.6
-          ? { mode: 'rich', s: [55, 85], l: [45, 65] }
-          : roll < 0.85
-            ? { mode: 'pastel', s: [50, 75], l: [72, 84] }
-            : { mode: 'moody', s: [38, 60], l: [35, 52] };
-        const randomInt = ([min, max]) => Math.floor(Math.random() * (max - min + 1)) + min;
-        return {
-          h1,
-          h2: (h1 + 180) % 360,
-          s: randomInt(range.s),
-          l: randomInt(range.l),
-          mode: range.mode,
-        };
-      }
-
-      let theme = null;
-      try { theme = JSON.parse(sessionStorage.getItem(KEY) || 'null'); } catch {}
-      if (!theme) {
-        theme = generateTheme();
-        sessionStorage.setItem(KEY, JSON.stringify(theme));
-      }
-      applyTheme(theme);
-      // Keep the rotating background in the same phase across pages
-      const DUR = 90; // must match CSS rotate-background duration
-      const START_KEY = 'micaAnimStart_v1';
-      let start = Number(sessionStorage.getItem(START_KEY));
-      if (!start) {
-        start = Date.now();
-        sessionStorage.setItem(START_KEY, String(start));
-      }
-      const elapsed = ((Date.now() - start) / 1000) % DUR;
-      root.style.setProperty('--bg-delay', `-${elapsed}s`);
-
-      // Fade in once theme vars are applied
       requestAnimationFrame(() => {
         requestAnimationFrame(() => document.body.classList.add('is-ready'));
       });
