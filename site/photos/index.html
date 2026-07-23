@@ -156,6 +156,12 @@
       transform: none;
     }
 
+    .photo-actions{
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+    }
+
     .board{
       position: relative;
       width: 100%;
@@ -481,6 +487,18 @@
         overflow: auto;
       }
 
+      .photo-actions{
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        width: 100%;
+      }
+
+      .photo-actions .tool-btn{
+        min-width: 0;
+        padding-inline: .75rem;
+        white-space: nowrap;
+      }
+
       .board{
         min-height: calc(100dvh - 230px);
       }
@@ -533,12 +551,12 @@
         </div>
       </div>
 
-      <div class="flex items-center gap-2 flex-wrap">
+      <div class="photo-actions">
         <button id="refreshBtn" type="button" class="tool-btn">
-          <i class="fa-solid fa-arrows-rotate mr-2"></i>Open a fresh pack
+          Open a fresh pack
         </button>
         <button id="layoutBtn" type="button" class="tool-btn" aria-label="Stack photos">
-          <i id="layoutIcon" class="fa-solid fa-layer-group mr-2" aria-hidden="true"></i><span id="layoutLabel">Stack 'em up</span>
+          <span id="layoutLabel">Stack 'em up</span>
         </button>
       </div>
     </div>
@@ -575,7 +593,6 @@
     const board = document.getElementById('board');
     const refreshBtn = document.getElementById('refreshBtn');
     const layoutBtn = document.getElementById('layoutBtn');
-    const layoutIcon = document.getElementById('layoutIcon');
     const layoutLabel = document.getElementById('layoutLabel');
     const emptyState = document.getElementById('emptyState');
     const focusBackdrop = document.getElementById('focusBackdrop');
@@ -904,7 +921,6 @@
     function updateLayoutButton() {
       const label = isStacked ? "Spread 'em out" : "Stack 'em up";
       layoutLabel.textContent = label;
-      layoutIcon.className = `fa-solid ${isStacked ? 'fa-shuffle' : 'fa-layer-group'} mr-2`;
       layoutBtn.setAttribute('aria-label', isStacked ? 'Spread photos out' : 'Stack photos');
       layoutBtn.title = label;
     }
