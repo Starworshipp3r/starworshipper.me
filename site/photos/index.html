@@ -217,7 +217,18 @@
       cursor: grab;
       user-select: none;
       touch-action: none;
-      transition: left .9s cubic-bezier(.22,.82,.26,1), top .9s cubic-bezier(.22,.82,.26,1), transform .9s cubic-bezier(.22,.82,.26,1), box-shadow .18s ease;
+      transition: left .9s cubic-bezier(.22,.82,.26,1), top .9s cubic-bezier(.22,.82,.26,1), transform .9s cubic-bezier(.22,.82,.26,1), box-shadow .18s ease, opacity .24s ease;
+    }
+
+    .polaroid.is-pack-hidden{
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .polaroid.is-pack-preparing{
+      opacity: 0;
+      transition: none;
+      pointer-events: none;
     }
 
     .polaroid:active{
@@ -977,9 +988,9 @@
       clearZoom();
     }
 
-    function createCard(photo, index) {
+    function createCard(photo, index, { preparing = false } = {}) {
       const card = document.createElement('article');
-      card.className = 'polaroid';
+      card.className = preparing ? 'polaroid is-pack-preparing' : 'polaroid';
       card.style.zIndex = String(++zCounter);
       card.innerHTML = `
         <span class="polaroid-pin"></span>
@@ -990,6 +1001,37 @@
       board.appendChild(card);
       cards.push({ el: card, photo });
       wireDrag(card, photo);
+    }
+
+    function wait(ms) {
+      return new Promise((resolve) => setTimeout(resolve, ms));
+    }
+
+    function preloadPhotos(photos) {
+      return Promise.allSettled(photos.map((photo) => new Promise((resolve) => {
+        const image = new Image();
+        image.onload = resolve;
+        image.onerror = resolve;
+        image.src = photo.src;
+      })));
+    }
+
+    async function replaceStackedPack(photos, withScatterSound) {
+      cards.forEach((entry) => entry.el.classList.add('is-pack-hidden'));
+      await wait(240);
+
+      clearBoard();
+      currentPhotos = photos.slice();
+      setEmptyState(false);
+      currentPhotos.forEach((photo, index) => createCard(photo, index, { preparing: true }));
+      stackCards();
+
+      void board.offsetHeight;
+      cards.forEach((entry) => entry.el.classList.remove('is-pack-preparing'));
+      await wait(360);
+
+      if (withScatterSound) playPhotoFoley();
+      scatterCards();
     }
 
     function renderBoard(photos, withScatterSound = false) {
@@ -1007,9 +1049,16 @@
       scheduleAutoScatter(1800, withScatterSound);
     }
 
-    async function fetchPhotos({ withScatterSound = false } = {}) {
+    async function fetchPhotos({ withScatterSound = false, animateRefresh = false } = {}) {
       refreshBtn.disabled = true;
       setStatus('loading');
+      const hasExistingPack = animateRefresh && cards.length > 0;
+      let collectPromise = Promise.resolve();
+
+      if (hasExistingPack) {
+        stackCards();
+        collectPromise = wait(900);
+      }
 
       try {
         const res = await fetch('/.netlify/functions/unsplash-photos?count=9');
@@ -1019,10 +1068,19 @@
           throw new Error(data?.error || 'No photos returned');
         }
 
-        renderBoard(data.photos, withScatterSound);
+        if (hasExistingPack) {
+          await Promise.all([collectPromise, preloadPhotos(data.photos)]);
+          await replaceStackedPack(data.photos, withScatterSound);
+        } else {
+          renderBoard(data.photos, withScatterSound);
+        }
       } catch (error) {
-        clearBoard();
-        setEmptyState(true, 'Unable to load photos from Unsplash right now.');
+        if (hasExistingPack) {
+          scatterCards();
+        } else {
+          clearBoard();
+          setEmptyState(true, 'Unable to load photos from Unsplash right now.');
+        }
         setStatus('error');
       } finally {
         setStatus('ready');
@@ -1097,7 +1155,7 @@
       refreshBtn.addEventListener('click', () => {
         cancelAutoScatter();
         unlockPhotoFoley();
-        fetchPhotos({ withScatterSound: true });
+        fetchPhotos({ withScatterSound: true, animateRefresh: true });
       });
       layoutBtn.addEventListener('click', () => {
         cancelAutoScatter();
