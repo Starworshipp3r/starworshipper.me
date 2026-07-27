@@ -102,6 +102,42 @@
       padding: 16px;
       box-shadow: 0 10px 28px rgba(0,0,0,.20);
     }
+    #stuff .flex.flex-wrap > span{
+      cursor: default;
+      user-select: none;
+      transition:
+        transform .18s ease,
+        background-color .18s ease,
+        border-color .18s ease,
+        box-shadow .18s ease,
+        color .18s ease;
+    }
+    #stuff .flex.flex-wrap > span i{
+      transition: transform .18s ease, color .18s ease;
+    }
+    @media (hover: hover) and (pointer: fine){
+      #stuff .flex.flex-wrap > span:hover{
+        transform: translateY(-1px);
+        background-color: rgba(255,255,255,.10);
+        border-color: rgba(255,255,255,.22);
+        box-shadow: 0 7px 16px rgba(0,0,0,.16);
+        color: rgba(255,255,255,.94);
+      }
+      #stuff .flex.flex-wrap > span:hover i{
+        transform: scale(1.10);
+        color: rgba(255,255,255,.92);
+      }
+    }
+    @media (prefers-reduced-motion: reduce){
+      #stuff .flex.flex-wrap > span,
+      #stuff .flex.flex-wrap > span i{
+        transition-duration: 0s;
+      }
+      #stuff .flex.flex-wrap > span:hover,
+      #stuff .flex.flex-wrap > span:hover i{
+        transform: none;
+      }
+    }
     .highlight-art-card{
       position: relative;
       isolation: isolate;
