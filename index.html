@@ -2414,14 +2414,47 @@
   .dumbdog-tray-icons{
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 3px;
     color: rgba(240,250,255,.94);
     font-size: 12px;
   }
 
-  .dumbdog-tray-icons .security{ color: #6dff8a; }
-  .dumbdog-tray-icons .network{ color: #8fd9ff; }
-  .dumbdog-tray-icons .volume{ color: #f7fbff; }
+  .dumbdog-tray-app{
+    width: 17px;
+    height: 20px;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    color: rgba(240,250,255,.96);
+    text-shadow: 0 1px 2px rgba(0,0,0,.60);
+  }
+
+  .dumbdog-tray-app i{
+    font-size: 14px;
+  }
+
+  .dumbdog-tray-app img{
+    width: 16px;
+    height: 16px;
+    max-width: none;
+    object-fit: contain;
+  }
+
+  .dumbdog-tray-system{
+    width: 16px;
+    height: 20px;
+    display: grid;
+    place-items: center;
+  }
+
+  .dumbdog-tray-system img,
+  .dumbdog-tray-volume img{
+    width: 16px;
+    height: 16px;
+    max-width: none;
+    object-fit: contain;
+    image-rendering: auto;
+  }
 
   .dumbdog-tray-volume{
     width: 20px;
@@ -2636,10 +2669,6 @@
       gap: 4px;
       padding: 0 6px;
       font-size: 11px;
-    }
-
-    .dumbdog-tray-icons i:not(.volume){
-      display: none;
     }
 
     .dumbdog-tray-time{
@@ -3094,10 +3123,29 @@
             <div class="dumbdog-task-spacer"></div>
             <div class="dumbdog-tray" aria-label="Dumbdog OS tray">
                 <span class="dumbdog-tray-icons">
-                    <i class="fa-solid fa-shield-halved security" aria-hidden="true"></i>
-                    <i class="fa-solid fa-network-wired network" aria-hidden="true"></i>
+                    <span class="dumbdog-tray-app steam" role="img" aria-label="Steam is running" title="Steam is running">
+                        <i class="fa-brands fa-steam" aria-hidden="true"></i>
+                    </span>
+                    <span class="dumbdog-tray-app messenger" role="img" aria-label="Windows Live Messenger is running" title="Windows Live Messenger is running">
+                        <img src="/aero/tray/messenger.png" alt="" decoding="async">
+                    </span>
+                    <span class="dumbdog-tray-app winamp" role="img" aria-label="Winamp is running" title="Winamp is running">
+                        <img src="/aero/tray/winamp.png" alt="" decoding="async">
+                    </span>
+                    <span class="dumbdog-tray-app soulseek" role="img" aria-label="Soulseek is connected" title="Soulseek is connected">
+                        <img src="/aero/tray/soulseek.png" alt="" decoding="async">
+                    </span>
+                    <span class="dumbdog-tray-app limewire" role="img" aria-label="LimeWire is running" title="LimeWire is running">
+                        <img src="/aero/tray/limewire.webp" alt="" decoding="async">
+                    </span>
+                    <span class="dumbdog-tray-system" role="img" aria-label="Security Center reports no issues" title="Security Center reports no issues">
+                        <img src="/aero/tray/security-center.png" alt="" decoding="async">
+                    </span>
+                    <span class="dumbdog-tray-system" role="img" aria-label="Network connected" title="Network connected">
+                        <img src="/aero/tray/network-connected.png" alt="" decoding="async">
+                    </span>
                     <button id="dumbdog-tray-volume" class="dumbdog-tray-volume" type="button" aria-label="Mute desktop music" aria-pressed="false" title="Mute desktop music">
-                        <i class="fa-solid fa-volume-high volume" aria-hidden="true"></i>
+                        <img src="/aero/tray/volume-high.png" alt="" decoding="async">
                     </button>
                 </span>
                 <span class="dumbdog-tray-time" data-dumbdog-time>--:--</span>
@@ -3783,15 +3831,15 @@
             if (!button) return;
 
             const muted = dumbdogDesktopMuted || dumbdogDesktopVolume === 0;
-            const icon = button.querySelector('i');
+            const icon = button.querySelector('img');
             const label = muted ? 'Unmute desktop music' : 'Mute desktop music';
-            const iconName = muted
-                ? 'fa-volume-xmark'
+            const iconSource = muted
+                ? '/aero/tray/volume-muted.png'
                 : dumbdogDesktopVolume < 0.5
-                    ? 'fa-volume-low'
-                    : 'fa-volume-high';
+                    ? '/aero/tray/volume-low.png'
+                    : '/aero/tray/volume-high.png';
 
-            if (icon) icon.className = `fa-solid ${iconName} volume`;
+            if (icon) icon.src = iconSource;
             button.setAttribute('aria-label', label);
             button.setAttribute('aria-pressed', String(dumbdogDesktopMuted));
             button.title = label;
