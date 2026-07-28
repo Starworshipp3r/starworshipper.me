@@ -1852,16 +1852,33 @@
     align-items: center;
     gap: 4px;
     padding: 2px 8px 2px 7px;
-    border-top: 1px solid rgba(242, 255, 255, .46);
+    border-top: 1px solid rgba(244, 255, 255, .66);
     background:
-      linear-gradient(180deg, rgba(255,255,255,.40) 0, rgba(255,255,255,.16) 9%, rgba(37,57,50,.74) 46%, rgba(12,25,27,.92) 50%, rgba(32,54,49,.92) 100%),
-      linear-gradient(90deg, rgba(93,126,33,.60), rgba(15,84,84,.58) 36%, rgba(7,39,60,.66));
+      linear-gradient(180deg,
+        rgba(255,255,255,.42) 0,
+        rgba(255,255,255,.18) 9%,
+        rgba(42,59,61,.54) 44%,
+        rgba(8,21,24,.72) 50%,
+        rgba(18,37,38,.68) 100%),
+      linear-gradient(90deg,
+        rgba(103,128,55,.36),
+        rgba(15,83,86,.34) 36%,
+        rgba(8,42,61,.40));
     box-shadow:
       0 -1px 0 rgba(0,0,0,.48),
-      inset 0 1px 0 rgba(255,255,255,.50),
-      inset 0 -1px 0 rgba(0,0,0,.48);
-    backdrop-filter: blur(14px) saturate(1.35);
-    -webkit-backdrop-filter: blur(12px) saturate(1.35);
+      inset 0 1px 0 rgba(255,255,255,.56),
+      inset 0 -1px 0 rgba(0,0,0,.44);
+    backdrop-filter: blur(12px) saturate(1.28) brightness(.92);
+    -webkit-backdrop-filter: blur(12px) saturate(1.28) brightness(.92);
+  }
+
+  .dumbdog-taskbar::before{
+    content: "";
+    position: absolute;
+    inset: 1px 0 auto;
+    height: 42%;
+    background: linear-gradient(180deg, rgba(255,255,255,.20), rgba(255,255,255,.04));
+    pointer-events: none;
   }
 
   .dumbdog-task-button,
@@ -2364,9 +2381,10 @@
     display: flex;
     align-items: center;
     gap: 7px;
+    flex: 0 0 clamp(112px, 12vw, 160px);
+    width: clamp(112px, 12vw, 160px);
     height: 26px;
     min-width: 0;
-    max-width: 188px;
     padding: 0 12px 0 9px;
     border-radius: 2px;
     font-size: 11px;
@@ -2374,9 +2392,45 @@
     text-shadow: 0 1px 2px rgba(0,0,0,.55);
   }
 
+  .dumbdog-task-button.is-active{
+    border-color: rgba(202, 247, 255, .38);
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.28), rgba(255,255,255,.08) 44%, rgba(0,0,0,.12)),
+      rgba(24, 83, 103, .46);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.34),
+      inset 0 -1px 0 rgba(0,0,0,.28),
+      0 0 5px rgba(104, 216, 255, .10);
+  }
+
   .dumbdog-task-button i{
     color: #bcefff;
     font-size: 12px;
+  }
+
+  .dumbdog-task-button.shoutcast img{
+    width: 15px;
+    height: 15px;
+    object-fit: contain;
+    filter: drop-shadow(0 1px 1px rgba(0,0,0,.72));
+    flex: 0 0 auto;
+  }
+
+  .dumbdog-task-button.messenger img{
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+    filter: drop-shadow(0 1px 1px rgba(0,0,0,.64));
+    flex: 0 0 auto;
+  }
+
+  .dumbdog-task-icon.messenger-contact-icon{
+    width: 15px;
+    height: 15px;
+    display: inline-block;
+    background: url('/aero/tray/messenger-conversation.png') center / contain no-repeat;
+    filter: drop-shadow(0 1px 1px rgba(0,0,0,.64));
+    flex: 0 0 auto;
   }
 
   .dumbdog-task-button span{
@@ -2393,19 +2447,14 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    gap: 6px;
-    min-width: 132px;
+    gap: 2px;
+    min-width: 0;
     height: 28px;
-    padding: 0 9px 0 10px;
-    border-width: 0 0 0 1px;
+    padding: 0 3px 0 4px;
+    border-width: 0;
     border-radius: 0;
-    border-color: rgba(255,255,255,.24);
-    background:
-      linear-gradient(90deg, rgba(255,255,255,.12), rgba(255,255,255,.02) 10%, rgba(10,28,37,.16)),
-      transparent;
-    box-shadow:
-      inset 1px 0 0 rgba(0,0,0,.30),
-      inset -1px 0 0 rgba(255,255,255,.08);
+    background: transparent;
+    box-shadow: none;
     font-size: 11px;
     font-weight: 600;
     text-shadow: 0 1px 2px rgba(0,0,0,.70);
@@ -2477,7 +2526,7 @@
   }
 
   .dumbdog-tray-time{
-    min-width: 52px;
+    min-width: 50px;
     text-align: right;
   }
 
@@ -2636,7 +2685,7 @@
     .dumbdog-taskbar{
       min-height: 36px;
       border-radius: 0;
-      gap: 4px;
+      gap: 2px;
       padding: 2px 6px;
     }
 
@@ -2644,9 +2693,14 @@
       display: none;
     }
 
+    .dumbdog-task-button .dumbdog-task-icon{
+      display: inline-block;
+    }
+
     .dumbdog-task-button{
-      min-width: 30px;
-      width: 30px;
+      flex: 0 0 22px;
+      min-width: 22px;
+      width: 22px;
       height: 24px;
       justify-content: center;
       padding: 0;
@@ -2665,9 +2719,9 @@
     }
 
     .dumbdog-tray{
-      min-width: 76px;
-      gap: 4px;
-      padding: 0 6px;
+      min-width: 0;
+      gap: 2px;
+      padding: 0 2px;
       font-size: 11px;
     }
 
@@ -3116,9 +3170,21 @@
                 <img class="dumbdog-start-logo" src="/aero/logo.png" alt="" decoding="async">
                 <span>Dumbdog</span>
             </button>
-            <div class="dumbdog-task-button" aria-hidden="true">
+            <div class="dumbdog-task-button is-active" aria-hidden="true" title="Dumbdog Links">
                 <i class="fa-solid fa-window-maximize"></i>
                 <span>Dumbdog Links</span>
+            </div>
+            <div class="dumbdog-task-button shoutcast" aria-hidden="true" title="1. alyzea - home menu">
+                <img src="/aero/tray/winamp.png" alt="" decoding="async">
+                <span>1. alyzea - home menu</span>
+            </div>
+            <div class="dumbdog-task-button messenger" aria-hidden="true" title="Windows Live Messenger">
+                <img src="/aero/tray/messenger.png" alt="" decoding="async">
+                <span>Windows Live Messenger</span>
+            </div>
+            <div class="dumbdog-task-button messenger-contact" aria-hidden="true" data-dumbdog-messenger-task title="Cheezzy">
+                <span class="dumbdog-task-icon messenger-contact-icon"></span>
+                <span data-dumbdog-messenger-contact>Cheezzy</span>
             </div>
             <div class="dumbdog-task-spacer"></div>
             <div class="dumbdog-tray" aria-label="Dumbdog OS tray">
@@ -3940,6 +4006,7 @@
             { src: '/aero/slideshow/Waterfall_(Windows_Vista).jpg', title: 'Waterfall' },
             { src: '/aero/slideshow/Winter_Leaves.jpg', title: 'Winter Leaves' },
         ];
+        const dumbdogMessengerContacts = ['Cheezzy', 'Shu', 'pr1med_'];
 
         function setDumbdogToggleState(enabled, label) {
             const toggle = document.getElementById('aero-toggle');
@@ -4392,6 +4459,16 @@
                 statusDot.style.setProperty('--dumbdog-status-color', status.color);
                 statusDot.style.setProperty('--dumbdog-status-glow', status.glow);
                 statusDot.title = status.text;
+            }
+
+            const messengerContact = pickRandomItem(dumbdogMessengerContacts);
+            document.querySelectorAll('[data-dumbdog-messenger-contact]').forEach((el) => {
+                el.textContent = messengerContact;
+            });
+
+            const messengerTask = document.querySelector('[data-dumbdog-messenger-task]');
+            if (messengerTask) {
+                messengerTask.title = messengerContact;
             }
         }
 
