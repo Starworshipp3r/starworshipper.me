@@ -2360,38 +2360,6 @@
     pointer-events: none;
   }
 
-  .dumbdog-quick-launch{
-    display: flex;
-    align-items: center;
-    gap: 3px;
-    height: 26px;
-    padding: 0 7px 0 0;
-    margin-right: 2px;
-    border-right: 1px solid rgba(255,255,255,.26);
-    box-shadow: 1px 0 0 rgba(0,0,0,.30);
-  }
-
-  .dumbdog-quick-icon{
-    width: 22px;
-    height: 22px;
-    display: grid;
-    place-items: center;
-    border-radius: 2px;
-    color: rgba(245,252,255,.96);
-    font-size: 14px;
-    text-shadow: 0 1px 2px rgba(0,0,0,.45);
-  }
-
-  .dumbdog-quick-icon:hover{
-    background: linear-gradient(180deg, rgba(255,255,255,.24), rgba(255,255,255,.05));
-    box-shadow: inset 0 0 0 1px rgba(255,255,255,.20);
-  }
-
-  .dumbdog-quick-icon.browser{ color: #5ed9ff; }
-  .dumbdog-quick-icon.desktop{ color: #d7f3ff; }
-  .dumbdog-quick-icon.photos{ color: #9cc7ff; }
-  .dumbdog-quick-icon.media{ color: #ff963d; }
-
   .dumbdog-task-button{
     display: flex;
     align-items: center;
@@ -2454,6 +2422,26 @@
   .dumbdog-tray-icons .security{ color: #6dff8a; }
   .dumbdog-tray-icons .network{ color: #8fd9ff; }
   .dumbdog-tray-icons .volume{ color: #f7fbff; }
+
+  .dumbdog-tray-volume{
+    width: 20px;
+    height: 20px;
+    display: grid;
+    place-items: center;
+    padding: 0;
+    border: 0;
+    border-radius: 2px;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+  }
+
+  .dumbdog-tray-volume:hover,
+  .dumbdog-tray-volume:focus-visible{
+    background: linear-gradient(180deg, rgba(255,255,255,.24), rgba(255,255,255,.05));
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.20);
+    outline: none;
+  }
 
   .dumbdog-tray-time{
     min-width: 52px;
@@ -2617,22 +2605,6 @@
       border-radius: 0;
       gap: 4px;
       padding: 2px 6px;
-    }
-
-    .dumbdog-quick-launch{
-      gap: 2px;
-      padding-right: 5px;
-      margin-right: 0;
-    }
-
-    .dumbdog-quick-icon{
-      width: 21px;
-      height: 21px;
-      font-size: 13px;
-    }
-
-    .dumbdog-quick-icon:nth-child(n+3){
-      display: none;
     }
 
     .dumbdog-task-button span{
@@ -3115,22 +3087,18 @@
                 <img class="dumbdog-start-logo" src="/aero/logo.png" alt="" decoding="async">
                 <span>Dumbdog</span>
             </button>
-            <div class="dumbdog-quick-launch" aria-hidden="true">
-                <span class="dumbdog-quick-icon browser"><i class="fa-solid fa-globe"></i></span>
-                <span class="dumbdog-quick-icon desktop"><i class="fa-solid fa-desktop"></i></span>
-                <span class="dumbdog-quick-icon photos"><i class="fa-solid fa-image"></i></span>
-                <span class="dumbdog-quick-icon media"><i class="fa-solid fa-circle-play"></i></span>
-            </div>
             <div class="dumbdog-task-button" aria-hidden="true">
                 <i class="fa-solid fa-window-maximize"></i>
                 <span>Dumbdog Links</span>
             </div>
             <div class="dumbdog-task-spacer"></div>
             <div class="dumbdog-tray" aria-label="Dumbdog OS tray">
-                <span class="dumbdog-tray-icons" aria-hidden="true">
-                    <i class="fa-solid fa-shield-halved security"></i>
-                    <i class="fa-solid fa-network-wired network"></i>
-                    <i class="fa-solid fa-volume-high volume"></i>
+                <span class="dumbdog-tray-icons">
+                    <i class="fa-solid fa-shield-halved security" aria-hidden="true"></i>
+                    <i class="fa-solid fa-network-wired network" aria-hidden="true"></i>
+                    <button id="dumbdog-tray-volume" class="dumbdog-tray-volume" type="button" aria-label="Mute desktop music" aria-pressed="false" title="Mute desktop music">
+                        <i class="fa-solid fa-volume-high volume" aria-hidden="true"></i>
+                    </button>
                 </span>
                 <span class="dumbdog-tray-time" data-dumbdog-time>--:--</span>
             </div>
@@ -3750,6 +3718,7 @@
         }
 
         let dumbdogDesktopVolume = 0.5;
+        let dumbdogDesktopMuted = false;
         let dumbdogDialogReturnFocus = null;
 
         function getDumbdogAudio(id) {
@@ -3809,6 +3778,32 @@
             resetDumbdogAudio(audio);
         }
 
+        function updateDumbdogTrayVolume() {
+            const button = document.getElementById('dumbdog-tray-volume');
+            if (!button) return;
+
+            const muted = dumbdogDesktopMuted || dumbdogDesktopVolume === 0;
+            const icon = button.querySelector('i');
+            const label = muted ? 'Unmute desktop music' : 'Mute desktop music';
+            const iconName = muted
+                ? 'fa-volume-xmark'
+                : dumbdogDesktopVolume < 0.5
+                    ? 'fa-volume-low'
+                    : 'fa-volume-high';
+
+            if (icon) icon.className = `fa-solid ${iconName} volume`;
+            button.setAttribute('aria-label', label);
+            button.setAttribute('aria-pressed', String(dumbdogDesktopMuted));
+            button.title = label;
+        }
+
+        function setDumbdogDesktopMuted(muted) {
+            dumbdogDesktopMuted = muted;
+            const audio = getDumbdogAudio('aero-audio');
+            if (audio) audio.muted = muted;
+            updateDumbdogTrayVolume();
+        }
+
         function startDumbdogBootAudio() {
             const audio = getDumbdogAudio('dumbdog-boot-audio');
             if (!audio) return;
@@ -3834,7 +3829,7 @@
 
             delete audio.dataset.dumbdogPrimed;
             audio.currentTime = 0;
-            audio.muted = false;
+            audio.muted = dumbdogDesktopMuted;
             audio.volume = dumbdogDesktopVolume;
             if (audio.paused) {
                 audio.play().catch(() => {});
@@ -4490,6 +4485,7 @@
 
             const dumbdogVolume = document.getElementById('dumbdog-volume');
             const dumbdogVolumeOutput = document.getElementById('dumbdog-volume-output');
+            const dumbdogTrayVolume = document.getElementById('dumbdog-tray-volume');
             if (dumbdogVolume) {
                 dumbdogVolume.addEventListener('input', () => {
                     const value = Number(dumbdogVolume.value);
@@ -4498,6 +4494,21 @@
 
                     const audio = getDumbdogAudio('aero-audio');
                     if (audio) audio.volume = dumbdogDesktopVolume;
+                    setDumbdogDesktopMuted(value === 0);
+                });
+            }
+            if (dumbdogTrayVolume) {
+                updateDumbdogTrayVolume();
+                dumbdogTrayVolume.addEventListener('click', () => {
+                    if (dumbdogDesktopMuted && dumbdogDesktopVolume === 0) {
+                        dumbdogDesktopVolume = 0.5;
+                        if (dumbdogVolume) dumbdogVolume.value = '50';
+                        if (dumbdogVolumeOutput) dumbdogVolumeOutput.value = '50%';
+
+                        const audio = getDumbdogAudio('aero-audio');
+                        if (audio) audio.volume = dumbdogDesktopVolume;
+                    }
+                    setDumbdogDesktopMuted(!dumbdogDesktopMuted);
                 });
             }
 
