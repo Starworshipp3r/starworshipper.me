@@ -1315,6 +1315,14 @@
     min-width: 0;
   }
 
+  .dumbdog-browser-icon{
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+    flex: 0 0 auto;
+    filter: drop-shadow(0 1px 1px rgba(0,0,0,.48));
+  }
+
   .dumbdog-window-close{
     width: 36px;
     height: 22px;
@@ -2957,7 +2965,7 @@
         <div class="dumbdog-desktop">
             <section class="dumbdog-window" aria-label="Dumbdog links window">
                 <div class="dumbdog-titlebar">
-                    <span><i class="fa-solid fa-window-maximize" aria-hidden="true"></i>Dumbdog Links</span>
+                    <span><img class="dumbdog-browser-icon" src="/aero/tray/internet-explorer.png" alt="" decoding="async">Dumbdog Links</span>
                     <button class="dumbdog-window-close" type="button" data-dumbdog-exit aria-label="Exit Dumbdog OS" title="Exit Dumbdog OS">
                         <i class="fa-solid fa-xmark" aria-hidden="true"></i>
                     </button>
@@ -3207,7 +3215,7 @@
                 <span>Dumbdog</span>
             </button>
             <div class="dumbdog-task-button is-active" aria-hidden="true" title="Dumbdog Links">
-                <i class="fa-solid fa-window-maximize"></i>
+                <img class="dumbdog-browser-icon" src="/aero/tray/internet-explorer.png" alt="" decoding="async">
                 <span>Dumbdog Links</span>
             </div>
             <div class="dumbdog-task-button shoutcast" aria-hidden="true" title="1. alyzea - home menu">
