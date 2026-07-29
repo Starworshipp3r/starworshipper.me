@@ -2433,6 +2433,38 @@
     flex: 0 0 auto;
   }
 
+  .dumbdog-task-button.messenger-contact.is-unread{
+    border-color: rgba(255, 193, 77, .68);
+    background:
+      linear-gradient(180deg, rgba(255, 239, 191, .27), rgba(255, 169, 37, .12) 44%, rgba(82, 37, 0, .22)),
+      rgba(74, 47, 8, .46);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 249, 218, .40),
+      inset 0 -1px 0 rgba(67, 28, 0, .38),
+      0 0 5px rgba(255, 161, 39, .28);
+  }
+
+  .dumbdog-task-button.messenger-contact.is-attention{
+    animation: dumbdog-task-attention .58s ease-in-out 3;
+  }
+
+  @keyframes dumbdog-task-attention{
+    0%, 100%{
+      border-color: rgba(255, 193, 77, .68);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 249, 218, .40),
+        inset 0 -1px 0 rgba(67, 28, 0, .38),
+        0 0 5px rgba(255, 161, 39, .28);
+    }
+    50%{
+      border-color: rgba(255, 226, 139, .96);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 253, 229, .68),
+        inset 0 -1px 0 rgba(104, 48, 0, .30),
+        0 0 12px rgba(255, 174, 54, .76);
+    }
+  }
+
   .dumbdog-task-button span{
     overflow: hidden;
     text-overflow: ellipsis;
@@ -2862,6 +2894,10 @@
 
     .dumbdog-progress span{
       transition: none !important;
+    }
+
+    .dumbdog-task-button.messenger-contact.is-attention{
+      animation: none !important;
     }
   }
 
@@ -4066,6 +4102,18 @@
             setDumbdogToggleState(enabled, enabled ? 'Dumbdog OS is starting' : 'Launch Dumbdog OS');
         }
 
+        function restartDumbdogMessengerAttention() {
+            const messengerTask = document.querySelector('[data-dumbdog-messenger-task]');
+            if (!messengerTask?.classList.contains('is-unread')) return;
+
+            messengerTask.classList.remove('is-attention');
+            window.requestAnimationFrame(() => {
+                window.requestAnimationFrame(() => {
+                    messengerTask.classList.add('is-attention');
+                });
+            });
+        }
+
         function setDumbdogOSActive(enabled) {
             document.body.classList.toggle('dumbdog-os-active', enabled);
 
@@ -4074,7 +4122,9 @@
                 os.setAttribute('aria-hidden', String(!enabled));
             }
 
-            if (!enabled) {
+            if (enabled) {
+                restartDumbdogMessengerAttention();
+            } else {
                 setDumbdogStartMenu(false);
                 closeDumbdogDialog();
             }
@@ -4462,13 +4512,17 @@
             }
 
             const messengerContact = pickRandomItem(dumbdogMessengerContacts);
+            const messengerUnreadCount = Math.floor(Math.random() * 3) + 1;
+            const messengerLabel = `${messengerContact} (${messengerUnreadCount})`;
             document.querySelectorAll('[data-dumbdog-messenger-contact]').forEach((el) => {
-                el.textContent = messengerContact;
+                el.textContent = messengerLabel;
             });
 
             const messengerTask = document.querySelector('[data-dumbdog-messenger-task]');
             if (messengerTask) {
-                messengerTask.title = messengerContact;
+                const unreadLabel = messengerUnreadCount === 1 ? 'unread message' : 'unread messages';
+                messengerTask.title = `${messengerContact} - ${messengerUnreadCount} ${unreadLabel}`;
+                messengerTask.classList.add('is-unread');
             }
         }
 
