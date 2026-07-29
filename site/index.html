@@ -344,6 +344,15 @@
       overflow: hidden;
     }
 
+    #videoModal .project-modal-card.has-contained-video{
+      max-width: var(--project-video-width);
+    }
+
+    #videoModal .project-modal-card.has-contained-video #modalVideo{
+      aspect-ratio: var(--project-video-aspect);
+      max-height: none;
+    }
+
     .project-preview img{
       display:block;
       width: 100%;
@@ -752,8 +761,9 @@
               type="button"
               class="mica-card flex flex-col gap-3 hover:bg-white/10 transition group w-full text-left"
               data-video="https://app.box.com/shared/static/axzo7wekrlprmwobz39n8am9nfergd6o.mp4"
-              data-poster="/site/images/montana-2021-preview.png"
+              data-poster="/site/images/montana-2021-preview.jpg"
               data-title="Montana, 2021"
+              data-aspect="0.5625"
               aria-label="Play Montana, 2021 video"
             >
               <div class="flex items-start justify-between gap-3">
@@ -769,7 +779,7 @@
 
               <div class="project-preview">
                 <img
-                  src="/site/images/montana-2021-preview.png"
+                  src="/site/images/montana-2021-preview.jpg"
                   alt="Montana travel footage preview"
                   loading="lazy"
                 />
@@ -825,6 +835,7 @@
               data-video="https://app.box.com/shared/static/kogas6zvbvjqho5gvgwdftmqmfb47udv.mp4"
               data-poster="/site/images/dont-break-our-oath-preview.png"
               data-title="Don't break our oath"
+              data-aspect="1"
               aria-label="Play Don't break our oath video"
             >
               <div class="flex items-start justify-between gap-3">
@@ -1056,9 +1067,28 @@ const closeBtn = document.getElementById('videoCloseBtn');
 const video = document.getElementById('modalVideo');
 const modalImage = document.getElementById('modalImage');
 const titleEl = document.getElementById('videoModalTitle');
+const projectModalCard = modal.querySelector('.project-modal-card');
+let activeVideoAspect = null;
 
-function openVideo({ src, poster, title }) {
+function sizeProjectVideoModal(aspect) {
+  const ratio = Number(aspect);
+  activeVideoAspect = Number.isFinite(ratio) && ratio > 0 && ratio <= 1.05 ? ratio : null;
+  projectModalCard.classList.toggle('has-contained-video', activeVideoAspect !== null);
+
+  if (activeVideoAspect === null) {
+    projectModalCard.style.removeProperty('--project-video-width');
+    projectModalCard.style.removeProperty('--project-video-aspect');
+    return;
+  }
+
+  const targetWidth = Math.max(320, Math.min(896, window.innerHeight * 0.7 * activeVideoAspect));
+  projectModalCard.style.setProperty('--project-video-width', `${Math.round(targetWidth)}px`);
+  projectModalCard.style.setProperty('--project-video-aspect', activeVideoAspect);
+}
+
+function openVideo({ src, poster, title, aspect }) {
   titleEl.textContent = title || 'Video';
+  sizeProjectVideoModal(aspect);
   modalImage.classList.add('hidden');
   modalImage.removeAttribute('src');
   modalImage.removeAttribute('alt');
@@ -1082,6 +1112,7 @@ function openVideo({ src, poster, title }) {
 
 function openImage({ src, title }) {
   titleEl.textContent = title || 'Artwork';
+  sizeProjectVideoModal(null);
   video.pause();
   video.removeAttribute('src');
   video.load();
@@ -1095,6 +1126,7 @@ function openImage({ src, title }) {
 
 function closeMedia() {
   modal.classList.add('hidden');
+  sizeProjectVideoModal(null);
   video.pause();
   // Optional: free memory / stop buffering
   video.removeAttribute('src');
@@ -1111,7 +1143,12 @@ document.addEventListener('click', (e) => {
     src: btn.getAttribute('data-video'),
     poster: btn.getAttribute('data-poster'),
     title: btn.getAttribute('data-title'),
+    aspect: btn.getAttribute('data-aspect'),
   });
+});
+
+window.addEventListener('resize', () => {
+  if (activeVideoAspect !== null) sizeProjectVideoModal(activeVideoAspect);
 });
 
 document.addEventListener('click', (e) => {
