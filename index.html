@@ -4034,6 +4034,7 @@
         let dumbdogBootTimer = null;
         let dumbdogBootMessageTimer = null;
         let dumbdogBiosTimer = null;
+        let dumbdogMessengerAttentionTimer = null;
         let dumbdogBootStepTimers = [];
         let dumbdogPhotoTimer = null;
         let dumbdogPhotoTransitionTimer = null;
@@ -4150,6 +4151,8 @@
 
         function setDumbdogOSActive(enabled) {
             document.body.classList.toggle('dumbdog-os-active', enabled);
+            clearTimeout(dumbdogMessengerAttentionTimer);
+            dumbdogMessengerAttentionTimer = null;
 
             const os = document.getElementById('dumbdog-os');
             if (os) {
@@ -4157,7 +4160,10 @@
             }
 
             if (enabled) {
-                restartDumbdogMessengerAttention();
+                dumbdogMessengerAttentionTimer = window.setTimeout(() => {
+                    restartDumbdogMessengerAttention();
+                    dumbdogMessengerAttentionTimer = null;
+                }, 2500);
             } else {
                 setDumbdogStartMenu(false);
                 closeDumbdogDialog();
