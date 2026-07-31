@@ -4123,6 +4123,7 @@
         let dumbdogPhotoPool = [];
         let dumbdogPhotoIndex = -1;
         let dumbdogCalendarDateKey = '';
+        let dumbdogWeatherState = null;
         const dumbdogBiosDelay = 6200;
         const dumbdogReducedBiosDelay = 260;
         const dumbdogBiosLineDelay = 540;
@@ -4595,16 +4596,62 @@
             dumbdogPhotoRequestId += 1;
         }
 
+        function isDumbdogWeatherNight(date = new Date()) {
+            const hour = date.getHours();
+            return hour >= 19 || hour < 6;
+        }
+
+        function renderDumbdogWeather(weather, date = new Date()) {
+            if (!weather) return;
+
+            const night = isDumbdogWeatherNight(date);
+            const image = night ? weather.nightImage : weather.image;
+            const captionText = night ? (weather.nightCaption || weather.caption) : weather.caption;
+            const weatherWidget = document.querySelector('[data-dumbdog-weather-widget]');
+
+            if (weatherWidget) {
+                weatherWidget.style.setProperty('--dumbdog-weather-image', `url("${image}")`);
+                weatherWidget.style.setProperty('--dumbdog-weather-border', weather.border);
+                weatherWidget.dataset.timeOfDay = night ? 'night' : 'day';
+            }
+
+            const temp = document.querySelector('[data-dumbdog-weather-temp]');
+            if (temp) {
+                temp.innerHTML = `${weather.temp}&deg;`;
+            }
+
+            const caption = document.querySelector('[data-dumbdog-weather-caption]');
+            if (caption) {
+                caption.textContent = captionText;
+            }
+
+            const high = document.querySelector('[data-dumbdog-weather-high]');
+            if (high) {
+                high.innerHTML = `${weather.high}&deg;`;
+            }
+
+            const low = document.querySelector('[data-dumbdog-weather-low]');
+            if (low) {
+                low.innerHTML = `${weather.low}&deg;`;
+            }
+
+            const range = document.querySelector('[data-dumbdog-weather-range]');
+            if (range) {
+                range.setAttribute('aria-label', `High ${weather.high} degrees, low ${weather.low} degrees`);
+            }
+
+        }
+
         function randomizeDumbdogWidgets() {
             const weatherPresets = [
-                { caption: 'Sunny', tempRange: [74, 92], highRise: [2, 7], lowDrop: [10, 20], image: '/aero/weather/sunny.webp', border: 'rgba(255,225,137,.44)' },
-                { caption: 'Mostly sunny', tempRange: [70, 88], highRise: [2, 7], lowDrop: [9, 18], image: '/aero/weather/mostly-sunny.webp', border: 'rgba(194,228,247,.42)' },
-                { caption: 'Partly cloudy', tempRange: [62, 82], highRise: [2, 6], lowDrop: [8, 16], image: '/aero/weather/partly-cloudy.webp', border: 'rgba(198,222,237,.40)' },
-                { caption: 'Cloudy', tempRange: [52, 74], highRise: [1, 5], lowDrop: [7, 14], image: '/aero/weather/cloudy.webp', border: 'rgba(187,207,221,.36)' },
-                { caption: 'Mist', tempRange: [46, 65], highRise: [1, 5], lowDrop: [5, 12], image: '/aero/weather/mist.webp', border: 'rgba(211,222,229,.38)' },
-                { caption: 'Rain showers', tempRange: [48, 68], highRise: [1, 5], lowDrop: [6, 13], image: '/aero/weather/rain-showers.webp', border: 'rgba(139,199,237,.40)' },
-                { caption: 'Thunderstorms', tempRange: [61, 82], highRise: [1, 6], lowDrop: [8, 16], image: '/aero/weather/thunderstorms.webp', border: 'rgba(165,152,211,.40)' },
-                { caption: 'Light snow', tempRange: [20, 35], highRise: [1, 4], lowDrop: [6, 14], image: '/aero/weather/light-snow.webp', border: 'rgba(215,244,250,.46)' },
+                { caption: 'Sunny', nightCaption: 'Clear', tempRange: [74, 92], highRise: [2, 7], lowDrop: [10, 20], image: '/aero/weather/sunny.webp', nightImage: '/aero/weather/sunny-night.webp', border: 'rgba(255,225,137,.44)' },
+                { caption: 'Mostly sunny', nightCaption: 'Mostly clear', tempRange: [70, 88], highRise: [2, 7], lowDrop: [9, 18], image: '/aero/weather/mostly-sunny.webp', nightImage: '/aero/weather/mostly-sunny-night.webp', border: 'rgba(194,228,247,.42)' },
+                { caption: 'Partly cloudy', tempRange: [62, 82], highRise: [2, 6], lowDrop: [8, 16], image: '/aero/weather/partly-cloudy.webp', nightImage: '/aero/weather/partly-cloudy-night.webp', border: 'rgba(198,222,237,.40)' },
+                { caption: 'Cloudy', tempRange: [52, 74], highRise: [1, 5], lowDrop: [7, 14], image: '/aero/weather/cloudy.webp', nightImage: '/aero/weather/cloudy-night.webp', border: 'rgba(187,207,221,.36)' },
+                { caption: 'Mist', tempRange: [46, 65], highRise: [1, 5], lowDrop: [5, 12], image: '/aero/weather/mist.webp', nightImage: '/aero/weather/mist-night.webp', border: 'rgba(211,222,229,.38)' },
+                { caption: 'Rain showers', tempRange: [48, 68], highRise: [1, 5], lowDrop: [6, 13], image: '/aero/weather/rain-showers.webp', nightImage: '/aero/weather/rain-showers-night.webp', border: 'rgba(139,199,237,.40)' },
+                { caption: 'Thunderstorms', tempRange: [61, 82], highRise: [1, 6], lowDrop: [8, 16], image: '/aero/weather/thunderstorms.webp', nightImage: '/aero/weather/thunderstorms-night.webp', border: 'rgba(165,152,211,.40)' },
+                { caption: 'Light snow', tempRange: [20, 35], highRise: [1, 4], lowDrop: [6, 14], image: '/aero/weather/light-snow.webp', nightImage: '/aero/weather/light-snow-night.webp', border: 'rgba(215,244,250,.46)' },
             ];
 
             let weather = null;
@@ -4644,36 +4691,11 @@
                 } catch {}
             }
 
-            const weatherWidget = document.querySelector('[data-dumbdog-weather-widget]');
-            if (weatherWidget) {
-                weatherWidget.style.setProperty('--dumbdog-weather-image', `url("${weather.image}")`);
-                weatherWidget.style.setProperty('--dumbdog-weather-border', weather.border);
-            }
+            dumbdogWeatherState = weather;
+            renderDumbdogWeather(dumbdogWeatherState);
 
-            const temp = document.querySelector('[data-dumbdog-weather-temp]');
-            if (temp) {
-                temp.innerHTML = `${weather.temp}&deg;`;
-            }
-
-            const caption = document.querySelector('[data-dumbdog-weather-caption]');
-            if (caption) {
-                caption.textContent = weather.caption;
-            }
-
-            const high = document.querySelector('[data-dumbdog-weather-high]');
-            if (high) {
-                high.innerHTML = `${weather.high}&deg;`;
-            }
-
-            const low = document.querySelector('[data-dumbdog-weather-low]');
-            if (low) {
-                low.innerHTML = `${weather.low}&deg;`;
-            }
-
-            const range = document.querySelector('[data-dumbdog-weather-range]');
-            if (range) {
-                range.setAttribute('aria-label', `High ${weather.high} degrees, low ${weather.low} degrees`);
-            }
+            const alternateWeatherImage = new Image();
+            alternateWeatherImage.src = isDumbdogWeatherNight() ? weather.image : weather.nightImage;
 
             const status = pickRandomItem([
                 { text: 'Online', color: '#76ff9b', glow: 'rgba(118,255,155,.78)' },
@@ -4922,6 +4944,7 @@
             updateDumbdogCalendar(true);
             randomizeDumbdogWidgets();
             window.setInterval(updateDumbdogClock, 1000);
+            window.setInterval(() => renderDumbdogWeather(dumbdogWeatherState), 60000);
 
             const onLiteSceneChange = (event) => {
                 if (!event.matches) {
