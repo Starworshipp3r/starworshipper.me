@@ -1443,6 +1443,8 @@
   .dumbdog-weather-widget{
     --dumbdog-weather-image: url('/aero/weather/mostly-sunny.webp');
     --dumbdog-weather-border: rgba(212, 238, 255, .36);
+    min-height: 92px;
+    padding: 8px 10px 9px;
     border-color: var(--dumbdog-weather-border);
     background: var(--dumbdog-weather-image) center / cover no-repeat;
     box-shadow:
@@ -1466,6 +1468,45 @@
   .dumbdog-weather-widget > *{
     position: relative;
     z-index: 1;
+  }
+
+  .dumbdog-weather-widget .dumbdog-widget-label{
+    position: absolute;
+    left: 10px;
+    bottom: 8px;
+    margin: 0;
+    color: rgba(231, 246, 255, .78);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, .82);
+  }
+
+  .dumbdog-weather-current{
+    display: flex;
+    min-height: 61px;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-start;
+    text-align: right;
+  }
+
+  .dumbdog-weather-condition{
+    margin-top: 1px;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1.1;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, .9);
+  }
+
+  .dumbdog-weather-range{
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    margin-top: 3px;
+    color: rgba(255,255,255,.82);
+    font-size: 9px;
+    font-weight: 700;
+    line-height: 1;
+    text-shadow: 0 1px 3px rgba(0,0,0,.9);
   }
 
   .dumbdog-widget-label{
@@ -1851,8 +1892,11 @@
   }
 
   .dumbdog-weather-temp{
-    font-size: 28px;
-    line-height: 1;
+    color: #fff;
+    font-size: 32px;
+    font-weight: 400;
+    line-height: .92;
+    text-shadow: 0 1px 5px rgba(0, 0, 0, .88);
   }
 
   .dumbdog-status-avatar{
@@ -3110,10 +3154,15 @@
 
                 <section class="dumbdog-widget dumbdog-weather-widget" data-dumbdog-weather-widget>
                     <span class="dumbdog-widget-label">Weather</span>
-                    <div class="dumbdog-widget-main">
+                    <div class="dumbdog-weather-current">
                         <span class="dumbdog-weather-temp" data-dumbdog-weather-temp>72&deg;</span>
+                        <span class="dumbdog-weather-condition" data-dumbdog-weather-caption>Mostly sunny</span>
+                        <span class="dumbdog-weather-range" data-dumbdog-weather-range aria-label="High 78 degrees, low 63 degrees">
+                            <span data-dumbdog-weather-high>78&deg;</span>
+                            <span aria-hidden="true">&rarr;</span>
+                            <span data-dumbdog-weather-low>63&deg;</span>
+                        </span>
                     </div>
-                    <p class="dumbdog-widget-sub" data-dumbdog-weather-caption>Mostly sunny</p>
                 </section>
 
                 <section class="dumbdog-widget">
@@ -4380,6 +4429,10 @@
             return items[Math.floor(Math.random() * items.length)];
         }
 
+        function randomInteger(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
         function updateDumbdogCalendar(force = false) {
             const now = new Date();
             const dateKey = now.toDateString();
@@ -4544,14 +4597,14 @@
 
         function randomizeDumbdogWidgets() {
             const weatherPresets = [
-                { temp: 76, caption: 'Sunny', image: '/aero/weather/sunny.webp', border: 'rgba(255,225,137,.44)' },
-                { temp: 74, caption: 'Mostly sunny', image: '/aero/weather/mostly-sunny.webp', border: 'rgba(194,228,247,.42)' },
-                { temp: 69, caption: 'Partly cloudy', image: '/aero/weather/partly-cloudy.webp', border: 'rgba(198,222,237,.40)' },
-                { temp: 64, caption: 'Cloudy', image: '/aero/weather/cloudy.webp', border: 'rgba(187,207,221,.36)' },
-                { temp: 58, caption: 'Mist', image: '/aero/weather/mist.webp', border: 'rgba(211,222,229,.38)' },
-                { temp: 61, caption: 'Rain showers', image: '/aero/weather/rain-showers.webp', border: 'rgba(139,199,237,.40)' },
-                { temp: 72, caption: 'Thunderstorms', image: '/aero/weather/thunderstorms.webp', border: 'rgba(165,152,211,.40)' },
-                { temp: 31, caption: 'Light snow', image: '/aero/weather/light-snow.webp', border: 'rgba(215,244,250,.46)' },
+                { caption: 'Sunny', tempRange: [74, 92], highRise: [2, 7], lowDrop: [10, 20], image: '/aero/weather/sunny.webp', border: 'rgba(255,225,137,.44)' },
+                { caption: 'Mostly sunny', tempRange: [70, 88], highRise: [2, 7], lowDrop: [9, 18], image: '/aero/weather/mostly-sunny.webp', border: 'rgba(194,228,247,.42)' },
+                { caption: 'Partly cloudy', tempRange: [62, 82], highRise: [2, 6], lowDrop: [8, 16], image: '/aero/weather/partly-cloudy.webp', border: 'rgba(198,222,237,.40)' },
+                { caption: 'Cloudy', tempRange: [52, 74], highRise: [1, 5], lowDrop: [7, 14], image: '/aero/weather/cloudy.webp', border: 'rgba(187,207,221,.36)' },
+                { caption: 'Mist', tempRange: [46, 65], highRise: [1, 5], lowDrop: [5, 12], image: '/aero/weather/mist.webp', border: 'rgba(211,222,229,.38)' },
+                { caption: 'Rain showers', tempRange: [48, 68], highRise: [1, 5], lowDrop: [6, 13], image: '/aero/weather/rain-showers.webp', border: 'rgba(139,199,237,.40)' },
+                { caption: 'Thunderstorms', tempRange: [61, 82], highRise: [1, 6], lowDrop: [8, 16], image: '/aero/weather/thunderstorms.webp', border: 'rgba(165,152,211,.40)' },
+                { caption: 'Light snow', tempRange: [20, 35], highRise: [1, 4], lowDrop: [6, 14], image: '/aero/weather/light-snow.webp', border: 'rgba(215,244,250,.46)' },
             ];
 
             let weather = null;
@@ -4561,15 +4614,31 @@
                 weather = null;
             }
 
-            const storedWeather = weatherPresets.find((preset) => preset.caption === weather?.caption);
-            if (storedWeather) {
-                weather = storedWeather;
+            const storedPreset = weatherPresets.find((preset) => preset.caption === weather?.caption);
+            const hasStoredTemperatures = Number.isFinite(weather?.temp)
+                && Number.isFinite(weather?.high)
+                && Number.isFinite(weather?.low);
+
+            if (storedPreset && hasStoredTemperatures) {
+                weather = {
+                    ...storedPreset,
+                    temp: weather.temp,
+                    high: weather.high,
+                    low: weather.low,
+                };
             } else {
-                weather = pickRandomItem([
+                const preset = storedPreset || pickRandomItem([
                     ...weatherPresets.slice(0, 4),
                     ...weatherPresets.slice(0, 4),
                     ...weatherPresets.slice(4),
                 ]);
+                const temp = randomInteger(...preset.tempRange);
+                weather = {
+                    ...preset,
+                    temp,
+                    high: temp + randomInteger(...preset.highRise),
+                    low: temp - randomInteger(...preset.lowDrop),
+                };
                 try {
                     sessionStorage.setItem('dumbdog-weather', JSON.stringify(weather));
                 } catch {}
@@ -4589,6 +4658,21 @@
             const caption = document.querySelector('[data-dumbdog-weather-caption]');
             if (caption) {
                 caption.textContent = weather.caption;
+            }
+
+            const high = document.querySelector('[data-dumbdog-weather-high]');
+            if (high) {
+                high.innerHTML = `${weather.high}&deg;`;
+            }
+
+            const low = document.querySelector('[data-dumbdog-weather-low]');
+            if (low) {
+                low.innerHTML = `${weather.low}&deg;`;
+            }
+
+            const range = document.querySelector('[data-dumbdog-weather-range]');
+            if (range) {
+                range.setAttribute('aria-label', `High ${weather.high} degrees, low ${weather.low} degrees`);
             }
 
             const status = pickRandomItem([
