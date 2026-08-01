@@ -59,19 +59,15 @@
     }
     .username-alias-visual{ white-space: nowrap; }
     .username-alias-glyph{
-      display: inline-block;
-      position: relative;
-      width: .5em;
-      height: 1em;
+      display: inline-grid;
+      width: .56em;
       overflow: hidden;
-      vertical-align: -.04em;
+      vertical-align: baseline;
     }
     .username-alias-glyph > span{
-      position: absolute;
-      inset: 0;
-      display: grid;
-      place-items: center;
-      line-height: 1;
+      grid-area: 1 / 1;
+      justify-self: center;
+      line-height: inherit;
       will-change: transform, opacity;
     }
     .username-alias-e{ animation: username-alias-e 7s cubic-bezier(.4,0,.2,1) infinite; }
