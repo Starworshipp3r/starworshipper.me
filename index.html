@@ -143,6 +143,56 @@
 100% { transform: rotate(720deg) scale(1); }
 }
 
+  .username-alias{
+    display: inline;
+    white-space: nowrap;
+  }
+
+  .username-alias-visual{
+    white-space: nowrap;
+  }
+
+  .username-alias-glyph{
+    display: inline-block;
+    position: relative;
+    width: .56em;
+    height: 1em;
+    overflow: hidden;
+    vertical-align: -.12em;
+  }
+
+  .username-alias-glyph > span{
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    line-height: 1;
+    will-change: transform, opacity;
+  }
+
+  .username-alias-e{
+    animation: username-alias-e 7s cubic-bezier(.4,0,.2,1) infinite;
+  }
+
+  .username-alias-three{
+    transform: translateY(110%);
+    opacity: 0;
+    animation: username-alias-three 7s cubic-bezier(.4,0,.2,1) infinite;
+  }
+
+  @keyframes username-alias-e{
+    0%, 38% { transform: translateY(0); opacity: 1; }
+    48%, 90% { transform: translateY(-110%); opacity: 0; }
+    91% { transform: translateY(110%); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+  }
+
+  @keyframes username-alias-three{
+    0%, 38% { transform: translateY(110%); opacity: 0; }
+    48%, 90% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(-110%); opacity: 0; }
+  }
+
   /* Noise film */
   /* Main window */
   .mica-window{
@@ -2987,6 +3037,17 @@
   }
 
   @media (prefers-reduced-motion: reduce){
+    .username-alias-e{
+      animation: none !important;
+      transform: none !important;
+      opacity: 1 !important;
+    }
+
+    .username-alias-three{
+      animation: none !important;
+      opacity: 0 !important;
+    }
+
     .dumbdog-boot,
     .dumbdog-os,
     .dumbdog-bios-panel,
@@ -3071,7 +3132,7 @@
                 <div class="dumbdog-window-body">
                     <div class="dumbdog-profile">
                         <img src="av.jpg" alt="Profile Picture">
-                        <h2>@Starworshipper</h2>
+                        <h2><span class="username-alias" aria-label="Starworshipper, also Starworshipp3r"><span class="username-alias-visual" aria-hidden="true">Starworshipp<span class="username-alias-glyph"><span class="username-alias-e">e</span><span class="username-alias-three">3</span></span>r</span></span></h2>
                         <p>Certified Frutiger Aero dog.</p>
                     </div>
 
@@ -3231,7 +3292,7 @@
                 <div class="dumbdog-start-right">
                     <div class="dumbdog-start-user">
                         <img src="/aero/vistafish.png" alt="">
-                        <span>Starworshipper</span>
+                        <span class="username-alias" aria-label="Starworshipper, also Starworshipp3r"><span class="username-alias-visual" aria-hidden="true">Starworshipp<span class="username-alias-glyph"><span class="username-alias-e">e</span><span class="username-alias-three">3</span></span>r</span></span>
                     </div>
                     <a class="dumbdog-start-right-link" href="/site/" target="_blank" rel="noopener"><i class="fa-solid fa-user" aria-hidden="true"></i><span>Profile</span></a>
                     <a class="dumbdog-start-right-link" href="/site/journal/" target="_blank" rel="noopener"><i class="fa-solid fa-folder" aria-hidden="true"></i><span>Documents</span></a>
@@ -3421,7 +3482,7 @@
                   class="profile-avatar"
                   onerror="this.onerror=null; this.src='https://placehold.co/128x128/1f2937/ffffff?text=Error';"
                 >
-                <h1 class="text-2xl font-bold text-white">@Starworshipper</h1>
+                <h1 class="text-2xl font-bold text-white"><span class="username-alias" aria-label="Starworshipper, also Starworshipp3r"><span class="username-alias-visual" aria-hidden="true">Starworshipp<span class="username-alias-glyph"><span class="username-alias-e">e</span><span class="username-alias-three">3</span></span>r</span></span></h1>
 
                 <div class="text-center mt-1">
                 <p class="text-gray-300 certified-line">

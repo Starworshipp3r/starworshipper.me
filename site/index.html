@@ -53,6 +53,45 @@
 
     @keyframes rotate-background { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
+    .username-alias{
+      display: inline;
+      white-space: nowrap;
+    }
+    .username-alias-visual{ white-space: nowrap; }
+    .username-alias-glyph{
+      display: inline-block;
+      position: relative;
+      width: .56em;
+      height: 1em;
+      overflow: hidden;
+      vertical-align: -.12em;
+    }
+    .username-alias-glyph > span{
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      line-height: 1;
+      will-change: transform, opacity;
+    }
+    .username-alias-e{ animation: username-alias-e 7s cubic-bezier(.4,0,.2,1) infinite; }
+    .username-alias-three{
+      transform: translateY(110%);
+      opacity: 0;
+      animation: username-alias-three 7s cubic-bezier(.4,0,.2,1) infinite;
+    }
+    @keyframes username-alias-e{
+      0%, 38% { transform: translateY(0); opacity: 1; }
+      48%, 90% { transform: translateY(-110%); opacity: 0; }
+      91% { transform: translateY(110%); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+    @keyframes username-alias-three{
+      0%, 38% { transform: translateY(110%); opacity: 0; }
+      48%, 90% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(-110%); opacity: 0; }
+    }
+
     body::before{
       content:'';
       position: fixed;
@@ -129,6 +168,15 @@
       }
     }
     @media (prefers-reduced-motion: reduce){
+      .username-alias-e{
+        animation: none !important;
+        transform: none !important;
+        opacity: 1 !important;
+      }
+      .username-alias-three{
+        animation: none !important;
+        opacity: 0 !important;
+      }
       #stuff .flex.flex-wrap > span,
       #stuff .flex.flex-wrap > span i{
         transition-duration: 0s;
@@ -443,7 +491,7 @@
 
       <button type="button" class="shell-identity-control min-w-0" aria-label="Show profile identity">
         <div class="shell-identity leading-tight min-w-0">
-          <div class="font-semibold truncate">@Starworshipper</div>
+          <div class="font-semibold truncate"><span class="username-alias" aria-label="Starworshipper, also Starworshipp3r"><span class="username-alias-visual" aria-hidden="true">Starworshipp<span class="username-alias-glyph"><span class="username-alias-e">e</span><span class="username-alias-three">3</span></span>r</span></span></div>
           <div class="text-white/60 text-sm truncate">Certified dumb dog.</div>
         </div>
 
