@@ -12,18 +12,6 @@
     ]
   },
   {
-    "date": "2026-08-02",
-    "title": "Working In Layers",
-    "type": "project",
-    "body": "Took on another small project after liking how the last one turned out. The process was pretty similar: starting with a reference photo of my own hand, using AI to reinterpret it as my character, and then taking those pieces into Photoshop, Premiere, and After Effects to make it feel like something that was actually mine.\n\nThis one gave me a chance to experiment more with rendering the same animation in separate layers. I rendered the hand and background together, then rendered the moving star separately so I could datamosh it, add glitch effects, and overlay everything back together. It took a couple hours of piecing things together, rendering, tweaking, and rendering again... but I think it turned out pretty cool.\n\nI’m really starting to enjoy this kind of AI-assisted process. The AI helps bring the initial idea into existence, but the interesting part is everything afterward: cleaning it up, separating the layers, deciding what should move, and figuring out how all the pieces should interact. It feels less like asking something to create for me and more like being handed a pile of raw material to build something from.\n\nAlso learned from the last project and rendered everything at a properly high resolution from the beginning... self-improvement. :3\n\nToday is going to be a good day... I can feel it. I’m excited to see where it goes. :3",
-    "tags": ["project", "personal"],
-    "coverImage": "/site/journal/images/working-in-layers-cover.jpg",
-    "photos": [
-      "/site/journal/images/working-in-layers-cover.jpg",
-      "/site/journal/images/working-in-layers-after-effects.png"
-    ]
-  },
-  {
     "date": "2026-08-01",
     "title": "Without Distractions",
     "type": "music",
