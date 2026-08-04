@@ -1,10 +1,24 @@
 [
   {
+    "date": "2026-08-03",
+    "title": "Worth Getting Lost In",
+    "type": "reflection",
+    "body": "Today felt like the first real day of the trip. Yesterday was mostly travel, getting settled, and letting my brain slowly accept that I had successfully left the house without it immediately flooding, burning down, or disappearing behind me. Today was a lot more active.\n\nOne of the first funny moments of the trip happened when I came around family again and a few people did not entirely recognize me. Not in a dramatic way, but there was definitely a second where their brains had to connect the person standing in front of them with the version of me they remembered.\n\nApparently getting bigger, stronger, and balder changes the silhouette a little.\n\nI see myself every day, so most of those changes happen slowly enough to disappear into the routine. Another workout. Another meal. A little more weight on the bar. A little less hair on my head. Then I come back around people who have not seen me in a while, and their reaction becomes a much clearer measurement than anything I could track myself.\n\nThe important part is that I like the change. I feel stronger, I look more like the person I have gradually been working toward, and it is nice knowing the difference is visible before I even say anything.\n\nWe took the light rail into Seattle and headed toward Pike Place. At one point, a guy hopped onto the train and immediately started getting worked up because he thought he might be going the wrong direction. It was also my first time using the light rail, so I was not exactly a seasoned local with all the answers, but I still told him, “Don’t worry about it if it’s not yours to change.”\n\nWhich is funny, because I apparently cannot stop accidentally quoting my own journal entries in real life now.\n\nHe figured out where he needed to go, hopped off at the next stop to reset his route, and thanked me before leaving. It was such a small interaction, but I think confidence can be a little contagious sometimes. Even when you do not have every answer yourself, calmly acting like the situation is manageable can help somebody else believe that it is too.\n\nWe spent a good chunk of the day wandering around Pike Place, the surrounding streets, and down near the pier by the aquarium. We also checked out The Spheres before eventually making our way over to Seattle Center and the Space Needle.\n\nI got lost a few times, but it was the fun kind of lost. No real urgency, no feeling that I needed to follow the most efficient route, just letting whatever looked interesting pull me farther into the city. A building, a strange little alley, someone crossing through the right patch of light, or a scene that looked like it might become a good photograph if I stopped for a second.\n\nI took a ridiculous number of street photos throughout the day, which means future me now has a ridiculous number of photos to sort through and edit. Still, this felt like exactly the kind of place where carrying the camera was worth it. There was always another piece of architecture, another person, or another little moment that made me want to stop and capture it before moving on.\n\nA surprising number of people also complimented my shirt or the stickers covering my backpack. They were tiny interactions, but they made me happy. I spend a lot of time choosing little things that feel like me, even when they are strange, obscure, or require some explanation. Being somewhere unfamiliar and having people notice those details in a positive way made the entire outfit and sticker setup feel worth carrying around.\n\nSomeone at Pike Place told me they liked my Hyena Agenda shirt, so I immediately told them that I liked their style too. They sort of lit up when I said it, almost like they had expected the compliment to travel in only one direction and were surprised to have the kindness handed straight back to them.\n\nThat interaction somehow turned into a small cider tasting. He invited me behind the little vendor table, poured a few different samples, and we just stood there vibing and talking for a while. I bought the flight sampler, but he ended up giving me a couple extra samples on top of it.\n\nNothing huge happened. It was just easy. A compliment became another compliment, which became a conversation, which became standing behind a vendor table trying cider with someone I had only just met.\n\nI do not think I would have been this comfortable a few years ago. Hell, maybe not even a couple years ago. I probably would have accepted the original compliment, said thank you, and kept walking before the interaction had the chance to become anything else.\n\nNow it feels much more natural to return the energy people give me. To talk to strangers. To reassure somebody who looks worried. To compliment someone without getting trapped inside my own head. To let a conversation keep unfolding instead of searching for the quickest way out of it.\n\nMaybe confidence really is a little contagious. You carry yourself like you belong somewhere, and people become more comfortable opening up around you. Someone offers kindness, you hand it back, and suddenly both people leave the interaction feeling a little better than they did before.\n\nMaybe that is part of why today felt so good. I got to wander through a place that was unfamiliar without feeling uncomfortable inside it. I could get lost, take photos, wear things I liked, and let small conversations happen naturally along the way.\n\nA much fuller day than yesterday. More movement, more people, more city, and far more photos than I currently know what to do with.\n\nSome places are worth getting a little lost in. Sometimes that is where you realize how comfortable you have become finding your own way.",
+    "tags": [
+      "travel",
+      "photography",
+      "personal"
+    ]
+  },
+  {
     "date": "2026-08-02",
     "title": "Working In Layers",
     "type": "project",
     "body": "Took on another small project after liking how the last one turned out. The process was pretty similar: starting with a reference photo of my own hand, using AI to reinterpret it as my character, and then taking those pieces into Photoshop, Premiere, and After Effects to make it feel like something that was actually mine.\n\nThis one gave me a chance to experiment more with rendering the same animation in separate layers. I rendered the hand and background together, then rendered the moving star separately so I could datamosh it, add glitch effects, and overlay everything back together. It took a couple hours of piecing things together, rendering, tweaking, and rendering again... but I think it turned out pretty cool.\n\nI’m really starting to enjoy this kind of AI-assisted process. The AI helps bring the initial idea into existence, but the interesting part is everything afterward: cleaning it up, separating the layers, deciding what should move, and figuring out how all the pieces should interact. It feels less like asking something to create for me and more like being handed a pile of raw material to build something from.\n\nAlso learned from the last project and rendered everything at a properly high resolution from the beginning... self-improvement. :3\n\nToday is going to be a good day... I can feel it. I’m excited to see where it goes. :3",
-    "tags": ["project", "personal"],
+    "tags": [
+      "project",
+      "personal"
+    ],
     "coverImage": "/site/journal/images/working-in-layers-cover.jpg",
     "photos": [
       "/site/journal/images/working-in-layers-cover.jpg",
@@ -32,7 +46,10 @@
     "photos": [
       "/site/journal/images/spotify-playlist-art-july-31.png"
     ],
-    "tags": ["project", "reflection"]
+    "tags": [
+      "project",
+      "reflection"
+    ]
   },
   {
     "date": "2026-07-30",
@@ -43,7 +60,10 @@
     "photos": [
       "/site/journal/images/until-its-yours-to-change-july-30.jpg"
     ],
-    "tags": ["personal", "reflection"]
+    "tags": [
+      "personal",
+      "reflection"
+    ]
   },
   {
     "date": "2026-07-29",
@@ -56,7 +76,11 @@
       "/site/journal/images/finally-its-you-2-july-29.jpg",
       "/site/journal/images/finally-its-you-achievements-july-29.jpg"
     ],
-    "tags": ["gaming", "reflection", "work"]
+    "tags": [
+      "gaming",
+      "reflection",
+      "work"
+    ]
   },
   {
     "date": "2026-07-28",
@@ -64,14 +88,22 @@
     "type": "reflection",
     "body": "Feeling pretty good today. Went to the gym for more of an active recovery session, which actually felt pretty nice. Spent about 30 minutes on the treadmill and managed to get some studying in for MD-102 while I was on there. It feels good being able to multitask like that and still retain the information while getting my body moving.\n\nI have been a regular there long enough that a lot of us just kinda' yap with each other between sets. During one of those conversations, I was telling someone about a situation where another person was messing with me and I kept pushing back until they finally found their place and backed off. Their response was basically, \"Was that old Matt or new Matt?\"\n\nIt was a short little question, but it stuck with me.\n\nOld Matt probably would have backed away, let it go, or accepted something just to keep the peace. New Matt is much more willing to hold his ground and push back when something does not sit right. I do not think that necessarily means I have become meaner or more menacing... maybe I am just a little harder to move now.\n\nChange can happen slowly enough that it feels invisible while you are living through it. Sometimes it takes somebody else casually pointing at the difference for you to realize just how much of it has already happened.\n\nAlso took a few minutes to better sort through my vinyls. Nothing crazy, just one of those small tasks that feels nice to finally straighten out.",
     "coverImage": "/site/journal/images/old-me-new-me-vinyls-july-28.jpg",
-    "tags": ["personal", "reflection", "work"]
+    "tags": [
+      "personal",
+      "reflection",
+      "work"
+    ]
   },
   {
     "date": "2026-07-27",
     "title": "Do You Know Who You Are?",
     "type": "reflection",
     "body": "Managed to get through most of *There Is a You That Remains*, the DLC for Oath. I am basically at the ending now, just wrapping up a few tasks and hunting down whatever achievements I can before I finally leave. There were a couple of weird moments, but overall it was a nice little addition that built on the original game in ways I enjoyed.\n\nOne moment has been sitting with me more than I expected. You enter a room and someone asks if you know who you are. The game gives you two answers: \"I know who I am\" and \"I'm unsure.\" Choosing the confident answer only makes them ask if you are really sure... until eventually, uncertainty becomes the only honest way forward.\n\nI feel like both answers can be true. There are days where I know exactly who I am, what I want, and who I am trying to become. Then there are days where that confidence feels a little less certain. Looking back at who I was 10 or 15 years ago makes the amount I have changed feel almost impossible, even though most of it happened slowly enough to feel natural while I was living through it.\n\nMaybe knowing who you are does not mean having one permanent answer. Maybe it means recognizing yourself through every version, even when some parts are still changing.\n\nAlso started poking at Microsoft's MD-102 Endpoint Administrator exam. Took a practice test mostly cold and landed around 75%, which honestly felt pretty good considering I have not properly started studying yet. Nice little reminder that some of the knowledge I have picked up over the years actually stuck. There are still a few core areas I need to tighten up, so that will probably be part of the week ahead alongside catching up on work and getting things squared away before I eventually head out on vacation.\n\n*I think I know who I am... but maybe being unsure from time to time is part of knowing myself honestly.*\n\nNearly a week of looking like a mutt btw, hopefully tomorrow comes so I can look... semi... normal again. ;3",
-    "tags": ["gaming", "personal", "reflection"],
+    "tags": [
+      "gaming",
+      "personal",
+      "reflection"
+    ],
     "coverImage": "/site/journal/images/do-you-know-who-you-are-july-27.jpg",
     "photos": [
       "/site/journal/images/do-you-know-who-you-are-july-27.jpg"
@@ -82,7 +114,11 @@
     "title": "Despite Everything, It's Still You",
     "type": "music",
     "body": "Woke up pretty early and got the day started. Sometimes it feels pretty good to have everything handled before 9:00 AM, even on a Sunday. There is something nice about having the whole day still sitting in front of you after the usual little things are already out of the way.\n\nPlayed a little more of Oath last night and started digging into the DLC, *There Is a You That Remains*. It is a bit more open-world than the main game, but it is still wrestling with the same kind of painfully relatable emotions, struggles, and little pressure points that made the original hit me so hard.\n\nvai5000 also opened pre-orders for her new album today, which I immediately picked up. There are only three songs available so far, but I have already been running through them. \"defend\" is probably my favorite right now. Something about her lyrics always seems to find a relevant point in my life and press directly against it.\n\nI think she has quietly become my favorite musical artist... maybe ever. Before this, I definitely had favorite songs, but I do not think I could have answered if somebody asked who my favorite artist was. Now, without a doubt, I would say vai5000.\n\nIt is funny remembering how that started. \"pretty\" showed up in my Spotify Discover Weekly at some point, and the first time I listened I was basically like... eh, whatever. Then I played it again and something clicked. You can almost trace the realization through my library from there. One song became another, then another, and eventually I was buying everything she released. It is nice finally having an answer to that question.\n\nMusic has been a huge part of my life for as long as I can remember, so it is kind of funny that it took this long to find an artist I could call my favorite without hesitating. It feels even more fitting that the answer is usually met with, \"Wait... who?\"\n\nI think a strange amount of my personality lives inside that unfamiliarity. What phone do you use? OnePlus. What car do you drive? A WRX. Who is your favorite artist? vai5000. Simple questions that somehow always require a little explanation. Maybe I just naturally find myself in these smaller ecosystems, surrounded by things I genuinely love even if most people have no idea what I am talking about.\n\nI wonder what I will think when I look back at this entry a year, two years, or three years from now. Will she still be my favorite artist, or will that answer have changed again? I guess that is part of keeping a journal... leaving little statements for a future version of yourself and waiting to see which ones still feel true. Aging into the unknown, I suppose.\n\nDo... you ever feel like you're getting stronger and weaker at the same time...? Like the more capable you become, the more clearly you can see the parts of yourself that are... still tender. I don't really have the words for it yet... just something sitting... in the back of my mind.",
-    "tags": ["music", "gaming", "personal"],
+    "tags": [
+      "music",
+      "gaming",
+      "personal"
+    ],
     "coverImage": "/site/journal/images/without-a-doubt-oath-2-july-26.jpg",
     "photos": [
       "/site/journal/images/without-a-doubt-oath-1-july-26.jpg",
@@ -97,7 +133,10 @@
     "title": "Familiar Frequencies",
     "type": "note",
     "body": "Pretty good day overall. Hit the gym as usual, ran into a couple friends, and shot the shit for a bit mid-workout. Always nice when the usual routine comes with a little company.\n\nIt was fucking hot today. Like... 117 degrees hot. I don't know why I keep doing this to myself, but I also don't really know where else I'd go, so I stay here and hope winter eventually remembers we exist. Still have a long way to go.\n\nIt started raining later in the evening, which wasn't too bad... even if it was somehow still around 113 degrees. Walking out to get the mail felt less like standing in the rain and more like taking a shower outside.\n\nSomeone I hadn't talked to in a little while reached out today. It was nice hearing from her again, and I hope it lasts. I really like talking to her about music, art, life goals, and whatever else comes up. Our musical tastes are aligned enough that it is easy to yap about weird artists nobody else seems to know. It is nice not having to explain who Softcult, GORE GIRL, or vai5000 are, or why Vocaloid is playing, before the conversation can even start.\n\nI've had people at the gym ask what I'm listening to, only to respond with \"Who?\" the moment I answer. Like... okay, well, there goes that conversation piece. Trying to explain some of the weird music I like to somebody hearing it cold is basically impossible. Having somebody who already understands that wavelength is nice. We'll see where things go.",
-    "tags": ["personal", "friends"],
+    "tags": [
+      "personal",
+      "friends"
+    ],
     "coverImage": "/site/journal/images/rain-at-113-degrees-july-25.jpg"
   },
   {
@@ -105,16 +144,25 @@
     "title": "Quiet Evidence",
     "type": "reflection",
     "body": "Pretty straightforward day today. Went to the gym, kept up with the usual routine, and checked my weight now that I’m tracking it consistently. It has been gradually moving upward as I eat more and stay around that 3,000 calorie target, which is nice to see.\n\nIt has probably been two or three weeks since I really started digging into everything. Tracking calories, protein, macros, body weight, and all the little numbers surrounding it. For the first year or so of going to the gym, I was definitely getting stronger and building muscle, but the food side was all over the place. There was progress, but not much consistency behind it.\n\nIt feels good to put a real plan in place, follow through with it, and see the expected results within the expected amount of time. Not instant progress, but evidence that the small things are working. If the weight starts moving upward after a couple weeks, keep going. If it stays still, adjust something and try again. I think focusing on those little goals makes the larger one feel much more manageable.\n\nIt is still funny that the hardest part of going to the gym has been getting more food into my belly. Difficult, expensive, and sometimes more exhausting than moving the actual weights. Still, it feels worth it when some random girl starts ogling my calves while I’m waiting to get food with family and asks how I got them like that. A little strange, but honestly pretty sweet. Compliments hit differently when somebody notices something you have quietly spent years working toward.\n\nGetting back into studying over the weekend too. I’m hoping to finish IBM’s web development fundamentals course and get the certification knocked out. Right now I’m digging into website testing and deployment. It feels good going through some of it and realizing how much I already taught myself. I can move through the familiar material, knock out the quizzes, and still pick up a few new things along the way.\n\nMaybe building knowledge works a lot like building muscle. Keep showing up, focus on the little goals, add more when you can, and trust that the work will eventually become something visible.",
-    "tags": ["personal", "reflection"],
+    "tags": [
+      "personal",
+      "reflection"
+    ],
     "coverImage": "/site/journal/images/slow-and-steady-july-24.jpg",
-    "photos": ["/site/journal/images/slow-and-steady-july-24.jpg"]
+    "photos": [
+      "/site/journal/images/slow-and-steady-july-24.jpg"
+    ]
   },
   {
     "date": "2026-07-23",
     "title": "Little Sounds",
     "type": "project",
     "body": "Spent a few minutes recording some Foley for the website. I wanted the Photos section to feel a bit more tactile, almost ASMR-like, where shuffling the cards and pulling new photos has a little physical presence behind it. Whipped out the decent microphone, shuffled some actual cards around, and spent some time isolating and cleaning up the sounds. It turned out pretty good for a small experiment. I might revisit it later and add a few more effects, but for now... go shuffle some photos around if you want. :3\n\nStill feeling a little rough and looking like a mutt, but I’m heading back to the gym anyway. No point in letting a temporary setback knock the rest of my routine loose. Sometimes keeping yourself moving is enough, even when everything else is mostly a waiting game.\n\nFor now, I’m just taking things a day at a time and waiting for next week. Things should be better then. Until that arrives, there is still work to do, weight to move, and little ideas worth bringing to life.",
-    "tags": ["site", "project", "personal"],
+    "tags": [
+      "site",
+      "project",
+      "personal"
+    ],
     "coverImage": "/site/journal/images/foley-recording-july-23.jpg",
     "photos": [
       "/site/journal/images/foley-recording-july-23.jpg",
@@ -126,7 +174,11 @@
     "title": "about a girl i met",
     "type": "music",
     "body": "Yesterday started off pretty good, but got rough as the day went on. Rough days are part of life, really. I think I’m just starting to recognize the way my mind reacts when too many unresolved things begin stacking up at once.\n\nI do not shut down. I go into overdrive and try to solve everything at the same time, as if every problem becomes urgent simply because I noticed it. When the solutions do not work immediately, the frustration starts stacking alongside the problems themselves. I move faster, think harder, and somehow make everything feel heavier than it did before.\n\nI’m especially grateful for family right now. Some problems become too heavy to carry alone, and I’m lucky enough to have people willing to reach for the other side and help me through it. I genuinely do not know what I would do without that support.\n\n“about a girl i met” by vai5000 has been on repeat through all of this. I bought it almost immediately after the Bandcamp email arrived on July 20th. Bought it, downloaded it, dropped it into the usual folder, and somehow forgot to actually listen to it. The next day I remembered it almost casually, pressed play, and it immediately found a place in my life that seemed to be waiting for it.\n\nThere is a line near the end that I will not quote here, but it has been landing a little harder than I expected. I do not know why her music keeps finding the exact thoughts I would rather leave unnamed, but somehow it always does. Painfully relatable, especially now.\n\nLast night I made a small oath that today would be better.\n\nI woke up, put “about a girl i met” back on loop, and somehow the scrobble count has already climbed to ~~130~~ 200. It came out two days ago. Yes, I have a problem.\n\nI do feel better. Nothing has magically resolved itself, but the weight feels more manageable after getting some sleep and allowing a little distance between myself and yesterday. Maybe better does not always mean fixed. Sometimes it just means being able to get up and continue without demanding every answer immediately.\n\nThe commission from @Fanayaart is getting some traction too. They sent over an outline for review and I really like where it is going. Seeing that little bit of progress genuinely made me feel better. It’ll be nice to have some actual art made of my character rather than leaning on the usual AI art I use. There is something different about seeing another artist interpret something that belongs to you.\n\nMaybe rough days are part of what makes the good ones feel like something. If 90% of my days are good, I’ll take that as a win. Honestly, I think I’m closer to 95%. I cannot let the small setbacks convince me that the rest of it somehow matters less.\n\nThe goal has always been to become stronger, mentally and physically. I think self-realization is part of that. Strength is not preventing every bad day. Maybe it is learning how to let a bad day remain one bad day.\n\nStill going to hit the gym and let pull day pull my brain back into place.\n\nI think I kept the oath.",
-    "tags": ["music", "personal", "reflection"],
+    "tags": [
+      "music",
+      "personal",
+      "reflection"
+    ],
     "coverImage": "/site/journal/images/vai5000-about-a-girl-i-met-july-22.jpg",
     "coverType": "album-art"
   },
@@ -135,7 +187,11 @@
     "title": "What Is Forever For",
     "type": "reflection",
     "body": "Bit of an early entry today, but I wanted to get some thoughts off my chest before slipping into the usual routine. Gym, eating, housework, and working through IBM’s fundamental web development course. It covers the HTML, CSS, JavaScript, testing, and deployment basics. I already know how to put together a pretty good website, especially with AI helping along the way, but I still want enough foundational knowledge to understand what breaks, troubleshoot it, and know what everything is actually doing.\n\nOnce that is done, I’ll probably start working toward Microsoft’s MD-102 for endpoint management. I think I’m just reaching for something better again. The month is slowly winding down, which has me thinking about the self-improvement goal I gave myself and what I want to work toward next.\n\nThe first goal was getting out there more. I already knew I could talk to people, that was never really the problem. Walking into a larger event alone just required more processing power than it probably should have. Eventually my brain landed on “fuck it, let’s just go,” and it went about as well as it possibly could have. I met people, made connections, and proved that I could throw myself into an unfamiliar place without needing somebody beside me. I’m grateful I pushed myself into doing it.\n\nI think the next challenge begins after the connection is made.\n\nFriendships are easy enough. The overthinking really starts when romantic feelings get involved. There is this brief moment of clarity where I like somebody, they seem to like me, and everything feels simple. Then my brain starts searching for every possible explanation except the simplest one.\n\nMaybe they like the stability surrounding me more than they like me. Maybe I’m convenient. Maybe I look like an escape plan. Maybe there is somebody wealthier, more attractive, or more impressive waiting one rung above me. I want the best for them, so some part of me immediately assumes the best must be somebody else.\n\nThe strange part is that I’m comfortable with who I am. I’m proud of the life I’ve built and the person I’ve slowly become. I’ve spent years becoming stronger, more confident, and more like the person I wanted to be when I was younger. I did that for myself. I’ve always believed meaningful change has to begin there. You can change harmful behavior for somebody you care about, sure, but the desire to grow has to belong to you first.\n\nChanging for myself does not mean nobody else is allowed to love what I’ve become.\n\nI never seem to apply the same comparisons to somebody I care about. I do not wonder whether a better version of them exists. I like their personality, their presence, the way they behave, and the way being around them feels. My interest is specific to them. Yet when somebody sees something worth choosing in me, I struggle to believe their interest could carry that same depth.\n\nI’ve probably ruined possible relationships by trying to protect somebody from choosing me. I told myself that stepping aside was some quiet act of kindness when it was probably just fear wearing a polite face. I cannot keep competing with imaginary people and deciding on somebody else’s behalf that I am going to lose.\n\n“What Is Forever For” by Frost Children has been on repeat lately. There is something about the song, and the way its video folds back into finding comfort in your own presence, that found me at exactly the right moment. I have spent so much time becoming someone I am finally happy to be. Maybe part of that process is learning to enjoy his company and trusting that somebody else might too.\n\nI think when I meet somebody and feel that connection, I am not really hoping for a couple of conversations or a handful of hangouts. I want to build something meaningful. Something that lasts. The odds of finding forever might not get any kinder as we get older, but that is still what I reach for. For better or worse, I want something that feels worth keeping.\n\nMaybe the problem is that I start asking whether something can last forever before I have allowed it to exist today. I race toward every possible ending, find all the ways it could fall apart, and convince myself to step aside before either person gets the chance to decide.\n\nWhat is forever for? I do not really know. Maybe forever is not something you can solve at the beginning. Maybe it starts with staying in the moment and believing the simplest answer.\n\nMaybe they just like me.",
-    "tags": ["personal", "reflection", "music"],
+    "tags": [
+      "personal",
+      "reflection",
+      "music"
+    ],
     "coverImage": "/site/journal/images/frost-children-what-is-forever-for-july-21.jpg",
     "coverType": "album-art"
   },
@@ -144,7 +200,9 @@
     "title": "Keeping Pace",
     "type": "note",
     "body": "Good day at the gym and getting through the usual housework. Nothing overly exciting, but those kinds of days have started to feel nice in their own way. Just keeping things clean, keeping myself moving, and making sure the little things do not pile up.\n\nStill wrestling with this new 2,800 - 3,000 calorie target. It is manageable, but it definitely takes more effort than I expected. Eating feels like another part of the routine now, another thing to stay consistent with even when I am not especially hungry. I guess progress is not always exciting. Sometimes it is just doing the same thing again and again until one day you look back and realize it started working.\n\nGlad to be travelling soon. It will be nice to get out of this heat for a little while and have something out there to look forward to. Having that on the horizon makes the regular days feel a little lighter. For now, just keeping pace.\n\nAlso getting back into cooking more lately, mostly Italian dishes like this meat sauce with rigatoni. Wonderful smells. I kinda' missed it when I was occupied and busy with other stuff. It feels nice to slow down and cook a delicious meal for the week.",
-    "tags": ["personal"],
+    "tags": [
+      "personal"
+    ],
     "coverImage": "/site/journal/images/rigatoni-meat-sauce-july-19.jpg",
     "photos": [
       "/site/journal/images/rigatoni-meat-sauce-july-19.jpg"
@@ -155,7 +213,11 @@
     "title": "Time Well Wasted",
     "type": "reflection",
     "body": "Today feels pretty well-rounded, even if I missed the usual gym timing. It is rainy and weirdly nice out for a summer day, and the day has already started filling itself up with work, emails, helping someone get their recording setup sorted, and dinner with my mom later.\n\nI think I am slowly realizing that productivity is not always a checklist. Sometimes it is just being useful to somebody, showing up for the things that need you, and letting the rest of the day unfold without trying to squeeze every ounce of value out of it.\n\nMaybe that is why the idea of wasting time has been on my mind lately. I am good at finding something to work toward, another skill to learn, another thing to improve, another little credential to add somewhere. That is not necessarily bad, but I do not think every quiet hour needs to be justified by what I can show for it afterward.\n\nSometimes I catch myself having fun and suddenly feel like I need to be doing something more useful. Then I start looking for a skill to learn. Web development. Database stuff. French. Piano. Anything that makes it feel like I used the day correctly.\n\nBut then I get caught on the other side of it. Why learn French when a translator is always in my pocket? Why learn web development when AI can help build half the thing? Why learn piano when I am not trying to become a musician?\n\nI think the answer is probably that not everything has to become useful in the biggest possible way. Sometimes it is enough to understand something a little better. Sometimes it is enough to make something with your own hands, even if a tool could have made it faster. Sometimes it is enough to play a song you like because you wanted to learn it.\n\nA day can be full because I worked, helped someone out, went to the gym, had dinner with family, or even just sat around and played something I enjoy. I think the secret is not wasting time carelessly. It is spending it in ways that actually feel like living.\n\n…maybe wasting time is not the same as spending it without a plan. Maybe wasting time is only when you spend it in ways that do not feel like yours. ♥♥♥",
-    "tags": ["personal", "reflection", "work"],
+    "tags": [
+      "personal",
+      "reflection",
+      "work"
+    ],
     "coverImage": "/site/journal/images/time-well-wasted-july-17.jpg",
     "photos": [
       "/site/journal/images/time-well-wasted-july-17.jpg"
@@ -166,7 +228,11 @@
     "title": "Voyages",
     "type": "music",
     "body": "Solid gym day, it feels really good to actually notice weight increases now that I'm tracking it better, even a bit of progress really makes this shit worth it in the end. Number go brrrrr.\n\n'Voyages' by 'Thrupence' has been on loop lately, forgot how good the version with the soft spoken quote is and has been stuck in my head for a while. Makes me think of how a simple interaction with someone can be the last without you even really knowing it. Or the fact that you can care about someone while accepting your lives are running parallel lines, visible but never able to properly intersect. Or wishing to have more understanding in the moment while you're still in it.",
-    "tags": ["music", "personal", "reflection"],
+    "tags": [
+      "music",
+      "personal",
+      "reflection"
+    ],
     "coverImage": "/site/journal/images/thrupence-voyages-july-15.jpg",
     "coverType": "album-art"
   },
@@ -175,7 +241,10 @@
     "title": "Proud Of You, Bud.",
     "type": "reflection",
     "body": "Keeping days simple is always a bit of a treat. Gym. Work. Eating. Maybe a late night swim while it rains.\n\nThe topic of ‘Change’ has been on my mind lately. More importantly, change as a person. Having the knowledge of my past self is an interesting concept since I can look back on those days. I’m proud of him. I wonder if he’d be proud of me? Of who I’ve become over the past years. Proud of where I ended up. Proud of how I’ve changed. It’d be interesting to introduce my younger self to my current self.\n\nIt’s a good feeling when change doesn’t feel forced. There are things I wanted at one point and I could see them but wasn’t strong enough to pull them into my life at that time. As time passes, you keep reaching, keep trying to pull whatever it is into your life and the natural progression of pulling makes it seem natural, almost invisible. But looking back into the past you suddenly realize you’re finally holding those things that at one point you thought would only be able to look at from a distance.\n\nA goal doesn’t need impress anyone else to actually matter. It just has to be something real that you’re reaching for, especially when reaching for it is harder than it looks.",
-    "tags": ["personal", "reflection"],
+    "tags": [
+      "personal",
+      "reflection"
+    ],
     "coverImage": "/site/journal/images/proud-of-you-bud-cover-july-14.jpg",
     "photos": [
       "/site/journal/images/proud-of-you-bud-july-14.jpg"
@@ -186,7 +255,12 @@
     "title": "Fragments of You",
     "type": "reflection",
     "body": "Simple day, skipped the gym because I was so busy which feels a bit weird but it is what it is. Finally got around to beating Oath last night... at least... the main part. I'll probably dig into the DLC and achievement hunt when I get the time. I chose a weird time to play this game and didn't really know what to expect going into it aside from supporting vai5000, but it's hit me in the right spots at the right time with the right struggles it seems to carry with it for most of the story.\n\nGetting back into Softcult lately as well and bought their other album. \"Spiralling Out\" has been my newest go-to track to play on repeat.\n\nLots of work to be done today and throughout the week. Back to that grind. 💪💪💪",
-    "tags": ["personal", "gaming", "music", "reflection"],
+    "tags": [
+      "personal",
+      "gaming",
+      "music",
+      "reflection"
+    ],
     "coverImage": "/site/journal/images/oath-fragments-of-you-july-13-1.jpg",
     "photos": [
       "/site/journal/images/oath-fragments-of-you-july-13-1.jpg",
@@ -200,7 +274,10 @@
     "title": "Never Stop Becoming",
     "type": "reflection",
     "body": "Man... it’s taken a while for me to discover a name for my character, but I think I’ve finally settled on calling him Oath.\n\nI feel like he’s a representation of me more than I’d like to admit. Looking back at the older art from when he was just getting started, when I was still figuring out what he would look like and slowly shaping his history around things I’ve been through, only pushes me further toward the name Oath.\n\nHe represents the part of me that keeps deciding things have to change, even when I do not entirely know how to make that change happen. A lot of the promises I have made to myself did not begin with a clear plan. They began with the recognition that I wanted something better, or that I could no longer remain the person I had been.\n\nI have not always followed through perfectly, but I keep returning to those promises. Maybe that is what the name means to me. Not certainty, and not perfection, but the decision to keep trying to become someone better.\n\n…Maybe the promise was never to become one specific person. Maybe it was simply to never stop becoming.",
-    "tags": ["personal", "reflection"],
+    "tags": [
+      "personal",
+      "reflection"
+    ],
     "coverImage": "/site/journal/images/oath-title-card-july-12.gif",
     "coverFit": "contain",
     "photos": [
@@ -212,7 +289,11 @@
     "title": "Yea... Me Neither.",
     "type": "reflection",
     "body": "Not a very eventful day; It's only 6:00 PM, but I had a solid time at the gym and spent a good chunk of the day seemingly cleaning by spraying things down and mopping and keeping things organized. Now it's time to dig in and eat more throughout the day to keep that calorie and protein count up like the past couple of days... maybe spend some time learning French or more about web design.\n\nAlso got around to playing a bit more of Oath, it's still been pretty fun if not a bit sad and somber with the tones and moods it's playing on. Loss, confusion, what-ifs, etc... will try to complete more of it later in the evening now that I have some free time on my hands.\n\n.......do you ever feel like it's too late? .....yea.... me neither.",
-    "tags": ["personal", "gaming", "reflection"],
+    "tags": [
+      "personal",
+      "gaming",
+      "reflection"
+    ],
     "coverImage": "/site/journal/images/oath-not-too-late-july-11.jpg",
     "photos": [
       "/site/journal/images/oath-not-too-late-july-11.jpg",
@@ -224,7 +305,11 @@
     "title": "Keeping My Oath",
     "type": "project",
     "body": "Wrapped up the lil' Oath project late yesterday, think it turned out pretty nice actually. Was fun piecing this together in After Effects, making sure it looped properly, and then exporting a few different sizes to use as Discord banners and Steam artwork.\n\nNeed to try to wrap up the game itself later today or over the weekend when I have more time... feeling busy all the time feels productive, but so tiring at the same time. Better than sittin' around doing nothing all day I suppose.",
-    "tags": ["project", "gaming", "personal"],
+    "tags": [
+      "project",
+      "gaming",
+      "personal"
+    ],
     "coverImage": "/site/journal/images/dont-break-our-oath-july-10.jpg",
     "photos": [
       "/site/journal/images/dont-break-our-oath-july-10.jpg"
@@ -241,7 +326,12 @@
     "title": "Fricken' Birfday",
     "type": "reflection",
     "body": "O hell yea, it's my fricken' birfday 🎉🎉🎉 Getting older with... I guess... a little to show for it?\n\nSpending a good chunk of the day at the gym, followed by studying/reading up on some of the new ChatGPT/Codex updates that should be dropping today... also working on another small lil' video project as I learn more about After Effects.\n\nI've been really big into 'oath' lately and want to recreate a scene/album-art with my character. Isolating and animating individual pieces of the project has been pretty fun, I'm sure it'll take me a day or so to get it where I want but I'm enjoying the process.\n\nAlso took some time in the evening to troubleshot the 'Playing...' part of the website. I was not expecting to teach myself about blob storage and cache poisoning tonight but... well... here we are.\n\nI'm also brining Lyn-z back into the journal... it was a bit childish to redact her name but felt right in the moment to suppress memories I suppose. Future me will understand.",
-    "tags": ["personal", "project", "music", "reflection"],
+    "tags": [
+      "personal",
+      "project",
+      "music",
+      "reflection"
+    ],
     "coverImage": "/site/journal/images/after-effects-oath-birthday-july-9.jpg",
     "photos": [
       "/site/journal/images/after-effects-oath-birthday-july-9.jpg"
@@ -252,14 +342,24 @@
     "title": "Getting Out There",
     "type": "reflection",
     "body": "Another crazy chill and eventful day today... staying in contact with a few of the cute people I met on the 4th at Red, White, and Bass feels really good, especially when it comes to planning hangouts or more events in the future. I also took a random shot and met a few people that were looking for friends in the area and met up at a local brewery to grab some drinks and converse and we all hit it off really well, might be a solid little start to even more friendships.\n\nWhen I decided to make the next few months about self-improvement and decided to tackle 'getting out there more' as my first goal, I honestly wasn't expecting it to go this well and for it to be a bit awkward, but it's really been natural for me and comforting knowing that I can be thrown to the wolves and still make friendships that should seemingly last into the future. Hard, hard. ✌✌",
-    "tags": ["personal", "friends", "concert", "reflection"]
+    "tags": [
+      "personal",
+      "friends",
+      "concert",
+      "reflection"
+    ]
   },
   {
     "date": "2026-07-06",
     "title": "Don't break our oath...",
     "type": "reflection",
     "body": "Took long enough to start doing this but I'm finally seeing some agressive and noticeable progress at the gym now that I'm eating WAY more and targeting much higher calorie intakes. I was making some super solid progress the past year or so, no doubt, I've changed a LOT from who I used to be and what I used to look like, but finally putting pen to paper and tracking what I'm eating, intakes, weight limits, etc has been really solid.\n\nAlso started playing vai5000's game, Oath, which has hit a lot of recent pain points that I wasn't expecting. Still a super solid lil' game and I'm enjoying it, over the years, I think vai5000 has become my favorite artist. All of her music is just crazy good and well made.",
-    "tags": ["personal", "music", "gaming", "reflection"],
+    "tags": [
+      "personal",
+      "music",
+      "gaming",
+      "reflection"
+    ],
     "coverImage": "/site/journal/images/oath-you-are-worried-july-6.jpg",
     "photos": [
       "/site/journal/images/oath-are-you-happy-july-6.jpg",
@@ -273,7 +373,11 @@
     "title": "Red, White, and Bass",
     "type": "music",
     "body": "Red, White, and Bass was fucking insaneeeee. I'm so glad I pushed myself to go solo, it was a night full of memorable moments and memorable people, everyone is so fucking nice... perhaps even a little too nice at times, and everybody is just there to go crazy, dance, and forget their worries. I don't know if this is a new character arc for me, but this definitely woke something up in me. I was NOT planning on staying until 2:00am, but I'm glad I did.",
-    "tags": ["music", "concert", "personal"],
+    "tags": [
+      "music",
+      "concert",
+      "personal"
+    ],
     "coverImage": "/site/journal/images/red-white-and-bass-july-5.jpg",
     "photos": [
       "/site/journal/images/red-white-and-bass-july-5.jpg"
@@ -294,7 +398,11 @@
     "title": "Killing Floor 2",
     "type": "gaming",
     "body": "Nothing too crazy happened today, enjoyed a day off and met a few new friends to play Killing Floor 2 with. All good fun. Still feeling a lot better, it's nice to return to my old self without any of the drama that has been lingering.",
-    "tags": ["gaming", "friends", "personal"],
+    "tags": [
+      "gaming",
+      "friends",
+      "personal"
+    ],
     "coverImage": "/site/journal/images/killing-floor-2-july-3.jpg",
     "photos": [
       "/site/journal/images/killing-floor-2-july-3.jpg"
@@ -305,14 +413,22 @@
     "title": "A Fun Lil' Weekend",
     "type": "reflection",
     "body": "Pretty simple day today, nothing too crazy going on and I have a ton of videos to edit for work but I still want to get some entries into my journal. Looking forward to my birthday this month, as well as the little rave/concert on July 4th, honestly, should be a fun lil' weekend and I'm looking forward to now that I'm actually starting to feel like myself again.",
-    "tags": ["personal", "work", "concert", "reflection"]
+    "tags": [
+      "personal",
+      "work",
+      "concert",
+      "reflection"
+    ]
   },
   {
     "date": "2026-07-01",
     "title": "Honest Work",
     "type": "reflection",
     "body": "Feeling way better today, surprisingly. Slept well, woke up well, hit the gym well. Should have pushed that 300lb deadlift today, was just 5lbs off, might chase it next week sometime. Eating more is paying off, it seems. It ain't much, but it's honest work, especially considering where I came from all those years ago. 💪💪💪\n\nChecked out the new Jackass Movie which was... alright... very nostalgic. Also made the trek down to Buc-ee's and it was... alright. Fucking massive, I don't know what the hype was about but was a fun adventure.",
-    "tags": ["personal", "reflection"],
+    "tags": [
+      "personal",
+      "reflection"
+    ],
     "coverImage": "/site/journal/images/bucees-july-1-selfie.jpg",
     "photos": [
       "/site/journal/images/bucees-july-1-selfie.jpg"
@@ -323,14 +439,21 @@
     "title": "A Small Step",
     "type": "reflection",
     "body": "I just want to feel like myself again. I don't know why that's so hard.\n\nI think I struggle seeing people express desires, wants, and dreams... but then show no effort in trying to obtain said desires, wants, and dreams and instead assume that everything will fall into place if they wait long enough. If you want better, you gotta' go get it. Even a small step in that direction is a step that you hadn't taken previously and pushes you closer to the end goal.",
-    "tags": ["personal", "reflection"]
+    "tags": [
+      "personal",
+      "reflection"
+    ]
   },
   {
     "date": "2026-06-29",
     "title": "The Energy to Fight On",
     "type": "reflection",
     "body": "Another early entry for today, as I fear nothing too eventful will happen. Worked late getting my VRChat Avatar setup yesterday, I like learning new things like texturing and modeling. Even though I used a paid base as the... well... base... I still had fun learning how to edit textures and change pieces of the models and export/upload to the VRChat website. I think he came out pretty nice, especially with the Nomad Complex hoodie. :3\n\nGoing to head to the gym today and spend another day focusing on myself. I feel like I'm in a much better place mentally now, and I'm grateful for friends and even strangers taking the time to check on me... I know I'm a fucking yapper all the time, so when I'm quiet and visibly hurt I'm grateful that people offer support and help rather than judging me.\n\n*\"The reason anybody gets through any of this is because\nThere are people in our lives that care desperately about our wellbeing\r\nAnd um, when you disappear, they don't yell at you\r\nThey come up to you and they say, \"Are you okay?\"\r\nAnd that, that alone, just somebody that you know\r\nIs thinking of you, and um, concerned about you\r\nIt gives you the-the energy to fight on\"*",
-    "tags": ["personal", "gaming", "reflection"],
+    "tags": [
+      "personal",
+      "gaming",
+      "reflection"
+    ],
     "coverImage": "/site/journal/images/vrchat-avatar-nomad-selfie-1.jpg",
     "photos": [
       "/site/journal/images/vrchat-avatar-nomad-selfie-1.jpg",
@@ -343,7 +466,12 @@
     "title": "ADHD-Coded",
     "type": "reflection",
     "body": "Finally feel like I got some decent sleep and feel better today... the battle with ADHD always feels like such a chore. I always seem hyper-fixated on whatever is in front of me, yet still find it hard to knock these tasks out. I honestly think that's why things like the gym have helped more than meds ever really have, it exposes me to tons of options and people so there's always something to jump around to when your attention wanes.\n\nAnd then you have the duality of meds that help solve these problems, but the issue is that they don't really make you feel like yourself. I feel like my levels of ADHD make me... me... and the solutions make me feel a bit disconnected. Sometimes my brain hits a point where it's like... \"*Fuck it, let's just go for it.*\" and, well, we certainly went for it.\n\nI'm starting to feel more like myself. Physical strength is no substitute for mental strength. I'm getting strong every day, but sometimes I need to take a step back and realize that it's ok to just vibe around and cry to let it out. Keeping things bottled up never helped anyone. Your body is sending you important signals, don't try to ignore that.\n\nI think self realization makes me stronger in the end tho'... I've discovered a problem, the reason, and the solution and I'm doing my best to fix that with the information presented. :3\n\nAlso trying to teach myself how to adjust, create, and modify a VRChat avatar to make it look more like my character. We'll see how it goes, but it's pretty confusing. It is doing a good job keeping my mind off of everything else in the world.\n\nWent out for a nice lil' aimless drive since it wasn't too hot today... which is surprising. I feel like it's such a great way to clear your mind, especially with a manual that requires more of your attention and keeps your mind from wandering too much. This car still brings such a dumb smile to my face when I drive it.",
-    "tags": ["personal", "gaming", "cars", "reflection"],
+    "tags": [
+      "personal",
+      "gaming",
+      "cars",
+      "reflection"
+    ],
     "coverImage": "/site/journal/images/vrchat-avatar-unity-wip.png",
     "photos": [
       "/site/journal/images/vrchat-avatar-unity-wip.png"
@@ -354,7 +482,12 @@
     "title": "...I miss you.",
     "type": "reflection",
     "body": "4:01 AM... feeling better after a couple of drinks last night. We’ll see how I feel later in the morning once clarity hits. I’m going to focus on eating, the gym, and studying today.\n\nI know it's too early for something new... but I feel like writing this gets it off my chest. Some mornings just hit heavier than others, especially when your head is full of things you wish you could have said better.\n\nEarly morning... earbuds in. Early morning air. Softcult on repeat. I'm going for a walk.\n\nLater that night, 8:30 PM... just got done playing Content Warning with TJ and Cody, and it kinda reminded me how fun stupid games like that are.\n\n...my head might still be spinning, but I know when to offer a sincere apology. Some friendships stay with you, even when they get quiet. ♥",
-    "tags": ["personal", "music", "gaming", "reflection"],
+    "tags": [
+      "personal",
+      "music",
+      "gaming",
+      "reflection"
+    ],
     "coverImage": "/site/journal/images/content-warning-tj-cody.png",
     "photos": [
       "/site/journal/images/content-warning-tj-cody.png"
@@ -365,35 +498,60 @@
     "title": "Rabbit Hole",
     "type": "reflection",
     "body": "Finally a day where nothing overly eventful happened... exhausted... but glad things are calming down. Jumped back into a bit of VRChat last night and ended up spending nearly 2 hours playing Cards Against Humanity with complete strangers, and it was a blast... pushed me to invest in an actual VR headset to start the rabbit hole, Meta Quest S3. We'll see how it goes and if it pushes me into another expensive rabbit hole hobby... it'll be nice to mess around with and finally play Half-Life: Alyx at the very least.\n\nGood conversations and pump at the gym today. Maybe it's placebo, but I've really been working on eating more and I'm seeing a few small changes here and there... unless my lack of self preservation is pushing me to the limits.\n\nReally big into \"idgaf\" by fauxx again.",
-    "tags": ["personal", "gaming", "music", "reflection"]
+    "tags": [
+      "personal",
+      "gaming",
+      "music",
+      "reflection"
+    ]
   },
   {
     "date": "2026-06-25",
     "title": "Overstimulation",
     "type": "reflection",
     "body": "Listening to a lot of DARKNET lately, and I really dig and vibe with their anti-social-media, anti-drug messaging while poking fun at concepts like modern day society having hilariously short attention spans. Modern life is so surrounded in overstimulation and being hollowed out.\n\nI'm also starting to like ditching my phone lately, or throwing it into Zen Mode where I can't really use it until Zen Mode is over. The disconnect has always been important for me and something that seems to really annoy others. It's weird when people can't comprehend putting your phone away for hours at a time to just vibe with life.\n\nHad another solid gym day, getting a lot better at a 225lb squat. Someone at the gym really helped push me for more reps and helped with form and everything. I probably have a higher PR in me, but I'm not willing to ego-lift myself to death yet. Still struggling with eating more though. I'll get it down at some point, but eating more is so expensive.\n\nLots of good little messages between friends today, even though some can feel really disconnected from time to time. Probably one of the biggest reasons I'm so anti-narcotic.\n\nOld habits fade slower than I'd like sometimes. I'm too old to keep running in circles, but at least I can tell I'm moving in a better direction. -_-",
-    "tags": ["personal", "music", "friends", "reflection"]
+    "tags": [
+      "personal",
+      "music",
+      "friends",
+      "reflection"
+    ]
   },
   {
     "date": "2026-06-24",
     "title": "Clearing Clouds",
     "type": "reflection",
     "body": "Today started off a bit somber, slower paced, even a bit sad. Followed by an insane session at the gym, and I feel like I'm starting to feel like myself again. I'm grateful to people at the gym that help me see perspectives otherwise clouded by the fact that I overthink e v e r y t h i n g. I feel like the clouds in my brain are slowly clearing as I drop back to reality and realize what I want in life.\n\nNow it's time to force myself to eat more chicken and rice to stabilize that caloric intake. Today made me feel stronger both physically and mentally.\n\nSong I love right now: \"idgaf\" by DARKNET. The whole thing has that blunt little mental reset energy, especially the \"I pledge not to care\" part.\n\nI also finally took the plunge and came across an artist I like that had an open slot for a headshot commission, @Fanayaart. It was a bit pricey all things considered, but I need to start supporting real artists and getting real art done of my character. AI is useful for creating and bringing an idea to life in the moment, but I think I've started to crave actual art the way I've always craved real music. In a world where everyone can create their own music, art, and movies using AI, there's an even stronger need and desire for real artists.",
-    "tags": ["personal", "reflection", "music"]
+    "tags": [
+      "personal",
+      "reflection",
+      "music"
+    ]
   },
   {
     "date": "2026-06-23",
     "title": "Showing Up For Future Me",
     "type": "reflection",
     "body": "Today had a few small but memorable moments. The morning started with a really good drive into work, cruising most of the way next to a girl in a white STi that sounded great. It reminded me how much I still want to upgrade to an STi someday. The EJ sound just has such a distinct character, and it made the commute feel more enjoyable than usual.\n\nMusic-wise, I was really into \"No Love\" by Darknet and Enkojin. It had the right kind of hazy, heavy mood and stuck with me for a while.\n\nI also started thinking more seriously about a personal challenge for next month: picking one part of myself that needs improvement and spending the next few months working on it. First focus is being more outgoing, which means going to more raves, concerts, and events solo, even when it feels uncomfortable. I want to build experiences that future me will be glad I actually showed up for.\n\nThe gym was a highlight too. I had a pretty solid session, set a lot of personal records, and felt noticeably stronger. It feels like eating more food is starting to pay off, and the extra calories are actually turning into better performance.\n\nOverall, today felt busy but meaningful. Good commute, strong gym session, a song that matched the mood, and some clearer thoughts about the kind of person I want to become.\n\nSometimes life stacks a lot at once, but I’m grateful to wonderful co-workers and the usuals at the gym. They keep my day going when life takes a turn. ♥",
-    "tags": ["personal", "music", "work", "gaming", "reflection"]
+    "tags": [
+      "personal",
+      "music",
+      "work",
+      "gaming",
+      "reflection"
+    ]
   },
   {
     "date": "2026-06-22",
     "title": "Pill To Swallow",
     "type": "music",
     "body": "Lyn-z got me into Softcult, kinda. I've been listening to \"Pill To Swallow\" over and over again, currently at 49 scrobbles and rising over the past couple of days. Also listenmaxxing \"what u want\" by vai5000 because it's insane. This is going to be my most listened to track during Spotify Wrapped, I can promise it. Running on four hours of sleep, a Rockstar Hardcore Green Apple, and a pretty crazy workday with a lot of cool people. Started recording another course with someone at work too, who seems like a pretty cool dude. Also decided to start a journal on my website and begin filling it up. Hopefully I can keep it somewhat daily, but I'm also adding a few notable things to the backlog. Not totally sure how far back I'll go yet. Also got three new shirts from Nomad Complex.",
-    "tags": ["music", "work", "journal", "personal"],
+    "tags": [
+      "music",
+      "work",
+      "journal",
+      "personal"
+    ],
     "coverImage": "/site/journal/images/softcult-when-a-flower-doesnt-grow.jpg",
     "coverType": "album-art",
     "photos": [
@@ -406,14 +564,21 @@
     "title": "Vista Mode",
     "type": "project",
     "body": "Worked on the Frutiger Aero/Windows Vista mode a bit more. Added a fake BIOS screen and redid the fake Vista loading screen. I think I got it where I want it to be now. Had my dad over for a Father's Day dinner too. I cooked some chicken and corn and stuff, and we just kind of sat around and talked about life.",
-    "tags": ["site", "project", "family"]
+    "tags": [
+      "site",
+      "project",
+      "family"
+    ]
   },
   {
     "date": "2026-06-20",
     "title": "ChaseRoleplay",
     "type": "gaming",
     "body": "Lyn-z dragged me into a wacky economy FiveM server. Had a bit of fun, but it's really not my thing. She sounds cute as hell though, and I genuinely enjoyed her and the other players' company during my short stay in ChaseRoleplay.",
-    "tags": ["gaming", "friends"]
+    "tags": [
+      "gaming",
+      "friends"
+    ]
   },
   {
     "date": "2026-06-18",
@@ -421,7 +586,10 @@
     "type": "music",
     "location": "Phoenix, AZ",
     "body": "Figured out that one of my favorite dubstep artists, Figure, is playing locally at some shithole parking lot down in Phoenix. Kind of want to go, but I'd be rolling solo. I feel like I need to get out there more.",
-    "tags": ["music", "concert"],
+    "tags": [
+      "music",
+      "concert"
+    ],
     "coverImage": "/site/journal/images/figure-underground-nights-flyer.png",
     "photos": [
       "/site/journal/images/figure-underground-nights-flyer.png"
@@ -432,28 +600,40 @@
     "title": "Modern Games",
     "type": "gaming",
     "body": "Tried to play Forza Horizon 6 with Landon, and I'm just disappointed with modern day games and what they've become, basically.",
-    "tags": ["gaming"]
+    "tags": [
+      "gaming"
+    ]
   },
   {
     "date": "2026-05-23",
     "title": "Fake Vista Vibe",
     "type": "idea",
     "body": "Changed Frutiger Aero, to be honest. I think I want to go for a fake Windows Vista vibe instead.",
-    "tags": ["site", "idea"]
+    "tags": [
+      "site",
+      "idea"
+    ]
   },
   {
     "date": "2026-04-18",
     "title": "Frutiger Aero Page",
     "type": "idea",
     "body": "Big into Frutiger Aero right now. Kinda want to make a little Frutiger Aero page with little fish and a song by Alyzea.",
-    "tags": ["site", "idea", "music"]
+    "tags": [
+      "site",
+      "idea",
+      "music"
+    ]
   },
   {
     "date": "2026-03-21",
     "title": "Still Shaved",
     "type": "reflection",
     "body": "A couple months later, shaving my head might honestly have been one of the best decisions of my life. I feel a lot more confident now, and the burden of needing to worry about hair is just gone. It feels like a weight off my shoulders, basically. It has made life more enjoyable, the gym more enjoyable, swimming more enjoyable, traveling more enjoyable. To sound cringy, it was honestly kind of a pivotal moment in my life.",
-    "tags": ["personal", "reflection"]
+    "tags": [
+      "personal",
+      "reflection"
+    ]
   },
   {
     "date": "2026-02-08",
@@ -461,7 +641,10 @@
     "type": "memory",
     "location": "Tempe, AZ",
     "body": "Met up with a distant friend, Gem, at Desert Breeze Park in Tempe. There was a pretty big furmeet and I met a lot of cool people. I'm glad I've gotten more outgoing over the years. His suit was really nice :3",
-    "tags": ["friends", "memory"],
+    "tags": [
+      "friends",
+      "memory"
+    ],
     "coverImage": "/site/journal/images/desert-breeze-furmeet-gem.jpg",
     "photos": [
       "/site/journal/images/desert-breeze-furmeet-gem.jpg"
@@ -472,7 +655,10 @@
     "title": "Zoo With Family",
     "type": "memory",
     "body": "Went to the zoo with family :3 It was a bit underwhelming, honestly. There were a couple of animals, but I didn't get to see the hyenas, which I really wanted to see. I did get to pet a goat though, which was the highlight of my day, because I love goats. Otherwise, yeah, very underwhelming for the price.",
-    "tags": ["family", "memory"],
+    "tags": [
+      "family",
+      "memory"
+    ],
     "coverImage": "/site/journal/images/family-zoo-february-2026.jpg",
     "photos": [
       "/site/journal/images/family-zoo-february-2026.jpg"
@@ -484,7 +670,10 @@
     "type": "memory",
     "location": "Scottsdale, AZ",
     "body": "Went to a work event where they booked out the OdySea Aquarium in Scottsdale, and it was a pretty good night. There was a lot of partying and just an overall fun time seeing everything, especially at night when everything was blocked off and felt kind of eerie.",
-    "tags": ["work", "memory"],
+    "tags": [
+      "work",
+      "memory"
+    ],
     "coverImage": "/site/journal/images/odysea-aquarium-jellyfish-blue.jpg",
     "photos": [
       "/site/journal/images/odysea-aquarium-jellyfish-blue.jpg",
@@ -498,7 +687,10 @@
     "title": "Shaved My Head",
     "type": "memory",
     "body": "Decided to shave my head. Feels weird, but relieving.",
-    "tags": ["personal", "memory"],
+    "tags": [
+      "personal",
+      "memory"
+    ],
     "coverImage": "/site/journal/images/shaved-head-feels-weird.jpg",
     "photos": [
       "/site/journal/images/shaved-head-feels-weird.jpg"
@@ -510,7 +702,11 @@
     "type": "memory",
     "location": "Tortilla Flat, AZ",
     "body": "Took a solo run out to Tortilla Flats. It was a surprisingly nice day for July, the traffic opened up in all the right places, and I got to haul ass through most of the drive. Just cruising, enjoying the car, and stopping every so often to take photos of it against the mountains.\n\nI always enjoy the quiet little exchanges between car people out there. You drive past somebody, they look at your car, you look at theirs, and neither person really needs to say anything. You may never see each other again, but for a second there is this mutual understanding that you are both out there for the same reason.\n\nWhile I was stopped taking photos, some dude on a motorcycle ate shit and nearly went over the edge. It happened fast enough that there was not much time to process it. I jumped back into the car, drove down to where he landed, and helped block traffic while everyone made sure he was okay.\n\nThat moment has stuck with me. Tortilla Flats is an incredible road, but it can get sketchy quickly and does not leave much room for mistakes. Having fun is part of why we go out there, but you still have to respect the road and drive within your means. It only takes one corner to remind you how thin that line can be.",
-    "tags": ["cars", "memory", "personal"],
+    "tags": [
+      "cars",
+      "memory",
+      "personal"
+    ],
     "coverImage": "/site/journal/images/tortilla-flat-cover-july-20-2025.jpg",
     "photos": [
       "/site/journal/images/tortilla-flat-cockpit-july-20-2025.jpg",
@@ -537,7 +733,11 @@
     "type": "memory",
     "location": "Globe, AZ",
     "body": "Went on our annual New Year Cruise to Globe. It was a fun time. I feel a lot of us drifting apart and the squad shrinking as life takes us on more and more back roads without a map.",
-    "tags": ["cars", "friends", "memory"],
+    "tags": [
+      "cars",
+      "friends",
+      "memory"
+    ],
     "coverImage": "/site/journal/images/new-year-cruise-globe-blue-subaru.jpg",
     "photos": [
       "/site/journal/images/new-year-cruise-globe-blue-subaru.jpg",
@@ -552,7 +752,11 @@
     "type": "memory",
     "location": "Berge's Riverview Toyota",
     "body": "Went down to a massive car meet hosted at Berge's Riverview Toyota. Such a cool turnout and quality time with friends!",
-    "tags": ["cars", "friends", "memory"],
+    "tags": [
+      "cars",
+      "friends",
+      "memory"
+    ],
     "coverImage": "/site/journal/images/berges-riverview-toyota-meet-overview.jpg",
     "photos": [
       "/site/journal/images/berges-riverview-toyota-meet-overview.jpg",
